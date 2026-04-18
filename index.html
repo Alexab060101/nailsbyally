@@ -948,7 +948,7 @@ footer{
     // Manos arrancan al 15% del scroll y completan el círculo al 65%
     // Del 65% al 100% el círculo permanece intacto — momento "wow" antes de seguir
     var rawP = curScroll / scrollRange;
-    var progress = Math.max(0, Math.min((rawP - 0.15) / 0.50, 1));
+    var progress = Math.max(0, Math.min((rawP - 0.10) / 0.30, 1));
 
     state.forEach(function(s){
       // target = sx*(1-p) → cuando progress=1 → translate(0,0) = posición CSS final
