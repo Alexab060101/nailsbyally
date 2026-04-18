@@ -67,7 +67,7 @@ header.scrolled{
 }
 .logo-wrap{text-decoration:none;display:flex;align-items:center;}
 .logo-img{
-  height:72px;width:auto;display:block;
+  height:120px;width:auto;display:block;
   transition:opacity 0.3s;
   filter:drop-shadow(0 1px 3px rgba(0,0,0,0.18));
   mix-blend-mode:multiply;
@@ -851,7 +851,11 @@ footer{
 // HEADER SCROLL
 (function(){
   var h=document.getElementById('main-header');
-  window.addEventListener('scroll',function(){h.classList.toggle('scrolled',window.scrollY>60);},{passive:true});
+  window.addEventListener('scroll',function(){
+    var heroZone = document.getElementById('heroScrollZone');
+    var heroEnd = heroZone ? heroZone.offsetHeight : window.innerHeight;
+    h.classList.toggle('scrolled', window.scrollY > heroEnd - window.innerHeight);
+  },{passive:true});
 })();
 
 // MOBILE MENU
