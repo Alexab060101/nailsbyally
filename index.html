@@ -97,7 +97,7 @@ nav a:hover::after{width:100%;}
 /* ── HERO v2 — MANOS SCROLL ── */
 /* Zona de scroll: 350vh — manos empiezan a las 30vh y completan en 280vh de scroll */
 .hero-scroll-zone{
-  height:350vh;
+  height:315vh;
   position:relative;
 }
 .hero{
@@ -306,14 +306,13 @@ nav a:hover::after{width:100%;}
   .nivel-btn{padding:7px 12px;font-size:0.72rem;width:auto;align-self:flex-start;}
   .badge-featured{top:8px;right:8px;font-size:0.55rem;}
   .section{padding:52px 24px;}
-  .servicios-header{margin-bottom:32px;}
+  .servicios-header{margin-bottom:28px;}
   .proceso-grid{margin-top:32px;gap:24px;}
   .galeria-header{margin-bottom:24px;}
   .galeria-grid{gap:10px;}
   .testi-grid{margin-top:28px;gap:16px;}
   .section-h{margin-bottom:10px;}
   .section-desc{font-size:0.88rem;}
-  .servicios-header{margin-bottom:28px;}
   .servicios-header .section-desc{font-size:0.78rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
   .proceso-section{padding:48px 24px;}
   .proceso-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px;align-items:stretch;}
@@ -918,15 +917,14 @@ footer{
   });
 })();
 
-// HANDS SCROLL ANIMATION — manos emergen desde DETRÁS de la foto de Ally
-// Al inicio están centradas sobre Ally (ocultas detrás, z-index < 20).
-// Al scrollear se desplazan hacia su posición CSS final, rodeando el círculo.
+// HANDS SCROLL ANIMATION
 (function(){
   var handEls = document.querySelectorAll('.hero-hand');
   if(!handEls.length) return;
 
   var state = [];
   var vw = 0, vh = 0, scrollRange = 0;
+  var locked = false;
 
   function init(){
     vw = window.innerWidth;
@@ -935,32 +933,31 @@ footer{
     scrollRange = zone ? Math.max(zone.offsetHeight - vh, 1) : vh;
 
     state = [];
-    var allyCx = vw / 2;  // centro de Ally (siempre 50vw)
-    var allyCy = vh / 2;  // centro de Ally (siempre 50vh)
+    var allyCx = vw / 2;
+    var allyCy = vh / 2;
 
     handEls.forEach(function(el){
       var rot = parseFloat(el.dataset.rotate || '0');
 
-      // Quitar transform previo para leer posición CSS real (sin rotate, sin translate)
+      if(locked){
+        el.style.transform = 'translate(0px,0px) rotate('+rot+'deg)';
+        el.style.opacity = '1';
+        state.push({el:el, sx:0, sy:0, cx:0, cy:0, rot:rot});
+        return;
+      }
+
       el.style.transform = 'none';
       el.style.opacity   = '0';
       var r = el.getBoundingClientRect();
       var handCx = r.left + r.width  / 2;
       var handCy = r.top  + r.height / 2;
-
-      // Translate inicial = desplazamiento desde la posición final hasta el centro de Ally
-      // → la mano empieza centrada sobre Ally (oculta detrás, z<20) y sale hacia afuera
       var sx = allyCx - handCx;
       var sy = allyCy - handCy;
-
-      // Aplicar el transform de inicio: mano centrada en Ally, ya girada a su ángulo final
       el.style.transform = 'translate('+sx.toFixed(0)+'px,'+sy.toFixed(0)+'px) rotate('+rot+'deg)';
-
       state.push({el:el, sx:sx, sy:sy, cx:sx, cy:sy, rot:rot});
     });
   }
 
-  // Esperar layout completo antes de calcular posiciones
   if(document.readyState === 'complete'){
     init();
   } else {
@@ -972,23 +969,30 @@ footer{
   window.addEventListener('scroll', function(){ curScroll = window.scrollY; }, {passive:true});
 
   function tick(){
-    // Manos arrancan al 15% del scroll y completan el círculo al 65%
-    // Del 65% al 100% el círculo permanece intacto — momento "wow" antes de seguir
+    if(locked){
+      requestAnimationFrame(tick);
+      return;
+    }
+
     var rawP = curScroll / scrollRange;
     var progress = Math.max(0, Math.min((rawP - 0.10) / 0.30, 1));
 
     state.forEach(function(s){
-      // target = sx*(1-p) → cuando progress=1 → translate(0,0) = posición CSS final
       var tx = s.sx * (1 - progress);
       var ty = s.sy * (1 - progress);
-      s.cx += (tx - s.cx) * 0.14; // lerp suave
-      s.cy += (ty - s.cy) * 0.14;
-
+      s.cx += (tx - s.cx) * 0.22;
+      s.cy += (ty - s.cy) * 0.22;
       s.el.style.transform = 'translate('+s.cx.toFixed(1)+'px,'+s.cy.toFixed(1)+'px) rotate('+s.rot+'deg)';
-
-      // Opacidad: fade-in gradual al principio del movimiento
       s.el.style.opacity = Math.min(1, progress * 3).toFixed(3);
     });
+
+    if(progress >= 1){
+      locked = true;
+      state.forEach(function(s){
+        s.el.style.transform = 'translate(0px,0px) rotate('+s.rot+'deg)';
+        s.el.style.opacity = '1';
+      });
+    }
 
     requestAnimationFrame(tick);
   }
