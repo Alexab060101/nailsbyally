@@ -129,10 +129,12 @@ nav a:hover::after{width:100%;}
 }
 
 /* TEXT — siempre por encima de todas las manos (z>12) */
+/* Desktop: anclado desde abajo → bottom del bloque = 24px por encima del borde top de Ally */
+/* Ally: height 560px, centrada → top edge en calc(50% - 280px) → gap 24px → bottom = calc(50% + 304px) */
 .hero-text{
-  position:absolute;top:0;left:0;right:0;
+  position:absolute;top:auto;bottom:calc(50% + 304px);left:0;right:0;
   z-index:25;text-align:center;
-  padding-top:126px;pointer-events:none;
+  padding-top:0;pointer-events:none;
 }
 .hero-badge{
   display:inline-flex;align-items:center;gap:8px;
@@ -147,7 +149,7 @@ nav a:hover::after{width:100%;}
 @keyframes dotPulse{0%,100%{box-shadow:0 0 6px rgba(143,207,174,0.6);}50%{box-shadow:0 0 14px rgba(143,207,174,1);}}
 .hero-title{
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2.8rem,6vw,5.2rem);font-weight:600;line-height:1.1;
+  font-size:clamp(1.8rem,2.8vw,3rem);font-weight:600;line-height:1.1;
   color:var(--text);letter-spacing:-0.01em;
   animation:fadeUp 0.9s 0.45s both;
 }
@@ -176,11 +178,16 @@ nav a:hover::after{width:100%;}
 }
 
 /* 12h — ARRIBA · hand5 */
+/* fondo BLANCO → multiply hace el blanco transparente.
+   will-change:auto anula el will-change heredado de .hero-hand para que multiply funcione
+   (en Chrome, will-change:transform mueve el elem a su propio compositor layer y rompe mix-blend-mode) */
 .hand-5{
   width:220px;
   left:calc(50% - 110px);
-  top:calc(50% - 290px);
+  top:calc(50% - 390px);
   z-index:12;
+  mix-blend-mode:multiply;
+  will-change:auto;
 }
 
 /* 2-3h — DERECHA · hand4 */
@@ -273,9 +280,10 @@ nav a:hover::after{width:100%;}
   .hand-1{width:168px;left:calc(50% - 280px);top:calc(50% + 60px);}
   .hand-6{width:168px;left:calc(50% - 295px);top:calc(50% - 160px);}
 }
+
 @media(max-width:768px){
   .hero-ally{width:260px;height:295px;}
-  .hero-text{padding-top:100px;z-index:25;}
+  .hero-text{top:0;bottom:auto;padding-top:100px;z-index:25;}
   .hero-title{font-size:clamp(1.7rem,6.5vw,2.4rem);}
   /* Móvil: solo 3 manos, 110px máximo, inferiores al 75vh */
   /* 12h arriba — no invade texto */
