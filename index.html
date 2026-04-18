@@ -47,8 +47,8 @@ body{background:var(--white);color:var(--text);font-family:'DM Sans',sans-serif;
 
 /* ── CURSOR ── */
 @media(pointer:fine){*,*::before,*::after{cursor:none!important;}}
-.c-dot{position:fixed;pointer-events:none;z-index:9999;width:8px;height:8px;border-radius:50%;background:var(--pink-deep);transform:translate(-50%,-50%);transition:transform 0.1s;will-change:left,top;}
-.c-ring{position:fixed;pointer-events:none;z-index:9998;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--pink-main);transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s,border-color 0.25s;will-change:left,top;}
+.c-dot{position:fixed;pointer-events:none;z-index:9999;width:8px;height:8px;border-radius:50%;background:var(--pink-deep);transform:translate(-50%,-50%);transition:transform 0.1s;}
+.c-ring{position:fixed;pointer-events:none;z-index:9998;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--pink-main);transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s,border-color 0.25s;}
 .c-ring.hovered{width:44px;height:44px;border-color:var(--green-main);}
 
 /* ── HEADER ── */
@@ -345,10 +345,10 @@ nav a:hover::after{width:100%;}
 .nivel-card{
   background:var(--white);border-radius:var(--r-lg);overflow:hidden;
   border:1.5px solid var(--gray-200);
-  transition:transform 0.35s,box-shadow 0.35s,border-color 0.35s;
+  transition:transform 0.15s,box-shadow 0.15s,border-color 0.15s;
   cursor:pointer;position:relative;
 }
-.nivel-card:hover{transform:translateY(-8px);box-shadow:0 24px 60px rgba(244,167,190,0.2);border-color:var(--pink-main);}
+.nivel-card:hover{transform:translateY(-8px);box-shadow:0 12px 28px rgba(244,167,190,0.2);border-color:var(--pink-main);}
 .nivel-photo{
   height:200px;position:relative;overflow:hidden;
   display:flex;align-items:center;justify-content:center;
@@ -374,7 +374,7 @@ nav a:hover::after{width:100%;}
   display:block;width:100%;text-align:center;padding:12px;border-radius:var(--r-md);
   font-size:0.8rem;font-weight:600;letter-spacing:0.04em;text-decoration:none;
   background:var(--gray-100);color:var(--text-mid);border:1.5px solid var(--gray-200);
-  transition:background 0.3s,color 0.3s,border-color 0.3s;cursor:pointer;
+  transition:background 0.15s,color 0.15s,border-color 0.15s;cursor:pointer;
 }
 .nivel-card:hover .nivel-btn{background:var(--pink-deep);color:#fff;border-color:var(--pink-deep);}
 .nivel-card.featured{border-color:var(--pink-main);}
@@ -398,9 +398,6 @@ nav a:hover::after{width:100%;}
 }
 .proceso-step h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:10px;}
 .proceso-step p{font-size:0.85rem;color:var(--text-mid);line-height:1.7;}
-.proceso-connector{
-  display:flex;align-items:center;justify-content:center;gap:40px;margin-top:20px;
-}
 
 /* ── GALERÍA ── */
 .galeria-section{background:var(--pink-bg);}
@@ -415,12 +412,12 @@ nav a:hover::after{width:100%;}
   width:100%;height:100%;min-height:160px;
   display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;
   font-size:0.75rem;font-weight:500;color:rgba(255,255,255,0.7);letter-spacing:0.1em;text-transform:uppercase;
-  transition:transform 0.4s;
+  transition:transform 0.15s;
 }
 .galeria-item:hover .galeria-ph{transform:scale(1.05);}
 .galeria-overlay{
   position:absolute;inset:0;background:rgba(232,132,154,0);
-  transition:background 0.3s;display:flex;align-items:center;justify-content:center;
+  transition:background 0.15s;display:flex;align-items:center;justify-content:center;
   border-radius:var(--r-md);
 }
 .galeria-item:hover .galeria-overlay{background:rgba(232,132,154,0.15);}
@@ -435,7 +432,7 @@ nav a:hover::after{width:100%;}
 .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px;}
 .testi-card{
   background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:var(--r-lg);
-  padding:32px 28px;transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s;
+  padding:32px 28px;transition:transform 0.15s,border-color 0.15s,box-shadow 0.15s;
 }
 .testi-card:hover{transform:translateY(-6px);border-color:var(--pink-light);box-shadow:0 16px 48px rgba(244,167,190,0.15);}
 .testi-stars{color:var(--pink-deep);font-size:0.85rem;letter-spacing:3px;margin-bottom:14px;}
@@ -523,7 +520,7 @@ footer{
 <!-- HEADER -->
 <header id="main-header">
   <a href="index.html" class="logo-wrap">
-    <img src="assets/logo.png" alt="Nails By Ally" class="logo-img">
+    <img src="assets/logo.png" alt="Nails By Ally" class="logo-img" decoding="async">
   </a>
   <nav>
     <a href="#servicios">Servicios</a>
@@ -825,7 +822,7 @@ footer{
   <div class="footer-top">
     <div class="footer-brand">
       <a href="index.html" class="logo-wrap" style="margin-bottom:12px;display:inline-flex;">
-        <img src="assets/logo.png" alt="Nails By Ally" class="logo-img" style="filter:brightness(0) invert(1);height:48px;">
+        <img src="assets/logo.png" alt="Nails By Ally" class="logo-img" style="filter:brightness(0) invert(1);height:48px;" loading="lazy" decoding="async">
       </a>
       <p>Studio de uñas y belleza. Diseños únicos, materiales premium, atención con amor.</p>
     </div>
