@@ -105,6 +105,7 @@ nav a:hover::after{width:100%;}
   background:#FAF7F4;
   position:sticky;
   top:0;
+  isolation:isolate; /* nuevo stacking context para z-index fiables */
 }
 .hero-grain{
   position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0.025;
@@ -127,10 +128,10 @@ nav a:hover::after{width:100%;}
   display:block;
 }
 
-/* TEXT z-index:5 — encima de las manos en composición visual */
+/* TEXT — siempre por encima de todas las manos (z>12) */
 .hero-text{
   position:absolute;top:0;left:0;right:0;
-  z-index:5;text-align:center;
+  z-index:25;text-align:center;
   padding-top:126px;pointer-events:none;
 }
 .hero-badge{
@@ -174,51 +175,51 @@ nav a:hover::after{width:100%;}
   filter:drop-shadow(0 8px 28px rgba(44,44,44,0.18));
 }
 
-/* 12h — ARRIBA · hand5 · simétricas french blanco */
+/* 12h — ARRIBA · hand5 */
 .hand-5{
-  width:340px;
-  left:calc(50% - 170px);   /* centrada */
-  top:calc(50% - 420px);    /* dedos bien visibles sobre Ally */
+  width:220px;
+  left:calc(50% - 110px);
+  top:calc(50% - 290px);
   z-index:12;
 }
 
-/* 2-3h — DERECHA · hand4 · pegada al borde der de Ally, uñas arriba-derecha */
+/* 2-3h — DERECHA · hand4 */
 .hand-4{
-  width:260px;
-  left:calc(50% + 195px);   /* más cerca de hand5 */
-  top:calc(50% - 310px);    /* más arriba, acercándose a hand5 */
+  width:200px;
+  left:calc(50% + 175px);
+  top:calc(50% - 210px);
   z-index:11;
 }
 
-/* 4-5h — DERECHA-ABAJO · hand3 · pegada al borde inf-der de Ally */
+/* 4-5h — DERECHA-ABAJO · hand3 */
 .hand-3{
-  width:280px;
-  left:calc(50% + 148px);   /* más pegada al borde inferior-derecho de Ally */
-  top:calc(50% + 118px);    /* más pegada a la curva de Ally */
+  width:210px;
+  left:calc(50% + 160px);
+  top:calc(50% + 100px);
   z-index:8;
 }
 
-/* 6h — ABAJO-CENTRO · hand2 · pegada al borde inferior de Ally */
+/* 6h — ABAJO-CENTRO · hand2 */
 .hand-2{
-  width:280px;
-  left:calc(50% - 140px);   /* centrada bajo Ally */
-  top:calc(50% + 220px);    /* pegada al borde inferior de Ally */
+  width:210px;
+  left:calc(50% - 105px);
+  top:calc(50% + 210px);
   z-index:7;
 }
 
-/* 7-8h — ABAJO-IZQUIERDA · hand1 · pegada al borde inf-izq, uñas más visibles */
+/* 7-8h — ABAJO-IZQUIERDA · hand1 */
 .hand-1{
-  width:280px;
-  left:calc(50% - 420px);   /* algo más a la izquierda para que salga más */
-  top:calc(50% + 60px);     /* pegada al borde inferior-izquierdo de Ally */
+  width:210px;
+  left:calc(50% - 350px);
+  top:calc(50% + 80px);
   z-index:6;
 }
 
-/* 10h — IZQUIERDA · hand6 · pegada al borde izquierdo de Ally */
+/* 10h — IZQUIERDA · hand6 */
 .hand-6{
-  width:300px;
-  left:calc(50% - 440px);   /* más metida dentro del borde de Ally */
-  top:calc(50% - 270px);    /* zona 10h, cerca de hand5 */
+  width:210px;
+  left:calc(50% - 370px);
+  top:calc(50% - 200px);
   z-index:10;
 }
 
@@ -244,7 +245,7 @@ nav a:hover::after{width:100%;}
 .hero-actions-wrap{
   position:absolute;bottom:64px;left:0;right:0;
   display:flex;justify-content:center;align-items:center;gap:14px;
-  z-index:15;
+  z-index:30;  /* por encima de manos y texto */
   animation:fadeUp 0.9s 0.75s both;
 }
 .hero-scroll{
@@ -264,25 +265,32 @@ nav a:hover::after{width:100%;}
 /* RESPONSIVE HERO */
 @media(max-width:1024px){
   .hero-ally{width:360px;height:410px;}
-  /* Tablet — escala ~75% de desktop */
-  .hand-5{width:255px;left:calc(50% - 128px);top:calc(50% - 305px);}
-  .hand-4{width:195px;left:calc(50% + 188px);top:calc(50% - 98px);}
-  .hand-3{width:210px;left:calc(50% + 88px);top:calc(50% + 196px);}
-  .hand-2{width:210px;left:calc(50% - 105px);top:calc(50% + 240px);}
-  .hand-1{width:210px;left:calc(50% - 283px);top:calc(50% + 183px);}
-  .hand-6{width:225px;left:calc(50% - 422px);top:calc(50% - 113px);}
+  /* Tablet — escala ~80% de desktop, máx 180px */
+  .hand-5{width:175px;left:calc(50% - 88px);top:calc(50% - 235px);}
+  .hand-4{width:160px;left:calc(50% + 140px);top:calc(50% - 170px);}
+  .hand-3{width:168px;left:calc(50% + 128px);top:calc(50% + 78px);}
+  .hand-2{width:168px;left:calc(50% - 84px);top:calc(50% + 168px);}
+  .hand-1{width:168px;left:calc(50% - 280px);top:calc(50% + 60px);}
+  .hand-6{width:168px;left:calc(50% - 295px);top:calc(50% - 160px);}
 }
 @media(max-width:768px){
-  .hero-ally{width:250px;height:285px;}
-  .hero-text{padding-top:108px;}
-  .hero-title{font-size:clamp(2rem,7.5vw,2.8rem);}
-  /* Móvil: 12h, 5h-der, 7h-izq (3 manos) */
-  .hand-5{width:190px;left:calc(50% - 95px);top:calc(50% - 225px);}
+  .hero-ally{width:260px;height:295px;}
+  .hero-text{padding-top:100px;z-index:25;}
+  .hero-title{font-size:clamp(1.7rem,6.5vw,2.4rem);}
+  /* Móvil: solo 3 manos, 110px máximo, inferiores al 75vh */
+  /* 12h arriba — no invade texto */
+  .hand-5{width:110px;left:calc(50% - 55px);top:calc(50% - 185px);}
+  /* Laterales ocultos */
   .hand-4{display:none;}
-  .hand-3{width:170px;left:calc(50% + 58px);top:calc(50% + 162px);}
-  .hand-2{display:none;}
-  .hand-1{width:170px;left:calc(50% - 228px);top:calc(50% + 162px);}
   .hand-6{display:none;}
+  /* Abajo-derecha — máximo 75% del alto = 50% + 25% = 50% + 25vh ≈ top:calc(50% + 110px) */
+  .hand-3{width:110px;left:calc(50% + 80px);top:calc(50% + 100px);}
+  /* Abajo-izquierda */
+  .hand-1{width:110px;left:calc(50% - 190px);top:calc(50% + 100px);}
+  .hand-2{display:none;}
+  /* Botones siempre visibles */
+  .hero-actions-wrap{bottom:56px;gap:10px;}
+  .btn-primary,.btn-ghost{padding:12px 22px;font-size:0.8rem;}
 }
 
 /* ── SECTION BASE ── */
@@ -513,7 +521,7 @@ footer{
   <div class="hero-text">
     <div class="hero-badge">
       <span class="hero-badge-dot"></span>
-      Nail Studio &amp; Beauty · Madrid
+      Nail Studio &amp; Beauty · Palma de Mallorca
     </div>
     <h1 class="hero-title">
       Uñas que cuentan<br><em>tu historia.</em>
