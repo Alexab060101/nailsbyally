@@ -505,9 +505,90 @@ footer{
   .footer-links{gap:32px;}
 }
 @media(max-width:600px){
-  .niveles-grid{grid-template-columns:1fr;}
   .cta-section{padding:60px 24px;}
   footer{padding:40px 24px 24px;}
+}
+
+/* SERVICIOS REDISEÑO */
+.niveles-new{display:flex;flex-direction:column;}
+.nivel-group{padding:28px 0;}
+.nivel-separator{height:1px;background:var(--gray-200);}
+.nivel-group-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.nivel-num-circle{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  background:var(--pink-bg);border:1.5px solid var(--pink-light);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:0.72rem;font-weight:700;
+  color:var(--pink-accent);
+}
+.nivel-group-title{
+  font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;
+  color:var(--pink-accent);
+}
+.chips-wrap{display:flex;flex-wrap:wrap;gap:10px;}
+.chip{
+  background:var(--white);border:1.5px solid var(--pink-light);border-radius:100px;
+  padding:10px 20px;cursor:pointer;text-align:left;
+  transition:background 0.15s,border-color 0.15s;
+  display:flex;flex-direction:column;gap:2px;
+}
+.chip:hover{background:var(--pink-bg);border-color:var(--pink-main);}
+.chip-name{font-size:0.82rem;font-weight:500;color:var(--text);}
+.chip-meta{font-size:0.68rem;color:var(--text-soft);}
+/* MODAL SERVICIO */
+.svc-overlay{
+  display:none;position:fixed;inset:0;background:rgba(44,44,44,0.55);
+  z-index:500;align-items:center;justify-content:center;padding:20px;
+}
+.svc-overlay.open{display:flex;}
+.svc-modal{
+  background:var(--white);border-radius:24px;max-width:480px;width:100%;
+  position:relative;max-height:90vh;overflow-y:auto;
+}
+.svc-close{
+  position:absolute;top:14px;right:16px;background:rgba(255,255,255,0.92);
+  border:none;width:32px;height:32px;border-radius:50%;font-size:1.2rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  z-index:10;color:var(--text);line-height:1;
+}
+.svc-photo{
+  height:200px;background:var(--pink-bg);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;border-radius:24px 24px 0 0;
+}
+.svc-photo img{width:100%;height:100%;object-fit:cover;display:none;position:absolute;inset:0;}
+.svc-photo-ph{font-size:0.88rem;color:var(--text-soft);}
+.svc-body{padding:24px;}
+.svc-name{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:600;color:var(--text);margin-bottom:12px;}
+.svc-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.svc-desc{font-size:0.85rem;color:var(--text-mid);line-height:1.7;margin-bottom:24px;}
+.svc-reservar{width:100%;text-align:center;display:block;margin-bottom:10px;}
+.svc-cerrar-btn{width:100%;text-align:center;display:block;}
+/* MINI POP-UP WHATSAPP */
+.wa-overlay{
+  display:none;position:fixed;inset:0;background:rgba(44,44,44,0.4);
+  z-index:600;align-items:center;justify-content:center;padding:20px;
+}
+.wa-overlay.open{display:flex;}
+.wa-modal{
+  background:var(--white);border-radius:20px;max-width:400px;width:100%;
+  padding:28px 24px;position:relative;
+}
+.wa-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:8px;}
+.wa-sub{font-size:0.82rem;color:var(--text-mid);line-height:1.6;margin-bottom:16px;}
+.wa-textarea{
+  width:100%;min-height:80px;border:1.5px solid var(--gray-200);border-radius:12px;
+  padding:10px 14px;font-size:0.82rem;font-family:'DM Sans',sans-serif;
+  color:var(--text);resize:vertical;margin-bottom:16px;outline:none;
+  transition:border-color 0.15s;box-sizing:border-box;
+}
+.wa-textarea:focus{border-color:var(--pink-main);}
+.wa-send{width:100%;text-align:center;display:block;margin-bottom:10px;}
+.wa-direct{width:100%;text-align:center;display:block;}
+@media(max-width:768px){
+  .chip{width:100%;border-radius:16px;padding:12px 16px;}
+  .svc-modal{width:95vw;}
+  .svc-photo{height:160px;}
 }
 </style>
 </head>
@@ -598,92 +679,107 @@ footer{
       <h2 class="section-h">Elige tu <em>nivel</em></h2>
       <p class="section-desc">Del cuidado básico al diseño más exclusivo.<br>Elige tu nivel y reserva en 2 minutos.</p>
     </div>
-    <div class="niveles-grid">
+    <div class="niveles-new">
 
-      <!-- SEMIPERMANENTE -->
-      <div class="nivel-card reveal reveal-delay-1">
-        <div class="nivel-photo" style="background:linear-gradient(135deg,#FFE8F0 0%,#FFD0E2 100%);">
-          <div class="nivel-photo-placeholder">💅</div>
-          <span class="nivel-photo-label">Semi permanente</span>
+      <!-- NIVEL I -->
+      <div class="nivel-group reveal reveal-delay-1">
+        <div class="nivel-group-header">
+          <span class="nivel-num-circle">I</span>
+          <h3 class="nivel-group-title">Express</h3>
         </div>
-        <div class="nivel-body">
-          <div class="nivel-name">Semi permanente</div>
-          <div class="nivel-desc">Esmalte gel de larga duración sobre uña natural. Brillo y resistencia hasta 3 semanas.</div>
-          <div class="nivel-meta">
-            <span class="nivel-badge time">⏱ Por confirmar</span>
-            <span class="nivel-badge price">25 €</span>
-          </div>
-          <a href="reservas.html?nivel=1" class="nivel-btn">Seleccionar</a>
+        <div class="chips-wrap">
+          <button class="chip" data-servicio="Manicura Express" data-duracion="30 min" data-precio="25€" data-foto="manicura-express" data-desc="Servicio rápido de preparación básica y aplicación de un solo color. No incluye trabajo de cutícula ni nivelación. Este servicio no cuenta con garantía.">
+            <span class="chip-name">Manicura Express</span>
+            <span class="chip-meta">30 min · 25€</span>
+          </button>
+          <button class="chip" data-servicio="Retiro Profesional" data-duracion="30 min" data-precio="20€" data-foto="retiro-profesional" data-desc="Retirada segura del producto para proteger la uña natural, minimizando daño y preservando su salud.">
+            <span class="chip-name">Retiro Profesional</span>
+            <span class="chip-meta">30 min · 20€</span>
+          </button>
         </div>
       </div>
+      <div class="nivel-separator"></div>
 
-      <!-- ACRÍLICO CORTAS -->
-      <div class="nivel-card reveal reveal-delay-2">
-        <div class="nivel-photo" style="background:linear-gradient(135deg,#FFD6E8 0%,#FFC0D4 100%);">
-          <div class="nivel-photo-placeholder">🌸</div>
-          <span class="nivel-photo-label">Acrílico Cortas</span>
+      <!-- NIVEL II -->
+      <div class="nivel-group reveal reveal-delay-2">
+        <div class="nivel-group-header">
+          <span class="nivel-num-circle">II</span>
+          <h3 class="nivel-group-title">Natural</h3>
         </div>
-        <div class="nivel-body">
-          <div class="nivel-name">Acrílico Cortas</div>
-          <div class="nivel-desc">Extensiones acrílicas cortas. Resultado natural y elegante con la forma que elijas.</div>
-          <div class="nivel-meta">
-            <span class="nivel-badge time">⏱ Por confirmar</span>
-            <span class="nivel-badge price">30 €</span>
-          </div>
-          <a href="reservas.html?nivel=2" class="nivel-btn">Seleccionar</a>
+        <div class="chips-wrap">
+          <button class="chip" data-servicio="Manicura de Precisión con Color" data-duracion="1h" data-precio="35€" data-foto="manicura-precision" data-desc="Preparación profunda de la uña natural, trabajo detallado de cutícula, nivelación para reforzar y perfeccionar la estructura de la uña, seguido de aplicación de color semipermanente.">
+            <span class="chip-name">Manicura de Precisión con Color</span>
+            <span class="chip-meta">1h · 35€</span>
+          </button>
+          <button class="chip" data-servicio="Pedicura Semipermanente" data-duracion="1h" data-precio="40€" data-foto="pedicura-semipermanente" data-desc="Preparación de uñas, cuidado básico y aplicación de color semipermanente para un acabado limpio y duradero.">
+            <span class="chip-name">Pedicura Semipermanente</span>
+            <span class="chip-meta">1h · 40€</span>
+          </button>
         </div>
       </div>
+      <div class="nivel-separator"></div>
 
-      <!-- ACRÍLICO MEDIANAS — FEATURED -->
-      <div class="nivel-card featured reveal reveal-delay-3">
-        <span class="badge-featured">⭐ Popular</span>
-        <div class="nivel-photo" style="background:linear-gradient(135deg,#F4B8CE 0%,#E8A0BC 100%);">
-          <div class="nivel-photo-placeholder">✨</div>
-          <span class="nivel-photo-label">Acrílico Medianas</span>
+      <!-- NIVEL III -->
+      <div class="nivel-group reveal reveal-delay-3">
+        <div class="nivel-group-header">
+          <span class="nivel-num-circle">III</span>
+          <h3 class="nivel-group-title">Extensiones</h3>
         </div>
-        <div class="nivel-body">
-          <div class="nivel-name">Acrílico Medianas</div>
-          <div class="nivel-desc">Extensiones acrílicas medianas. La longitud perfecta para un look sofisticado y versátil.</div>
-          <div class="nivel-meta">
-            <span class="nivel-badge time">⏱ Por confirmar</span>
-            <span class="nivel-badge price">40 €</span>
-          </div>
-          <a href="reservas.html?nivel=3" class="nivel-btn">Seleccionar</a>
+        <div class="chips-wrap">
+          <button class="chip" data-servicio="Extensión de uña S" data-duracion="2h" data-precio="Consultar precio" data-foto="extension-s" data-desc="Extensión de la uña natural en acrílico o gel con la longitud deseada, incluyendo preparación completa, corte de cutícula, estructura y limado.">
+            <span class="chip-name">Extensión de uña S</span>
+            <span class="chip-meta">2h · Consultar precio</span>
+          </button>
+          <button class="chip" data-servicio="Extensión de uña M" data-duracion="2h" data-precio="Consultar precio" data-foto="extension-m" data-desc="Extensión de la uña natural en acrílico o gel con la longitud deseada, incluyendo preparación completa, corte de cutícula, estructura y limado.">
+            <span class="chip-name">Extensión de uña M</span>
+            <span class="chip-meta">2h · Consultar precio</span>
+          </button>
+          <button class="chip" data-servicio="Extensión de uña L" data-duracion="2h" data-precio="Consultar precio" data-foto="extension-l" data-desc="Extensión de la uña natural en acrílico o gel con la longitud deseada, incluyendo preparación completa, corte de cutícula, estructura y limado.">
+            <span class="chip-name">Extensión de uña L</span>
+            <span class="chip-meta">2h · Consultar precio</span>
+          </button>
         </div>
       </div>
+      <div class="nivel-separator"></div>
 
-      <!-- ACRÍLICO LARGAS -->
-      <div class="nivel-card reveal reveal-delay-4">
-        <div class="nivel-photo" style="background:linear-gradient(135deg,#D4E8DC 0%,#B8D8C4 100%);">
-          <div class="nivel-photo-placeholder">💎</div>
-          <span class="nivel-photo-label">Acrílico Largas</span>
+      <!-- NIVEL IV -->
+      <div class="nivel-group reveal reveal-delay-4">
+        <div class="nivel-group-header">
+          <span class="nivel-num-circle">IV</span>
+          <h3 class="nivel-group-title">Nail Art</h3>
         </div>
-        <div class="nivel-body">
-          <div class="nivel-name">Acrílico Largas</div>
-          <div class="nivel-desc">Extensiones acrílicas largas. Máximo impacto visual para un acabado de lujo y diseños elaborados.</div>
-          <div class="nivel-meta">
-            <span class="nivel-badge time">⏱ Por confirmar</span>
-            <span class="nivel-badge price">45 €</span>
-          </div>
-          <a href="reservas.html?nivel=4" class="nivel-btn">Seleccionar</a>
+        <div class="chips-wrap">
+          <button class="chip" data-servicio="Diseños con arte" data-duracion="2h+" data-precio="Consultar precio" data-foto="disenos-arte" data-desc="Diseños personalizados de alta complejidad. Consulta disponibilidad y precio con Ally.">
+            <span class="chip-name">Diseños con arte</span>
+            <span class="chip-meta">2h+ · Consultar precio</span>
+          </button>
+          <button class="chip" data-servicio="Piedras y lazos" data-duracion="2h+" data-precio="Consultar precio" data-foto="piedras-lazos" data-desc="Diseños personalizados de alta complejidad. Consulta disponibilidad y precio con Ally.">
+            <span class="chip-name">Piedras y lazos</span>
+            <span class="chip-meta">2h+ · Consultar precio</span>
+          </button>
+          <button class="chip" data-servicio="Nail art elaborado" data-duracion="2h+" data-precio="Consultar precio" data-foto="nail-art-elaborado" data-desc="Diseños personalizados de alta complejidad. Consulta disponibilidad y precio con Ally.">
+            <span class="chip-name">Nail art elaborado</span>
+            <span class="chip-meta">2h+ · Consultar precio</span>
+          </button>
         </div>
       </div>
+      <div class="nivel-separator"></div>
 
-      <!-- RELLENO / RETIRO / DECORADO -->
-      <div class="nivel-card reveal reveal-delay-5">
-        <div class="nivel-photo" style="background:linear-gradient(135deg,#F0D4E8 0%,#E8B8D4 100%);">
-          <div class="nivel-photo-placeholder">🎨</div>
-          <span class="nivel-photo-label">Extras</span>
+      <!-- NIVEL V -->
+      <div class="nivel-group reveal reveal-delay-5">
+        <div class="nivel-group-header">
+          <span class="nivel-num-circle">V</span>
+          <h3 class="nivel-group-title">Premium</h3>
         </div>
-        <div class="nivel-body">
-          <div class="nivel-name">Relleno · Retiro · Nail Art</div>
-          <div class="nivel-desc">Relleno acrílico (cada 3 semanas), retiro seguro y decorado/nail art por uña.</div>
-          <div class="nivel-meta">
-            <span class="nivel-badge price">Relleno 30 €</span>
-            <span class="nivel-badge price">Retiro 15 €</span>
-            <span class="nivel-badge price">Decorado +7 €</span>
-          </div>
-          <a href="reservas.html?nivel=5" class="nivel-btn">Seleccionar</a>
+        <div class="chips-wrap">
+          <button class="chip" data-servicio="Diseño exclusivo" data-duracion="3h+" data-precio="Consultar precio" data-foto="diseno-exclusivo" data-desc="Diseños personalizados de alta complejidad. Consulta disponibilidad y precio con Ally.">
+            <span class="chip-name">Diseño exclusivo</span>
+            <span class="chip-meta">3h+ · Consultar precio</span>
+          </button>
+          <button class="chip" data-servicio="Trabajos de alta complejidad" data-duracion="3h+" data-precio="Consultar precio" data-foto="alta-complejidad" data-desc="Diseños personalizados de alta complejidad. Consulta disponibilidad y precio con Ally.">
+            <span class="chip-name">Trabajos de alta complejidad</span>
+            <span class="chip-meta">3h+ · Consultar precio</span>
+          </button>
         </div>
       </div>
 
@@ -853,6 +949,39 @@ footer{
   </div>
 </footer>
 
+<!-- MODAL SERVICIO -->
+<div class="svc-overlay" id="svcOverlay">
+  <div class="svc-modal" id="svcModal">
+    <button class="svc-close" id="svcClose">&times;</button>
+    <div class="svc-photo" id="svcPhoto">
+      <img id="svcImg" src="" alt="" loading="lazy">
+      <div class="svc-photo-ph" id="svcPhotoPh">📸 Foto próximamente</div>
+    </div>
+    <div class="svc-body">
+      <h3 class="svc-name" id="svcName"></h3>
+      <div class="svc-badges">
+        <span class="nivel-badge time" id="svcDur"></span>
+        <span class="nivel-badge price" id="svcPrice"></span>
+      </div>
+      <p class="svc-desc" id="svcDesc"></p>
+      <button class="btn-primary svc-reservar" id="svcReservar">Reservar este servicio</button>
+      <button class="btn-ghost svc-cerrar-btn" id="svcCerrarBtn">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MINI POP-UP WHATSAPP -->
+<div class="wa-overlay" id="waOverlay">
+  <div class="wa-modal" id="waModal">
+    <button class="svc-close" id="waClose">&times;</button>
+    <h4 class="wa-title">Antes de reservar...</h4>
+    <p class="wa-sub">Puedes enviarnos una foto de referencia para que Ally sepa exactamente lo que quieres.</p>
+    <textarea class="wa-textarea" id="waText" placeholder="Cuéntanos qué quieres..."></textarea>
+    <button class="btn-primary wa-send" id="waSend">Enviar por WhatsApp</button>
+    <a href="https://squareup.com/appointments" target="_blank" rel="noopener noreferrer" class="btn-ghost wa-direct">Ir directo a reservar</a>
+  </div>
+</div>
+
 <script>
 // CURSOR PERSONALIZADO
 (function(){
@@ -997,6 +1126,73 @@ footer{
     requestAnimationFrame(tick);
   }
   tick();
+})();
+
+// SERVICIOS — MODAL + WHATSAPP
+(function(){
+  var overlay  = document.getElementById('svcOverlay');
+  var closeBtn = document.getElementById('svcClose');
+  var svcName  = document.getElementById('svcName');
+  var svcDur   = document.getElementById('svcDur');
+  var svcPrice = document.getElementById('svcPrice');
+  var svcDesc  = document.getElementById('svcDesc');
+  var svcImg   = document.getElementById('svcImg');
+  var svcPh    = document.getElementById('svcPhotoPh');
+  var reservar = document.getElementById('svcReservar');
+  var cerrar   = document.getElementById('svcCerrarBtn');
+  var waOverlay= document.getElementById('waOverlay');
+  var waClose  = document.getElementById('waClose');
+  var waSend   = document.getElementById('waSend');
+  var waText   = document.getElementById('waText');
+  var currentServicio = '';
+
+  function openModal(btn){
+    currentServicio = btn.dataset.servicio || '';
+    svcName.textContent  = currentServicio;
+    svcDur.textContent   = '⏱ ' + (btn.dataset.duracion || '');
+    svcPrice.textContent = btn.dataset.precio || '';
+    svcDesc.textContent  = btn.dataset.desc || '';
+    svcImg.src = 'assets/servicios/' + (btn.dataset.foto || '') + '.jpg';
+    svcImg.style.display = 'none';
+    svcPh.style.display  = 'flex';
+    svcImg.onload = function(){ svcImg.style.display='block'; svcPh.style.display='none'; };
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function openWA(){
+    waText.value = '';
+    waOverlay.classList.add('open');
+  }
+
+  function closeWA(){
+    waOverlay.classList.remove('open');
+  }
+
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest('.chip');
+    if(chip){ openModal(chip); return; }
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  cerrar.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) closeModal(); });
+
+  reservar.addEventListener('click', openWA);
+  waClose.addEventListener('click', closeWA);
+  waOverlay.addEventListener('click', function(e){ if(e.target===waOverlay) closeWA(); });
+
+  waSend.addEventListener('click', function(){
+    var comentario = waText.value.trim();
+    var base = 'Hola%20Ally!%20Quiero%20reservar%20' + encodeURIComponent(currentServicio) + '.';
+    var txt  = comentario ? base + '%20' + encodeURIComponent(comentario) : base;
+    window.open('https://wa.me/34XXXXXXXXX?text=' + txt, '_blank');
+  });
 })();
 </script>
 </body>
