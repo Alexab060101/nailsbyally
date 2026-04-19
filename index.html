@@ -1232,11 +1232,24 @@ footer{
 
   waSend.addEventListener('click', function(){
     var comentario = waText.value.trim();
+    guardarEnAirtable('', '', currentServicio, comentario);
     var base = 'Hola%20Ally!%20Quiero%20reservar%20' + encodeURIComponent(currentServicio) + '.';
     var txt  = comentario ? base + '%20' + encodeURIComponent(comentario) : base;
     window.open('https://wa.me/34611962056?text=' + txt, '_blank');
   });
 })();
+
+async function guardarEnAirtable(nombre, telefono, servicio, comentario) {
+  try {
+    await fetch('/api/guardar-lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombre: nombre || 'Desconocida', telefono: telefono || '', servicio: servicio || '', comentario: comentario || '' })
+    });
+  } catch(e) {
+    console.log('Lead error:', e);
+  }
+}
 </script>
 </body>
 </html>
