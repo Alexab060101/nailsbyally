@@ -573,11 +573,19 @@ footer{
   background:var(--white);border:1.5px solid var(--pink-light);border-radius:100px;
   padding:10px 20px;cursor:pointer;text-align:left;
   transition:background 0.15s,border-color 0.15s;
-  display:flex;flex-direction:column;gap:2px;
+  display:flex;flex-direction:row;justify-content:space-between;align-items:center;gap:12px;
 }
 .chip:hover{background:var(--pink-bg);border-color:var(--pink-main);}
+.chip-left{display:flex;flex-direction:column;gap:2px;}
 .chip-name{font-size:0.82rem;font-weight:500;color:var(--text);}
 .chip-meta{font-size:0.68rem;color:var(--text-soft);}
+.chip-reservar{
+  background:var(--pink-bg);color:var(--pink-deep);
+  font-size:0.72rem;font-weight:600;
+  border-radius:100px;padding:4px 12px;
+  white-space:nowrap;flex-shrink:0;pointer-events:none;
+}
+.chip-reservar::after{content:'Reservar →';}
 /* MODAL SERVICIO */
 .svc-overlay{
   display:none;position:fixed;inset:0;background:rgba(44,44,44,0.55);
@@ -630,6 +638,7 @@ footer{
 .wa-direct{width:100%;text-align:center;display:block;}
 @media(max-width:768px){
   .chip{width:100%;border-radius:16px;padding:12px 16px;}
+  .chip-reservar::after{content:'→';font-size:0.9rem;}
   .svc-modal{width:95vw;}
   .svc-photo{height:160px;}
 }
@@ -732,12 +741,12 @@ footer{
         </div>
         <div class="chips-wrap">
           <button class="chip" data-servicio="Manicura Express" data-duracion="30 min" data-precio="25€" data-foto="manicura-express" data-desc="Servicio rápido de preparación básica y aplicación de un solo color. No incluye trabajo de cutícula ni nivelación. Este servicio no cuenta con garantía.">
-            <span class="chip-name">Manicura Express</span>
-            <span class="chip-meta">30 min · 25€</span>
+            <span class="chip-left"><span class="chip-name">Manicura Express</span><span class="chip-meta">30 min · 25€</span></span>
+            <span class="chip-reservar"></span>
           </button>
           <button class="chip" data-servicio="Retiro Profesional" data-duracion="30 min" data-precio="20€" data-foto="retiro-profesional" data-desc="Retirada segura del producto para proteger la uña natural, minimizando daño y preservando su salud.">
-            <span class="chip-name">Retiro Profesional</span>
-            <span class="chip-meta">30 min · 20€</span>
+            <span class="chip-left"><span class="chip-name">Retiro Profesional</span><span class="chip-meta">30 min · 20€</span></span>
+            <span class="chip-reservar"></span>
           </button>
         </div>
       </div>
@@ -751,12 +760,12 @@ footer{
         </div>
         <div class="chips-wrap">
           <button class="chip" data-servicio="Manicura de Precisión con Color" data-duracion="1h" data-precio="35€" data-foto="manicura-precision" data-desc="Preparación profunda de la uña natural, trabajo detallado de cutícula, nivelación para reforzar y perfeccionar la estructura de la uña, seguido de aplicación de color semipermanente.">
-            <span class="chip-name">Manicura de Precisión con Color</span>
-            <span class="chip-meta">1h · 35€</span>
+            <span class="chip-left"><span class="chip-name">Manicura de Precisión con Color</span><span class="chip-meta">1h · 35€</span></span>
+            <span class="chip-reservar"></span>
           </button>
           <button class="chip" data-servicio="Pedicura Semipermanente" data-duracion="1h" data-precio="40€" data-foto="pedicura-semipermanente" data-desc="Preparación de uñas, cuidado básico y aplicación de color semipermanente para un acabado limpio y duradero.">
-            <span class="chip-name">Pedicura Semipermanente</span>
-            <span class="chip-meta">1h · 40€</span>
+            <span class="chip-left"><span class="chip-name">Pedicura Semipermanente</span><span class="chip-meta">1h · 40€</span></span>
+            <span class="chip-reservar"></span>
           </button>
         </div>
       </div>
@@ -770,16 +779,16 @@ footer{
         </div>
         <div class="chips-wrap">
           <button class="chip" data-servicio="Extensión de uña S" data-duracion="2h" data-precio="Consultar precio" data-foto="extension-s" data-desc="Extensión de la uña natural en acrílico o gel con la longitud deseada, incluyendo preparación completa, corte de cutícula, estructura y limado.">
-            <span class="chip-name">Extensión de uña S</span>
-            <span class="chip-meta">2h · Consultar precio</span>
+            <span class="chip-left"><span class="chip-name">Extensión de uña S</span><span class="chip-meta">2h · Consultar precio</span></span>
+            <span class="chip-reservar"></span>
           </button>
           <button class="chip" data-servicio="Extensión de uña M" data-duracion="2h" data-precio="Consultar precio" data-foto="extension-m" data-desc="Extensión de la uña natural en acrílico o gel con la longitud deseada, incluyendo preparación completa, corte de cutícula, estructura y limado.">
-            <span class="chip-name">Extensión de uña M</span>
-            <span class="chip-meta">2h · Consultar precio</span>
+            <span class="chip-left"><span class="chip-name">Extensión de uña M</span><span class="chip-meta">2h · Consultar precio</span></span>
+            <span class="chip-reservar"></span>
           </button>
           <button class="chip" data-servicio="Extensión de uña L" data-duracion="2h" data-precio="Consultar precio" data-foto="extension-l" data-desc="Extensión de la uña natural en acrílico o gel con la longitud deseada, incluyendo preparación completa, corte de cutícula, estructura y limado.">
-            <span class="chip-name">Extensión de uña L</span>
-            <span class="chip-meta">2h · Consultar precio</span>
+            <span class="chip-left"><span class="chip-name">Extensión de uña L</span><span class="chip-meta">2h · Consultar precio</span></span>
+            <span class="chip-reservar"></span>
           </button>
         </div>
       </div>
@@ -793,16 +802,16 @@ footer{
         </div>
         <div class="chips-wrap">
           <button class="chip" data-servicio="Diseños con arte" data-duracion="2h+" data-precio="Consultar precio" data-foto="disenos-arte" data-desc="Diseños personalizados de alta complejidad. Consulta disponibilidad y precio con Ally.">
-            <span class="chip-name">Diseños con arte</span>
-            <span class="chip-meta">2h+ · Consultar precio</span>
+            <span class="chip-left"><span class="chip-name">Diseños con arte</span><span class="chip-meta">2h+ · Consultar precio</span></span>
+            <span class="chip-reservar"></span>
           </button>
           <button class="chip" data-servicio="Piedras y lazos" data-duracion="2h+" data-precio="Consultar precio" data-foto="piedras-lazos" data-desc="Diseños personalizados de alta complejidad. Consulta disponibilidad y precio con Ally.">
-            <span class="chip-name">Piedras y lazos</span>
-            <span class="chip-meta">2h+ · Consultar precio</span>
+            <span class="chip-left"><span class="chip-name">Piedras y lazos</span><span class="chip-meta">2h+ · Consultar precio</span></span>
+            <span class="chip-reservar"></span>
           </button>
           <button class="chip" data-servicio="Nail art elaborado" data-duracion="2h+" data-precio="Consultar precio" data-foto="nail-art-elaborado" data-desc="Diseños personalizados de alta complejidad. Consulta disponibilidad y precio con Ally.">
-            <span class="chip-name">Nail art elaborado</span>
-            <span class="chip-meta">2h+ · Consultar precio</span>
+            <span class="chip-left"><span class="chip-name">Nail art elaborado</span><span class="chip-meta">2h+ · Consultar precio</span></span>
+            <span class="chip-reservar"></span>
           </button>
         </div>
       </div>
@@ -816,12 +825,12 @@ footer{
         </div>
         <div class="chips-wrap">
           <button class="chip" data-servicio="Diseño exclusivo" data-duracion="3h+" data-precio="Consultar precio" data-foto="diseno-exclusivo" data-desc="Diseños personalizados de alta complejidad. Consulta disponibilidad y precio con Ally.">
-            <span class="chip-name">Diseño exclusivo</span>
-            <span class="chip-meta">3h+ · Consultar precio</span>
+            <span class="chip-left"><span class="chip-name">Diseño exclusivo</span><span class="chip-meta">3h+ · Consultar precio</span></span>
+            <span class="chip-reservar"></span>
           </button>
           <button class="chip" data-servicio="Trabajos de alta complejidad" data-duracion="3h+" data-precio="Consultar precio" data-foto="alta-complejidad" data-desc="Diseños personalizados de alta complejidad. Consulta disponibilidad y precio con Ally.">
-            <span class="chip-name">Trabajos de alta complejidad</span>
-            <span class="chip-meta">3h+ · Consultar precio</span>
+            <span class="chip-left"><span class="chip-name">Trabajos de alta complejidad</span><span class="chip-meta">3h+ · Consultar precio</span></span>
+            <span class="chip-reservar"></span>
           </button>
         </div>
       </div>
