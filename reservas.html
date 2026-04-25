@@ -319,6 +319,83 @@ header{
 .booking-footer-links a{font-size:0.72rem;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.25s;}
 .booking-footer-links a:hover{color:var(--pink-main);}
 
+/* MODAL OVERLAY (nail art + calendario) */
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(44,44,44,0.55);z-index:500;
+  align-items:flex-end;justify-content:center;
+  padding:0;animation:fadeIn 0.25s ease;
+}
+.modal-overlay.open{display:flex;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.modal-content{
+  background:var(--white);border-radius:24px 24px 0 0;
+  width:100%;max-width:540px;max-height:92vh;overflow-y:auto;
+  padding:28px 22px 28px;position:relative;
+  animation:modalSlideUp 0.35s ease;
+}
+.modal-content-wide{max-width:560px;}
+@keyframes modalSlideUp{from{transform:translateY(40%);}to{transform:translateY(0);}}
+.modal-close{
+  position:absolute;top:14px;right:16px;
+  width:34px;height:34px;border-radius:50%;
+  background:var(--gray-100);border:none;
+  font-size:1.4rem;line-height:1;cursor:pointer;color:var(--text-mid);
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.2s;z-index:2;
+}
+.modal-close:hover{background:var(--gray-200);}
+.modal-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem;font-weight:600;
+  color:var(--text);text-align:center;
+  margin-bottom:6px;padding-right:36px;padding-left:36px;
+}
+.modal-title em{font-style:italic;color:var(--pink-deep);}
+.modal-intro{font-size:0.82rem;color:var(--text-soft);text-align:center;margin-bottom:22px;}
+.btn-modal-continue{
+  width:100%;padding:14px;border-radius:100px;border:none;
+  background:var(--pink-deep);color:#fff;
+  font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;
+  cursor:pointer;margin-top:18px;
+  box-shadow:0 6px 20px rgba(232,132,154,0.35);
+  transition:background 0.25s,transform 0.2s,box-shadow 0.25s;
+}
+.btn-modal-continue:hover:not(:disabled){background:var(--pink-accent);transform:translateY(-1px);box-shadow:0 10px 26px rgba(232,132,154,0.45);}
+.btn-modal-continue:disabled{background:var(--gray-300);cursor:not-allowed;box-shadow:none;}
+@media(min-width:600px){
+  .modal-overlay{align-items:center;padding:20px;}
+  .modal-content{border-radius:24px;}
+}
+
+/* SELECTION SUMMARY */
+.selection-card{
+  background:var(--white);border:1.5px solid var(--gray-200);
+  border-radius:var(--r-lg);padding:6px 22px;
+  max-width:540px;margin:0 auto;
+  box-shadow:0 2px 12px rgba(244,167,190,0.08);
+}
+.selection-row{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 0;border-bottom:1px solid var(--gray-100);
+}
+.selection-row:last-child{border-bottom:none;}
+.selection-label{
+  font-size:0.66rem;font-weight:600;color:var(--text-soft);
+  letter-spacing:0.08em;text-transform:uppercase;
+  min-width:78px;flex-shrink:0;
+}
+.selection-value{flex:1;font-size:0.88rem;color:var(--text);font-weight:500;line-height:1.35;}
+.selection-edit{
+  background:var(--pink-bg);border:none;
+  color:var(--pink-deep);font-weight:600;
+  font-size:0.74rem;padding:7px 16px;
+  border-radius:100px;cursor:pointer;flex-shrink:0;
+  font-family:'DM Sans',sans-serif;
+  transition:background 0.2s,color 0.2s;
+}
+.selection-edit:hover{background:var(--pink-light);color:var(--pink-accent);}
+
 /* RESPONSIVE */
 @media(max-width:768px){
   header{padding:14px 20px;}
@@ -332,6 +409,13 @@ header{
   .nivel-desc{font-size:0.68rem;line-height:1.4;margin-bottom:8px;-webkit-line-clamp:1;}
   .nbadge{padding:2px 7px;font-size:0.6rem;}
   .nail-art-booking-cards{grid-template-columns:1fr 1fr;}
+  .selection-card{padding:4px 16px;}
+  .selection-row{flex-wrap:wrap;gap:8px;padding:12px 0;}
+  .selection-label{min-width:62px;font-size:0.62rem;}
+  .selection-value{font-size:0.82rem;}
+  .selection-edit{font-size:0.7rem;padding:6px 12px;}
+  .modal-content{padding:24px 18px 24px;}
+  .modal-title{font-size:1.2rem;padding-left:32px;padding-right:32px;}
   .slots-grid{grid-template-columns:repeat(3,1fr);}
   .booking-section{margin-bottom:36px;}
   .sticky-total{font-size:1.05rem;}
@@ -510,39 +594,23 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
       </div>
     </section>
 
-    <!-- NAIL ART (solo extensiones) -->
-    <section class="booking-section nail-art-booking" id="nailArtBooking">
-      <h2 class="section-title">Elige tu <em>diseño</em></h2>
-      <p class="section-intro">El diseño suma tiempo y se confirma con Ally.</p>
-      <div class="nail-art-booking-cards" id="nailArtBookingCards"></div>
-    </section>
-
-    <!-- CUÁNDO -->
-    <section class="booking-section">
-      <h2 class="section-title">¿Cuándo te <em>viene bien?</em></h2>
-      <p class="section-intro">Abrimos de lunes a sábado · Domingos cerramos.</p>
-      <div class="when-wrap">
-        <div class="calendar-wrap">
-          <div class="cal-header">
-            <button class="cal-nav" id="cal-prev" aria-label="Mes anterior">‹</button>
-            <h3 id="cal-month-label"></h3>
-            <button class="cal-nav" id="cal-next" aria-label="Mes siguiente">›</button>
-          </div>
-          <div class="cal-grid" id="cal-grid">
-            <div class="cal-day-header">L</div>
-            <div class="cal-day-header">M</div>
-            <div class="cal-day-header">X</div>
-            <div class="cal-day-header">J</div>
-            <div class="cal-day-header">V</div>
-            <div class="cal-day-header">S</div>
-            <div class="cal-day-header">D</div>
-          </div>
+    <!-- TARJETA DE SELECCIÓN -->
+    <section class="booking-section selection-summary" id="selectionSummary" style="display:none;">
+      <h2 class="section-title">Tu <em>selección</em></h2>
+      <div class="selection-card">
+        <div class="selection-row">
+          <span class="selection-label">Servicio</span>
+          <span class="selection-value" id="selServicio">—</span>
         </div>
-        <div class="slots-wrap">
-          <p class="slots-label" id="slotsLabel">Horarios</p>
-          <div id="slotsContainer">
-            <p class="slots-hint">Selecciona un día primero</p>
-          </div>
+        <div class="selection-row" id="rowDesign" style="display:none;">
+          <span class="selection-label">Diseño</span>
+          <span class="selection-value" id="selDesign">—</span>
+          <button type="button" class="selection-edit" data-modal="nailArtModal">Cambiar</button>
+        </div>
+        <div class="selection-row">
+          <span class="selection-label">Cuándo</span>
+          <span class="selection-value" id="selCuando">Sin elegir</span>
+          <button type="button" class="selection-edit" data-modal="calendarModal" id="selCuandoBtn">Elegir</button>
         </div>
       </div>
     </section>
@@ -628,6 +696,51 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
 
 </div>
 
+<!-- MODAL NAIL ART -->
+<div class="modal-overlay" id="nailArtModal" role="dialog" aria-modal="true" aria-labelledby="nailArtModalTitle" aria-hidden="true">
+  <div class="modal-content">
+    <button class="modal-close" id="nailArtClose" aria-label="Cerrar">&times;</button>
+    <h2 class="modal-title" id="nailArtModalTitle">Elige tu <em>diseño</em></h2>
+    <p class="modal-intro">El diseño suma tiempo y se confirma con Ally.</p>
+    <div class="nail-art-booking-cards" id="nailArtBookingCards"></div>
+    <button type="button" class="btn-modal-continue" id="nailArtContinue">Continuar →</button>
+  </div>
+</div>
+
+<!-- MODAL CALENDARIO -->
+<div class="modal-overlay" id="calendarModal" role="dialog" aria-modal="true" aria-labelledby="calendarModalTitle" aria-hidden="true">
+  <div class="modal-content modal-content-wide">
+    <button class="modal-close" id="calendarClose" aria-label="Cerrar">&times;</button>
+    <h2 class="modal-title" id="calendarModalTitle">¿Cuándo te <em>viene bien?</em></h2>
+    <p class="modal-intro">Abrimos de lunes a sábado · Domingos cerramos.</p>
+    <div class="when-wrap">
+      <div class="calendar-wrap">
+        <div class="cal-header">
+          <button class="cal-nav" id="cal-prev" aria-label="Mes anterior">‹</button>
+          <h3 id="cal-month-label"></h3>
+          <button class="cal-nav" id="cal-next" aria-label="Mes siguiente">›</button>
+        </div>
+        <div class="cal-grid" id="cal-grid">
+          <div class="cal-day-header">L</div>
+          <div class="cal-day-header">M</div>
+          <div class="cal-day-header">X</div>
+          <div class="cal-day-header">J</div>
+          <div class="cal-day-header">V</div>
+          <div class="cal-day-header">S</div>
+          <div class="cal-day-header">D</div>
+        </div>
+      </div>
+      <div class="slots-wrap">
+        <p class="slots-label" id="slotsLabel">Horarios</p>
+        <div id="slotsContainer">
+          <p class="slots-hint">Selecciona un día primero</p>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn-modal-continue" id="calendarContinue" disabled>Confirmar fecha y hora</button>
+  </div>
+</div>
+
 <!-- STICKY FOOTER (paso 1) -->
 <div class="booking-sticky" id="bookingSticky" role="region" aria-label="Resumen de selección">
   <div class="sticky-info">
@@ -698,6 +811,55 @@ function formatDur(total) {
   return h + 'h ' + m + 'min';
 }
 function isExtension(nombre) { return EXTENSIONES.indexOf(nombre) !== -1; }
+
+// ══ MODALES ══
+function openModal(id){
+  var m = document.getElementById(id);
+  if(!m) return;
+  m.classList.add('open');
+  m.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id){
+  var m = document.getElementById(id);
+  if(!m) return;
+  m.classList.remove('open');
+  m.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+}
+
+// ══ SELECTION SUMMARY ══
+function updateSummary(){
+  var sum   = document.getElementById('selectionSummary');
+  var rowD  = document.getElementById('rowDesign');
+  var serv  = document.getElementById('selServicio');
+  var des   = document.getElementById('selDesign');
+  var cua   = document.getElementById('selCuando');
+  var cuaBt = document.getElementById('selCuandoBtn');
+
+  if(!booking.nivel){ sum.style.display = 'none'; return; }
+  sum.style.display = 'block';
+  serv.textContent = booking.baseNombre + ' · ' + booking.nivelPrecio + ' · ' + booking.nivelDuracion;
+
+  if(isExtension(booking.baseNombre)){
+    rowD.style.display = 'flex';
+    if(booking.nailArtId === 'natural'){ des.textContent = 'Natural nude (incluido)'; }
+    else { des.textContent = booking.nailArtNombre + ' (desde +7€)'; }
+  } else { rowD.style.display = 'none'; }
+
+  if(booking.fecha && booking.hora){
+    cua.textContent = booking.fechaLabel + ' · ' + booking.hora;
+    cuaBt.textContent = 'Cambiar';
+  } else {
+    cua.textContent = 'Sin elegir';
+    cuaBt.textContent = 'Elegir';
+  }
+}
+
+function updateCalendarContinue(){
+  var btn = document.getElementById('calendarContinue');
+  if(btn) btn.disabled = !(booking.fecha && booking.hora);
+}
 
 // ══ STEP NAVIGATION ══
 function goToStep(n) {
@@ -781,11 +943,13 @@ function updateSticky() {
         booking.nailArtId = art.id;
         booking.nailArtNombre = art.nombre;
         applyNailArtToBooking();
+        updateSummary();
         updateSticky();
       });
       container.appendChild(btn);
     });
   }
+  window.renderNailArt = renderNailArt;
   function applyNailArtToBooking(){
     var art = NAIL_ART.filter(function(a){ return a.id === booking.nailArtId; })[0];
     if(!art) return;
@@ -814,14 +978,12 @@ function updateSticky() {
       booking.nailArtNombre = 'Natural nude';
 
       var esExt = isExtension(card.dataset.nombre);
-      var nailSec = document.getElementById('nailArtBooking');
       if(esExt){
-        nailSec.style.display = 'block';
         renderNailArt();
         applyNailArtToBooking();
-      } else {
-        nailSec.style.display = 'none';
+        openModal('nailArtModal');
       }
+      updateSummary();
       updateSticky();
     });
   });
@@ -886,7 +1048,9 @@ function updateSticky() {
             booking.hora = null;
             renderCalendar();
             renderSlots();
+            updateSummary();
             updateSticky();
+            updateCalendarContinue();
           });
         })(d, viewYear, viewMonth);
       }
@@ -921,7 +1085,9 @@ function updateSticky() {
         document.querySelectorAll('.slot').forEach(function(s){ s.classList.remove('selected'); });
         slot.classList.add('selected');
         booking.hora = time;
+        updateSummary();
         updateSticky();
+        updateCalendarContinue();
       });
       grid.appendChild(slot);
     });
@@ -943,6 +1109,41 @@ function updateSticky() {
   renderCalendar();
   renderSlots();
 })();
+
+// ══ MODAL WIRING ══
+['nailArtModal','calendarModal'].forEach(function(id){
+  var m = document.getElementById(id);
+  if(!m) return;
+  m.addEventListener('click', function(e){ if(e.target === m) closeModal(id); });
+});
+document.getElementById('nailArtClose').addEventListener('click', function(){ closeModal('nailArtModal'); });
+document.getElementById('calendarClose').addEventListener('click', function(){ closeModal('calendarModal'); });
+
+document.getElementById('nailArtContinue').addEventListener('click', function(){
+  closeModal('nailArtModal');
+  setTimeout(function(){ openModal('calendarModal'); }, 280);
+});
+document.getElementById('calendarContinue').addEventListener('click', function(){
+  if(booking.fecha && booking.hora) closeModal('calendarModal');
+});
+
+// Botones "Cambiar / Elegir" del summary
+document.querySelectorAll('.selection-edit').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var modalId = btn.dataset.modal;
+    if(modalId === 'nailArtModal' && isExtension(booking.baseNombre) && window.renderNailArt) window.renderNailArt();
+    openModal(modalId);
+  });
+});
+
+// ESC cierra modal abierto
+document.addEventListener('keydown', function(e){
+  if(e.key !== 'Escape') return;
+  ['nailArtModal','calendarModal'].forEach(function(id){
+    var m = document.getElementById(id);
+    if(m && m.classList.contains('open')) closeModal(id);
+  });
+});
 
 // ══ STICKY CTA → STEP 2 ══
 document.getElementById('stickyCta').addEventListener('click', function(){
