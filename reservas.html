@@ -272,12 +272,34 @@ header{
 .booking-footer-links a{font-size:0.72rem;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.25s;}
 .booking-footer-links a:hover{color:var(--pink-main);}
 
+/* NAIL ART BOOKING SELECTOR */
+.nail-art-booking{display:none;margin-top:28px;padding-top:24px;border-top:1px solid var(--gray-200);animation:stepIn 0.35s ease both;}
+.nail-art-booking-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:16px;text-align:center;}
+.nail-art-booking-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:720px;margin:0 auto;}
+.nail-art-bc{
+  border:2px solid var(--gray-200);border-radius:var(--r-md);padding:14px 10px;
+  cursor:pointer;background:var(--white);text-align:center;width:100%;
+  transition:border-color 0.2s,background 0.2s,transform 0.2s;
+}
+.nail-art-bc:hover{border-color:var(--pink-main);background:var(--pink-bg);transform:translateY(-2px);}
+.nail-art-bc.selected{border-color:var(--pink-deep);background:var(--pink-bg);box-shadow:0 4px 14px rgba(232,132,154,0.2);}
+.nail-art-bc-name{font-size:0.85rem;font-weight:600;color:var(--text);display:block;margin-bottom:4px;}
+.nail-art-bc-desc{font-size:0.72rem;color:var(--text-soft);display:block;margin-bottom:6px;}
+.nail-art-bc-meta{font-size:0.72rem;color:var(--pink-accent);font-weight:500;display:block;}
+.nail-art-booking-total{
+  text-align:center;margin-top:14px;padding:12px 20px;
+  background:var(--pink-bg);border-radius:var(--r-md);
+  font-size:0.9rem;font-weight:600;color:var(--pink-accent);
+  max-width:300px;margin-left:auto;margin-right:auto;
+}
+
 /* RESPONSIVE */
 @media(max-width:768px){
   header{padding:14px 20px;}
   .booking-page{padding:28px 16px 60px;}
   .niveles-grid{grid-template-columns:1fr 1fr;}
   .nivel-photo{height:130px;}
+  .nail-art-booking-cards{grid-template-columns:1fr 1fr;}
   .slots-grid{grid-template-columns:repeat(3,1fr);}
   .form-row{grid-template-columns:1fr;}
   .progress-steps{gap:0;}
@@ -477,6 +499,13 @@ header{
         </div>
       </div>
 
+    </div>
+
+    <!-- NAIL ART — aparece solo para Extensión S/M/L -->
+    <div class="nail-art-booking" id="nailArtBooking">
+      <p class="nail-art-booking-title">Elige tu diseño:</p>
+      <div class="nail-art-booking-cards" id="nailArtBookingCards"></div>
+      <div class="nail-art-booking-total" id="nailArtBookingTotal"></div>
     </div>
 
     <div class="step-nav">
@@ -680,25 +709,99 @@ function goToStep(n) {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ══ STEP 1: NIVEL ══
+// ══ STEP 1: SERVICIO + NAIL ART ══
 (function(){
+  var NAIL_ART = [
+    { id:'natural', nombre:'Natural nude',  desc:'incluido',        tiempo:'+0 min',  precioExtra:0, minExtra:0  },
+    { id:'art1',    nombre:'Nail Art 1',    desc:'diseño sutil',    tiempo:'+15 min', precioExtra:7, minExtra:15 },
+    { id:'art2',    nombre:'Nail Art 2',    desc:'diseño medio',    tiempo:'+30 min', precioExtra:7, minExtra:30 },
+    { id:'art3',    nombre:'Nail Art 3',    desc:'diseño elaborado',tiempo:'+1h',     precioExtra:7, minExtra:60 },
+  ];
+  var EXTENSIONES = ['Extensión S', 'Extensión M', 'Extensión L'];
+  var selectedNailId = 'natural';
+  var basePrecioNum  = 0;
+  var baseDurMin     = 0;
+  var baseNombre     = '';
+
+  function parseDurMin(dur) {
+    var h = 0, m = 0;
+    var mh = dur.match(/(\d+)h/); if(mh) h = parseInt(mh[1]);
+    var mm = dur.match(/(\d+)\s*min/); if(mm) m = parseInt(mm[1]);
+    return h * 60 + m;
+  }
+  function formatDur(total) {
+    var h = Math.floor(total / 60), m = total % 60;
+    if(!h) return m + ' min';
+    if(!m) return h + 'h';
+    return h + 'h ' + m + 'min';
+  }
+
+  function updateNailArtTotal() {
+    var art = NAIL_ART.filter(function(a){ return a.id === selectedNailId; })[0];
+    if(!art) return;
+    var precio = basePrecioNum + art.precioExtra;
+    var dur    = baseDurMin + art.minExtra;
+    var pStr   = art.precioExtra > 0 ? 'Desde ' + precio + '€' : precio + '€';
+    document.getElementById('nailArtBookingTotal').textContent = pStr + ' · ' + formatDur(dur);
+    // Actualizar booking con valores combinados
+    booking.nivelNombre   = art.id !== 'natural' ? baseNombre + ' + ' + art.nombre : baseNombre;
+    booking.nivelDuracion = formatDur(dur);
+    booking.nivelPrecio   = pStr;
+  }
+
+  function renderNailArt(nombre, precioStr, durStr) {
+    baseNombre    = nombre;
+    basePrecioNum = parseInt(precioStr.replace(/[^\d]/g, '')) || 0;
+    baseDurMin    = parseDurMin(durStr);
+    selectedNailId = 'natural';
+
+    var container = document.getElementById('nailArtBookingCards');
+    container.innerHTML = '';
+    NAIL_ART.forEach(function(art) {
+      var btn = document.createElement('button');
+      btn.className = 'nail-art-bc' + (art.id === 'natural' ? ' selected' : '');
+      var etiqueta = art.precioExtra > 0 ? 'desde ' + art.precioExtra + '€' : 'sin coste extra';
+      btn.innerHTML =
+        '<span class="nail-art-bc-name">' + art.nombre + '</span>' +
+        '<span class="nail-art-bc-desc">' + art.desc + '</span>' +
+        '<span class="nail-art-bc-meta">' + art.tiempo + ' · ' + etiqueta + '</span>';
+      btn.addEventListener('click', function(){
+        document.querySelectorAll('.nail-art-bc').forEach(function(c){ c.classList.remove('selected'); });
+        btn.classList.add('selected');
+        selectedNailId = art.id;
+        updateNailArtTotal();
+      });
+      container.appendChild(btn);
+    });
+    document.getElementById('nailArtBooking').style.display = 'block';
+    updateNailArtTotal();
+  }
+
   var cards = document.querySelectorAll('#nivelGrid .nivel-card');
   cards.forEach(function(card){
     card.addEventListener('click', function(){
       cards.forEach(function(c){ c.classList.remove('selected'); });
       card.classList.add('selected');
-      booking.nivel = card.dataset.nivel;
+      booking.nivel       = card.dataset.nivel;
       booking.nivelNombre = card.dataset.nombre;
       booking.nivelDuracion = card.dataset.duracion;
-      booking.nivelPrecio = card.dataset.precio;
+      booking.nivelPrecio   = card.dataset.precio;
       document.getElementById('next-1').disabled = false;
+
+      var esExt = EXTENSIONES.indexOf(card.dataset.nombre) !== -1;
+      if(esExt){
+        renderNailArt(card.dataset.nombre, card.dataset.precio, card.dataset.duracion);
+      } else {
+        document.getElementById('nailArtBooking').style.display = 'none';
+        selectedNailId = 'natural';
+      }
     });
   });
+
   document.getElementById('next-1').addEventListener('click', function(){
     if(booking.nivel) goToStep(2);
   });
 
-  // Preseleccionar nivel desde URL param
   var urlNivel = new URLSearchParams(window.location.search).get('nivel');
   if(urlNivel){
     var card = document.querySelector('[data-nivel="'+urlNivel+'"]');
