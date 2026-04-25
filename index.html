@@ -615,7 +615,9 @@ footer{
   display:flex;align-items:center;justify-content:center;
   position:relative;overflow:hidden;border-radius:24px 24px 0 0;
 }
-.svc-photo img{width:100%;height:100%;object-fit:cover;object-position:center 35%;display:none;position:absolute;inset:0;transition:opacity 0.25s;}
+.svc-photo img{width:100%;height:100%;object-fit:cover;object-position:center 35%;display:none;position:absolute;inset:0;}
+.svc-photo img.swap{animation:photoSwap 0.28s cubic-bezier(0.4,0,0.2,1);}
+@keyframes photoSwap{0%{opacity:0.2;transform:scale(1.06);}60%{opacity:1;}100%{opacity:1;transform:scale(1);}}
 .svc-photo-ph{font-size:0.75rem;color:var(--pink-accent);opacity:0.55;letter-spacing:0.05em;}
 .svc-body{padding:22px 24px 24px;}
 .svc-name{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:600;color:var(--text);margin-bottom:10px;line-height:1.2;}
@@ -1240,6 +1242,9 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     { id:'art3',    nombre:'Nail Art 3',    desc:'diseño elaborado', tiempo:'+1h',     precioExtra:15, minExtra:60, foto:'assets/hands/elaborado.png' },
   ];
 
+  // Precarga fotos para que el cambio sea instantáneo
+  NAIL_ART.forEach(function(a){ if(a.foto){ var i=new Image(); i.src=a.foto; } });
+
   var overlay    = document.getElementById('svcOverlay');
   var closeBtn   = document.getElementById('svcClose');
   var svcName    = document.getElementById('svcName');
@@ -1281,13 +1286,12 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
 
   function swapPhoto(src){
     if(svcImg.src.indexOf(src) !== -1) return;
-    svcImg.style.opacity = '0';
-    setTimeout(function(){
-      svcImg.src = src;
-      svcImg.style.display = 'block';
-      svcPh.style.display  = 'none';
-      svcImg.style.opacity = '1';
-    }, 120);
+    svcImg.src = src;
+    svcImg.style.display = 'block';
+    svcPh.style.display  = 'none';
+    svcImg.classList.remove('swap');
+    void svcImg.offsetWidth;
+    svcImg.classList.add('swap');
   }
   function tweenPrice(from, to, prefix, suffix){
     var start = performance.now(), dur = 380;
