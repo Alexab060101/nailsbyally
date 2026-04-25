@@ -114,7 +114,7 @@ header{
 /* STEP 1 — NIVEL */
 .step-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:var(--text);margin-bottom:6px;text-align:center;}
 .step-sub{font-size:0.85rem;color:var(--text-soft);text-align:center;margin-bottom:32px;}
-.niveles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.niveles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
 .nivel-card{
   background:var(--white);border-radius:var(--r-lg);overflow:hidden;
   border:2px solid var(--gray-200);cursor:pointer;
@@ -277,6 +277,7 @@ header{
   header{padding:14px 20px;}
   .booking-page{padding:28px 16px 60px;}
   .niveles-grid{grid-template-columns:1fr 1fr;}
+  .nivel-photo{height:130px;}
   .slots-grid{grid-template-columns:repeat(3,1fr);}
   .form-row{grid-template-columns:1fr;}
   .progress-steps{gap:0;}
@@ -294,10 +295,7 @@ header{
 <!-- HEADER -->
 <header>
   <a href="index.html" class="logo-wrap">
-    <div>
-      <span class="logo-nby">NBY</span>
-      <span class="logo-sub">Nails By Ally</span>
-    </div>
+    <img src="assets/logo.png" alt="Nails By Ally" style="height:64px;width:auto;display:block;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.15));mix-blend-mode:multiply;" decoding="async">
   </a>
   <a href="index.html" class="header-back">← Volver al inicio</a>
 </header>
@@ -315,7 +313,7 @@ header{
     <div class="progress-steps" id="progressSteps">
       <div class="progress-step active" data-step="1">
         <div class="step-circle">1</div>
-        <span class="step-label">Nivel</span>
+        <span class="step-label">Servicio</span>
       </div>
       <div class="step-line" id="line-1-2"></div>
       <div class="progress-step" data-step="2">
@@ -337,92 +335,143 @@ header{
 
   <!-- ── STEP 1: NIVEL ── -->
   <div class="booking-step active" id="step-1">
-    <div class="step-title">¿Qué nivel <em style="font-style:italic;color:var(--pink-deep);">eliges?</em></div>
-    <p class="step-sub">Cada nivel incluye foto de referencia, duración estimada y precio desde.</p>
+    <div class="step-title">¿Qué servicio <em style="font-style:italic;color:var(--pink-deep);">eliges?</em></div>
+    <p class="step-sub">Elige el servicio que necesitas y continúa con fecha y hora.</p>
 
     <div class="niveles-grid" id="nivelGrid">
 
-      <div class="nivel-card" data-nivel="1" data-nombre="Manicura Natural" data-duracion="45 min" data-precio="Desde 20€">
-        <div class="nivel-photo" style="background:linear-gradient(135deg,#FFE8F0,#FFD0E2);">
-          <span>🌸</span>
-          <span class="nivel-tag">Nivel I</span>
+      <div class="nivel-card" data-nivel="1" data-nombre="Retiro Profesional" data-duracion="30 min" data-precio="20€">
+        <div class="nivel-photo" style="background:linear-gradient(135deg,#E8F5E9,#C8E6C9);">
+          <span>🌿</span>
+          <span class="nivel-tag">30 min</span>
           <span class="check-mark">✓</span>
         </div>
         <div class="nivel-body">
-          <div class="nivel-name">Manicura Natural</div>
-          <div class="nivel-desc">Limado, cutículas, hidratación y esmalte tradicional. Cuidado esencial.</div>
+          <div class="nivel-name">Retiro Profesional</div>
+          <div class="nivel-desc">Retirada segura del producto para proteger la uña natural.</div>
           <div class="nivel-meta">
-            <span class="nbadge time">⏱ 45 min</span>
-            <span class="nbadge price">Desde 20€</span>
+            <span class="nbadge time">⏱ 30 min</span>
+            <span class="nbadge price">20€</span>
           </div>
           <button class="nivel-select-btn">Seleccionar</button>
         </div>
       </div>
 
-      <div class="nivel-card" data-nivel="2" data-nombre="Semipermanente" data-duracion="60 min" data-precio="Desde 30€">
-        <div class="nivel-photo" style="background:linear-gradient(135deg,#FFD6E8,#FFC0D4);">
-          <span>💅</span>
-          <span class="nivel-tag">Nivel II</span>
+      <div class="nivel-card" data-nivel="2" data-nombre="Manicura Express" data-duracion="30 min" data-precio="25€">
+        <div class="nivel-photo" style="background:linear-gradient(135deg,#FFF3E0,#FFE0B2);">
+          <span>⚡</span>
+          <span class="nivel-tag">30 min</span>
           <span class="check-mark">✓</span>
         </div>
         <div class="nivel-body">
-          <div class="nivel-name">Semipermanente</div>
-          <div class="nivel-desc">Gel/shellac de larga duración. Hasta 3 semanas perfecto, sin dañar la uña.</div>
+          <div class="nivel-name">Manicura Express</div>
+          <div class="nivel-desc">Preparación básica y color. Sin cutícula ni nivelación. Sin garantía.</div>
           <div class="nivel-meta">
-            <span class="nbadge time">⏱ 60 min</span>
+            <span class="nbadge time">⏱ 30 min</span>
+            <span class="nbadge price">25€</span>
+          </div>
+          <button class="nivel-select-btn">Seleccionar</button>
+        </div>
+      </div>
+
+      <div class="nivel-card" data-nivel="3" data-nombre="Manicura de Precisión con Color" data-duracion="1h 30" data-precio="35€">
+        <div class="nivel-photo" style="background:linear-gradient(135deg,#FFD6E8,#FFC0D4);">
+          <span>💅</span>
+          <span class="nivel-tag">1h 30</span>
+          <span class="check-mark">✓</span>
+        </div>
+        <div class="nivel-body">
+          <div class="nivel-name">Manicura de Precisión con Color</div>
+          <div class="nivel-desc">Preparación profunda, cutícula, nivelación y color semipermanente.</div>
+          <div class="nivel-meta">
+            <span class="nbadge time">⏱ 1h 30</span>
+            <span class="nbadge price">35€</span>
+          </div>
+          <button class="nivel-select-btn">Seleccionar</button>
+        </div>
+      </div>
+
+      <div class="nivel-card" data-nivel="4" data-nombre="Pedicura Semipermanente" data-duracion="1h" data-precio="40€">
+        <div class="nivel-photo" style="background:linear-gradient(135deg,#FCE4EC,#F8BBD9);">
+          <span>🌸</span>
+          <span class="nivel-tag">1h</span>
+          <span class="check-mark">✓</span>
+        </div>
+        <div class="nivel-body">
+          <div class="nivel-name">Pedicura Semipermanente</div>
+          <div class="nivel-desc">Cuidado básico de pie y color semipermanente duradero.</div>
+          <div class="nivel-meta">
+            <span class="nbadge time">⏱ 1h</span>
+            <span class="nbadge price">40€</span>
+          </div>
+          <button class="nivel-select-btn">Seleccionar</button>
+        </div>
+      </div>
+
+      <div class="nivel-card" data-nivel="5" data-nombre="Relleno 3 semanas" data-duracion="1h 30" data-precio="30€">
+        <div class="nivel-photo" style="background:linear-gradient(135deg,#F3E5F5,#E1BEE7);">
+          <span>🔄</span>
+          <span class="nivel-tag">1h 30</span>
+          <span class="check-mark">✓</span>
+        </div>
+        <div class="nivel-body">
+          <div class="nivel-name">Relleno 3 semanas</div>
+          <div class="nivel-desc">Mantenimiento de extensiones cada 3 semanas. Resultado siempre perfecto.</div>
+          <div class="nivel-meta">
+            <span class="nbadge time">⏱ 1h 30</span>
+            <span class="nbadge price">30€</span>
+          </div>
+          <button class="nivel-select-btn">Seleccionar</button>
+        </div>
+      </div>
+
+      <div class="nivel-card" data-nivel="6" data-nombre="Extensión S" data-duracion="2h" data-precio="Desde 30€">
+        <div class="nivel-photo" style="background:linear-gradient(135deg,#F4B8CE,#E8A0BC);">
+          <span>✨</span>
+          <span class="nivel-tag">2h</span>
+          <span class="check-mark">✓</span>
+        </div>
+        <div class="nivel-body">
+          <div class="nivel-name">Extensión S</div>
+          <div class="nivel-desc">Extensión corta en acrílico o gel. Incluye preparación completa y limado.</div>
+          <div class="nivel-meta">
+            <span class="nbadge time">⏱ 2h</span>
             <span class="nbadge price">Desde 30€</span>
           </div>
           <button class="nivel-select-btn">Seleccionar</button>
         </div>
       </div>
 
-      <div class="nivel-card" data-nivel="3" data-nombre="Extensiones Base" data-duracion="90 min" data-precio="Desde 50€">
-        <div class="nivel-photo" style="background:linear-gradient(135deg,#F4B8CE,#E8A0BC);">
+      <div class="nivel-card" data-nivel="7" data-nombre="Extensión M" data-duracion="2h" data-precio="Desde 40€">
+        <div class="nivel-photo" style="background:linear-gradient(135deg,#D4E8DC,#B8D8C4);">
           <span class="nivel-popular">⭐ Popular</span>
           <span>✨</span>
-          <span class="nivel-tag">Nivel III</span>
+          <span class="nivel-tag">2h</span>
           <span class="check-mark">✓</span>
         </div>
         <div class="nivel-body">
-          <div class="nivel-name">Extensiones Base</div>
-          <div class="nivel-desc">Extensiones de gel con color sólido, french o degradado. La forma perfecta.</div>
-          <div class="nivel-meta">
-            <span class="nbadge time">⏱ 90 min</span>
-            <span class="nbadge price">Desde 50€</span>
-          </div>
-          <button class="nivel-select-btn">Seleccionar</button>
-        </div>
-      </div>
-
-      <div class="nivel-card" data-nivel="4" data-nombre="Nail Art" data-duracion="2h" data-precio="Desde 70€">
-        <div class="nivel-photo" style="background:linear-gradient(135deg,#D4E8DC,#B8D8C4);">
-          <span>🎨</span>
-          <span class="nivel-tag">Nivel IV</span>
-          <span class="check-mark">✓</span>
-        </div>
-        <div class="nivel-body">
-          <div class="nivel-name">Nail Art</div>
-          <div class="nivel-desc">Extensiones con diseños artísticos: florales, geométricos, marble, degradados.</div>
+          <div class="nivel-name">Extensión M</div>
+          <div class="nivel-desc">Extensión media en acrílico o gel. Incluye preparación completa y limado.</div>
           <div class="nivel-meta">
             <span class="nbadge time">⏱ 2h</span>
-            <span class="nbadge price">Desde 70€</span>
+            <span class="nbadge price">Desde 40€</span>
           </div>
           <button class="nivel-select-btn">Seleccionar</button>
         </div>
       </div>
 
-      <div class="nivel-card" data-nivel="5" data-nombre="Premium & Luxury" data-duracion="2.5h+" data-precio="Desde 90€">
-        <div class="nivel-photo" style="background:linear-gradient(135deg,#F0D4E8,#E8B8D4);">
+      <div class="nivel-card" data-nivel="8" data-nombre="Extensión L" data-duracion="2h" data-precio="Desde 45€">
+        <div class="nivel-photo" style="background:linear-gradient(135deg,#EDE7F6,#D1C4E9);">
           <span>👑</span>
-          <span class="nivel-tag">Nivel V</span>
+          <span class="nivel-tag">2h</span>
           <span class="check-mark">✓</span>
         </div>
         <div class="nivel-body">
-          <div class="nivel-name">Premium & Luxury</div>
-          <div class="nivel-desc">Piedras Swarovski, chrome, 3D, press-on personalizados. Para momentos especiales.</div>
+          <div class="nivel-name">Extensión L</div>
+          <div class="nivel-desc">Extensión larga en acrílico o gel. Incluye preparación completa y limado.</div>
           <div class="nivel-meta">
-            <span class="nbadge time">⏱ 2.5h+</span>
-            <span class="nbadge price">Desde 90€</span>
+            <span class="nbadge time">⏱ 2h</span>
+            <span class="nbadge price">Desde 45€</span>
           </div>
           <button class="nivel-select-btn">Seleccionar</button>
         </div>
@@ -579,10 +628,7 @@ header{
 <!-- FOOTER -->
 <footer class="booking-footer">
   <a href="index.html" class="logo-wrap">
-    <div>
-      <span class="logo-nby">NBY</span>
-      <span class="logo-sub">Nails By Ally</span>
-    </div>
+    <img src="assets/logo.png" alt="Nails By Ally" style="height:40px;width:auto;display:block;filter:brightness(0) invert(1);" decoding="async" loading="lazy">
   </a>
   <div class="booking-footer-links">
     <a href="index.html">Inicio</a>
@@ -778,13 +824,13 @@ function goToStep(n) {
   document.getElementById('next-3').addEventListener('click',function(){
     if(booking.hora){
       // Rellenar resumen
-      document.getElementById('res-nivel').textContent = booking.nivelNombre + ' (Nivel ' + booking.nivel + ')';
+      document.getElementById('res-nivel').textContent = booking.nivelNombre;
       document.getElementById('res-fecha').textContent = booking.fechaLabel;
       document.getElementById('res-hora').textContent = booking.hora;
       document.getElementById('res-duracion').textContent = booking.nivelDuracion;
       document.getElementById('res-precio').textContent = booking.nivelPrecio;
       // Hidden fields
-      document.getElementById('hidden-nivel').value = booking.nivelNombre + ' – Nivel ' + booking.nivel;
+      document.getElementById('hidden-nivel').value = booking.nivelNombre;
       document.getElementById('hidden-fecha').value = booking.fechaLabel;
       document.getElementById('hidden-hora').value = booking.hora;
       goToStep(4);
@@ -848,7 +894,7 @@ function goToStep(n) {
   });
 
   function showConfirmation(){
-    document.getElementById('conf-nivel').textContent = booking.nivelNombre + ' (Nivel ' + booking.nivel + ')';
+    document.getElementById('conf-nivel').textContent = booking.nivelNombre;
     document.getElementById('conf-fecha').textContent = booking.fechaLabel;
     document.getElementById('conf-hora').textContent = booking.hora;
     document.getElementById('conf-duracion').textContent = booking.nivelDuracion;
