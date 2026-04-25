@@ -673,6 +673,14 @@ footer{
   .chip-reservar::after{content:'→';font-size:0.9rem;}
   .svc-modal{width:95vw;}
   .svc-photo{height:160px;}
+}
+
+/* PREFERS-REDUCED-MOTION */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important;}
+  .c-dot,.c-ring{display:none!important;}
+  *,*::before,*::after{cursor:auto!important;}
+  .hero-hand{opacity:1!important;transform:none!important;}
   .nail-art-cards{grid-template-columns:1fr 1fr;}
 }
 </style>
@@ -710,13 +718,13 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     <a href="#nosotras">Nosotras</a>
     <a href="#servicios" class="nav-cta">Reservar cita</a>
   </nav>
-  <div class="hamburger" id="hamburger">
+  <div class="hamburger" id="hamburger" role="button" tabindex="0" aria-label="Abrir menú">
     <span></span><span></span><span></span>
   </div>
 </header>
 
 <div class="mobile-menu" id="mobileMenu">
-  <button class="mobile-close" id="mobileClose">&times;</button>
+  <button class="mobile-close" id="mobileClose" aria-label="Cerrar menú">&times;</button>
   <a href="#servicios" class="mm-link">Servicios</a>
   <a href="#galeria" class="mm-link">Galería</a>
   <a href="#nosotras" class="mm-link">Nosotras</a>
@@ -850,18 +858,18 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     <div class="proceso-grid">
       <div class="proceso-step reveal reveal-delay-1">
         <div class="proceso-num">01</div>
-        <h3>Tu nivel</h3>
-        <p>Elige entre nuestros niveles con foto de referencia. Sin dudas, sin sorpresas.</p>
+        <h3>Tu servicio</h3>
+        <p>Elige el servicio que quieres y, si llevas extensiones, tu diseño favorito.</p>
       </div>
       <div class="proceso-step reveal reveal-delay-2">
         <div class="proceso-num" style="background:linear-gradient(135deg,var(--green-light),var(--green-main));">02</div>
-        <h3>Tu cita</h3>
-        <p>Reserva el día y hora que prefieras. Confirmación en tu email en menos de 1h.</p>
+        <h3>Te escribimos</h3>
+        <p>Pulsa reservar y nos hablamos por WhatsApp. Ally te confirma fecha y hora en menos de 1h.</p>
       </div>
       <div class="proceso-step reveal reveal-delay-3">
         <div class="proceso-num">03</div>
-        <h3>¡A disfrutar!</h3>
-        <p>Llega relajada, nosotras nos encargamos de todo. Saldrás con unas uñas que van a enamorar.</p>
+        <h3>A disfrutar</h3>
+        <p>Llegas, te relajas, sales con unas uñas que enamoran. Así de fácil.</p>
       </div>
     </div>
   </div>
@@ -875,7 +883,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
         <span class="eyebrow">Galería</span>
         <h2 class="section-h">Nuestro <em>trabajo</em></h2>
       </div>
-      <a href="#servicios" class="btn-ghost reveal" style="flex-shrink:0;">Ver todos los diseños</a>
+      <a href="#servicios" class="btn-ghost reveal" style="flex-shrink:0;">Ver todos los servicios</a>
     </div>
     <div class="galeria-grid">
       <div class="galeria-item reveal">
@@ -959,7 +967,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   <div class="cta-inner reveal">
     <span class="cta-eyebrow">¿Lista?</span>
     <h2 class="cta-title">Tu próxima cita te<br>está <em>esperando.</em></h2>
-    <p class="cta-sub">Reserva en menos de 2 minutos. Sin esperas, sin llamadas, sin complicaciones. Solo tú y tus uñas de ensueño.</p>
+    <p class="cta-sub">Elige tu servicio, hablamos por WhatsApp y queda confirmada. Sin llamadas, sin complicaciones — solo tú y tus uñas de ensueño.</p>
     <a href="#servicios" class="btn-primary">Reservar ahora</a>
     <p class="cta-note">Sin tarjeta · Cancelación gratuita hasta 24h antes</p>
   </div>
@@ -1023,7 +1031,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
         <div class="svc-total" id="svcTotal"></div>
       </div>
       <p class="svc-desc" id="svcDesc"></p>
-      <button class="btn-primary svc-reservar" id="svcReservar">Reservar este servicio</button>
+      <button class="btn-primary svc-reservar" id="svcReservar">Quiero reservarlo</button>
       <button class="btn-ghost svc-cerrar-btn" id="svcCerrarBtn">Cerrar</button>
     </div>
   </div>
@@ -1032,12 +1040,12 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
 <!-- MINI POP-UP WHATSAPP -->
 <div class="wa-overlay" id="waOverlay">
   <div class="wa-modal" id="waModal">
-    <button class="svc-close" id="waClose">&times;</button>
-    <h4 class="wa-title">Antes de reservar...</h4>
-    <p class="wa-sub">Puedes enviarnos una foto de referencia para que Ally sepa exactamente lo que quieres.</p>
-    <textarea class="wa-textarea" id="waText" placeholder="Cuéntanos qué quieres..."></textarea>
-    <button class="btn-primary wa-send" id="waSend">Enviar por WhatsApp</button>
-    <a href="https://squareup.com/appointments" target="_blank" rel="noopener noreferrer" class="btn-ghost wa-direct">Ir directo a reservar</a>
+    <button class="svc-close" id="waClose" aria-label="Cerrar">&times;</button>
+    <h4 class="wa-title">Una cosita más</h4>
+    <p class="wa-sub">¿Tienes alguna referencia o detalle? Cuéntanoslo aquí y Ally lo verá antes de tu cita.</p>
+    <textarea class="wa-textarea" id="waText" placeholder="Una idea, una foto, lo que sea..."></textarea>
+    <button class="btn-primary wa-send" id="waSend">Hablar con Ally por WhatsApp</button>
+    <a href="https://squareup.com/appointments" target="_blank" rel="noopener noreferrer" class="btn-ghost wa-direct">O reservar sin hablar (Square)</a>
   </div>
 </div>
 
@@ -1074,8 +1082,10 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   var close=document.getElementById('mobileClose');
   if(!btn)return;
   btn.addEventListener('click',function(){menu.classList.add('open');});
+  btn.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();menu.classList.add('open');}});
   close.addEventListener('click',function(){menu.classList.remove('open');});
   document.querySelectorAll('.mm-link').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');});});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')menu.classList.remove('open');});
 })();
 
 // READ BAR
@@ -1344,6 +1354,11 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   closeBtn.addEventListener('click', closeModal);
   cerrar.addEventListener('click', closeModal);
   overlay.addEventListener('click', function(e){ if(e.target===overlay) closeModal(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape') return;
+    if(waOverlay.classList.contains('open')) closeWA();
+    else if(overlay.classList.contains('open')) closeModal();
+  });
   reservar.addEventListener('click', openWA);
   waClose.addEventListener('click', closeWA);
   waOverlay.addEventListener('click', function(e){ if(e.target===waOverlay) closeWA(); });
