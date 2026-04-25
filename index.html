@@ -141,9 +141,9 @@ nav a:hover::after{width:100%;}
 .mobile-close{position:absolute;top:24px;right:28px;font-size:1.8rem;cursor:pointer;background:none;border:none;color:var(--text);}
 
 /* ── HERO v2 — MANOS SCROLL ── */
-/* Zona de scroll: 350vh — manos empiezan a las 30vh y completan en 280vh de scroll */
+/* Zona de scroll: hero sticky mientras las manos entran */
 .hero-scroll-zone{
-  height:315vh;
+  height:220vh;
   position:relative;
 }
 .hero{
@@ -306,10 +306,11 @@ nav a:hover::after{width:100%;}
   transform:translateX(-50%);
   z-index:15;
   display:flex;flex-direction:column;align-items:center;gap:6px;
-  color:var(--text-soft);font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--text-soft);font-size:0.7rem;text-transform:uppercase;
   animation:fadeUp 0.9s 1s both;
   white-space:nowrap;
 }
+.scroll-text{letter-spacing:0.12em;padding-left:0.12em;}
 .scroll-line{width:1px;height:32px;background:linear-gradient(to bottom,var(--pink-main),transparent);animation:scrollPulse 2.2s ease-in-out infinite;}
 @keyframes scrollPulse{0%,100%{opacity:0.3;transform:scaleY(1);}50%{opacity:1;transform:scaleY(1.1);}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
@@ -770,13 +771,12 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   <!-- ACCIONES — z-index: 15 -->
   <div class="hero-actions-wrap">
     <a href="#servicios" class="btn-primary">Reservar mi cita</a>
-    <a href="#servicios" class="btn-ghost">Ver servicios</a>
   </div>
 
   <!-- SCROLL INDICATOR -->
   <div class="hero-scroll">
     <div class="scroll-line"></div>
-    Scroll
+    <span class="scroll-text">Scroll</span>
   </div>
 </section>
 </div><!-- /hero-scroll-zone -->
