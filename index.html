@@ -579,6 +579,9 @@ footer{
   display:flex;flex-direction:row;justify-content:space-between;align-items:center;gap:12px;
 }
 .chip:hover{background:var(--pink-bg);border-color:var(--pink-main);}
+.chip:active{transform:scale(0.97);transition:transform 0.1s;}
+@keyframes chipPress{0%{transform:scale(1);}45%{transform:scale(0.96);}100%{transform:scale(1);}}
+.chip.pressed{animation:chipPress 0.32s ease;}
 .chip-left{display:flex;flex-direction:column;gap:2px;}
 .chip-name{font-size:0.82rem;font-weight:500;color:var(--text);}
 .chip-meta{font-size:0.68rem;color:var(--text-soft);}
@@ -650,7 +653,8 @@ footer{
   transition:border-color 0.2s,background 0.2s,transform 0.15s;
 }
 .nail-art-card:hover{border-color:var(--pink-main);background:var(--pink-bg);}
-.nail-art-card.selected{border-color:var(--pink-deep);background:var(--pink-bg);transform:scale(1.02);}
+.nail-art-card.selected{border-color:var(--pink-deep);background:var(--pink-bg);transform:scale(1.02);animation:nailBounce 0.4s ease;}
+@keyframes nailBounce{0%{transform:scale(1);}45%{transform:scale(1.07);}100%{transform:scale(1.02);}}
 .nail-art-card-name{font-size:0.8rem;font-weight:600;color:var(--text);display:block;margin-bottom:2px;}
 .nail-art-card-desc{font-size:0.7rem;color:var(--text-soft);display:block;margin-bottom:3px;}
 .nail-art-card-meta{font-size:0.66rem;color:var(--pink-accent);font-weight:500;display:block;}
@@ -1229,13 +1233,32 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     return h + 'h ' + m + 'min';
   }
 
+  var lastShownPrice = null;
+  function tweenPrice(from, to, prefix, suffix){
+    var start = performance.now(), dur = 380;
+    if(typeof from !== 'number' || from === to){
+      svcTotal.textContent = prefix + to + suffix;
+      return;
+    }
+    function step(now){
+      var t = Math.min((now - start) / dur, 1);
+      var e = 1 - Math.pow(1 - t, 3);
+      var v = Math.round(from + (to - from) * e);
+      svcTotal.textContent = prefix + v + suffix;
+      if(t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
   function updateTotal() {
     var art = NAIL_ART.filter(function(a){ return a.id === selectedNailId; })[0];
     if(!art) return;
     var precio = currentPrecioBase + art.precioExtra;
     var dur    = currentDurMin + art.minExtra;
-    var pStr   = art.precioExtra > 0 ? 'Desde ' + precio + '€' : precio + '€';
-    svcTotal.textContent = pStr + ' · ' + formatDur(dur);
+    var prefix = art.precioExtra > 0 ? 'Desde ' : '';
+    var suffix = '€ · ' + formatDur(dur);
+    tweenPrice(lastShownPrice, precio, prefix, suffix);
+    lastShownPrice = precio;
     svcTotal.classList.remove('bump');
     void svcTotal.offsetWidth;
     svcTotal.classList.add('bump');
@@ -1270,6 +1293,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     var precio        = chip.dataset.precio   || '';
     currentPrecioBase = parseInt((chip.dataset.precioBase || precio).replace(/[^\d]/g,'')) || 0;
     currentDurMin     = parseDurMin(duracion);
+    lastShownPrice    = null;
     selectedNailId    = 'natural';
 
     svcName.textContent  = currentServicio;
@@ -1308,7 +1332,13 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
 
   document.addEventListener('click', function(e){
     var chip = e.target.closest('.chip');
-    if(chip){ openModal(chip); return; }
+    if(chip){
+      chip.classList.remove('pressed');
+      void chip.offsetWidth;
+      chip.classList.add('pressed');
+      openModal(chip);
+      return;
+    }
   });
 
   closeBtn.addEventListener('click', closeModal);
