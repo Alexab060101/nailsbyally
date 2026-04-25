@@ -615,7 +615,7 @@ footer{
   display:flex;align-items:center;justify-content:center;
   position:relative;overflow:hidden;border-radius:24px 24px 0 0;
 }
-.svc-photo img{width:100%;height:100%;object-fit:cover;display:none;position:absolute;inset:0;}
+.svc-photo img{width:100%;height:100%;object-fit:cover;object-position:center 35%;display:none;position:absolute;inset:0;transition:opacity 0.25s;}
 .svc-photo-ph{font-size:0.75rem;color:var(--pink-accent);opacity:0.55;letter-spacing:0.05em;}
 .svc-body{padding:22px 24px 24px;}
 .svc-name{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:600;color:var(--text);margin-bottom:10px;line-height:1.2;}
@@ -1200,10 +1200,10 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
 // SERVICIOS — MODAL + NAIL ART + WHATSAPP
 (function(){
   var NAIL_ART = [
-    { id:'natural', nombre:'Natural nude',   desc:'incluido',         tiempo:'+0 min',  precioExtra:0, minExtra:0  },
-    { id:'art1',    nombre:'Nail Art 1',     desc:'diseño sutil',     tiempo:'+15 min', precioExtra:7, minExtra:15 },
-    { id:'art2',    nombre:'Nail Art 2',     desc:'diseño medio',     tiempo:'+30 min', precioExtra:7, minExtra:30 },
-    { id:'art3',    nombre:'Nail Art 3',     desc:'diseño elaborado', tiempo:'+1h',     precioExtra:7, minExtra:60 },
+    { id:'natural', nombre:'Natural nude',  desc:'incluido',         tiempo:'+0 min',  precioExtra:0,  minExtra:0,  foto:'assets/hands/nude.png'      },
+    { id:'art1',    nombre:'Nail Art 1',    desc:'diseño sutil',     tiempo:'+15 min', precioExtra:7,  minExtra:15, foto:'assets/hands/sutil.png'     },
+    { id:'art2',    nombre:'Nail Art 2',    desc:'diseño medio',     tiempo:'+30 min', precioExtra:12, minExtra:30, foto:'assets/hands/medio.png'     },
+    { id:'art3',    nombre:'Nail Art 3',    desc:'diseño elaborado', tiempo:'+1h',     precioExtra:15, minExtra:60, foto:'assets/hands/elaborado.png' },
   ];
 
   var overlay    = document.getElementById('svcOverlay');
@@ -1244,6 +1244,19 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   }
 
   var lastShownPrice = null;
+
+  function swapPhoto(src){
+    if(svcImg.src.indexOf(src) !== -1) return;
+    svcImg.style.opacity = '0';
+    setTimeout(function(){
+      svcImg.src = src;
+      svcImg.onload = function(){
+        svcImg.style.display = 'block';
+        svcPh.style.display  = 'none';
+        svcImg.style.opacity = '1';
+      };
+    }, 120);
+  }
   function tweenPrice(from, to, prefix, suffix){
     var start = performance.now(), dur = 380;
     if(typeof from !== 'number' || from === to){
@@ -1290,6 +1303,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
         document.querySelectorAll('.nail-art-card').forEach(function(c){ c.classList.remove('selected'); });
         btn.classList.add('selected');
         selectedNailId = art.id;
+        if(art.foto) swapPhoto(art.foto);
         updateTotal();
       });
       nailCards.appendChild(btn);
@@ -1311,14 +1325,22 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     svcPrice.textContent = precio;
     svcDesc.textContent  = chip.dataset.desc || '';
 
-    svcImg.src = 'assets/servicios/' + (chip.dataset.foto || '') + '.jpg';
-    svcImg.style.display = 'none';
-    svcPh.style.display  = 'flex';
-    svcImg.onload = function(){ svcImg.style.display='block'; svcPh.style.display='none'; };
-
     var esExt = chip.dataset.extension === 'true';
     nailSel.style.display = esExt ? 'block' : 'none';
-    if(esExt) renderNailArt();
+
+    if(esExt){
+      svcImg.style.opacity = '1';
+      svcImg.src = NAIL_ART[0].foto;
+      svcImg.style.display = 'none';
+      svcPh.style.display  = 'flex';
+      svcImg.onload = function(){ svcImg.style.display='block'; svcPh.style.display='none'; };
+      renderNailArt();
+    } else {
+      svcImg.src = 'assets/servicios/' + (chip.dataset.foto || '') + '.jpg';
+      svcImg.style.display = 'none';
+      svcPh.style.display  = 'flex';
+      svcImg.onload = function(){ svcImg.style.display='block'; svcPh.style.display='none'; };
+    }
 
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden', 'false');
