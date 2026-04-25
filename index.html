@@ -606,16 +606,17 @@ footer{
   z-index:10;color:var(--text);line-height:1;
 }
 .svc-photo{
-  height:200px;background:var(--pink-bg);
+  height:120px;
+  background:linear-gradient(135deg,var(--pink-bg),var(--pink-light));
   display:flex;align-items:center;justify-content:center;
   position:relative;overflow:hidden;border-radius:24px 24px 0 0;
 }
 .svc-photo img{width:100%;height:100%;object-fit:cover;display:none;position:absolute;inset:0;}
-.svc-photo-ph{font-size:0.88rem;color:var(--text-soft);}
-.svc-body{padding:24px;}
-.svc-name{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:600;color:var(--text);margin-bottom:12px;}
-.svc-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
-.svc-desc{font-size:0.85rem;color:var(--text-mid);line-height:1.7;margin-bottom:24px;}
+.svc-photo-ph{font-size:0.75rem;color:var(--pink-accent);opacity:0.55;letter-spacing:0.05em;}
+.svc-body{padding:22px 24px 24px;}
+.svc-name{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:600;color:var(--text);margin-bottom:10px;line-height:1.2;}
+.svc-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.svc-desc{font-size:0.82rem;color:var(--text-mid);line-height:1.6;margin-bottom:18px;}
 .svc-reservar{width:100%;text-align:center;display:block;margin-bottom:10px;}
 .svc-cerrar-btn{width:100%;text-align:center;display:block;}
 /* MINI POP-UP WHATSAPP */
@@ -640,24 +641,29 @@ footer{
 .wa-send{width:100%;text-align:center;display:block;margin-bottom:10px;}
 .wa-direct{width:100%;text-align:center;display:block;}
 /* NAIL ART SELECTOR */
-.nail-art-selector{display:none;margin-bottom:20px;}
-.nail-art-title{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:600;color:var(--text);margin-bottom:12px;}
-.nail-art-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.nail-art-selector{display:none;margin-bottom:18px;}
+.nail-art-title{font-family:'Playfair Display',serif;font-size:0.92rem;font-weight:600;color:var(--text);margin-bottom:10px;}
+.nail-art-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
 .nail-art-card{
-  border:1.5px solid var(--gray-200);border-radius:12px;padding:12px;
+  border:1.5px solid var(--gray-200);border-radius:12px;padding:11px 10px;
   cursor:pointer;background:var(--white);text-align:left;width:100%;
-  transition:border-color 0.15s,background 0.15s;
+  transition:border-color 0.2s,background 0.2s,transform 0.15s;
 }
 .nail-art-card:hover{border-color:var(--pink-main);background:var(--pink-bg);}
-.nail-art-card.selected{border-color:var(--pink-deep);background:var(--pink-bg);}
-.nail-art-card-name{font-size:0.82rem;font-weight:600;color:var(--text);display:block;margin-bottom:2px;}
-.nail-art-card-desc{font-size:0.72rem;color:var(--text-soft);display:block;margin-bottom:4px;}
-.nail-art-card-meta{font-size:0.68rem;color:var(--pink-accent);font-weight:500;display:block;}
+.nail-art-card.selected{border-color:var(--pink-deep);background:var(--pink-bg);transform:scale(1.02);}
+.nail-art-card-name{font-size:0.8rem;font-weight:600;color:var(--text);display:block;margin-bottom:2px;}
+.nail-art-card-desc{font-size:0.7rem;color:var(--text-soft);display:block;margin-bottom:3px;}
+.nail-art-card-meta{font-size:0.66rem;color:var(--pink-accent);font-weight:500;display:block;}
 .svc-total{
-  background:var(--pink-bg);border-radius:12px;padding:10px 14px;
-  font-size:0.88rem;font-weight:600;color:var(--pink-accent);
-  text-align:center;
+  background:linear-gradient(135deg,var(--pink-deep),var(--pink-accent));
+  color:#fff;border-radius:14px;padding:14px 18px;
+  font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600;
+  text-align:center;letter-spacing:0.01em;
+  box-shadow:0 6px 18px rgba(232,132,154,0.28);
+  transition:transform 0.2s;
 }
+.svc-total.bump{animation:totalBump 0.35s ease;}
+@keyframes totalBump{0%{transform:scale(1);}40%{transform:scale(1.04);}100%{transform:scale(1);}}
 @media(max-width:768px){
   .chip{width:100%;border-radius:16px;padding:12px 16px;}
   .chip-reservar::after{content:'→';font-size:0.9rem;}
@@ -993,12 +999,12 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
 </footer>
 
 <!-- MODAL SERVICIO -->
-<div class="svc-overlay" id="svcOverlay">
+<div class="svc-overlay" id="svcOverlay" role="dialog" aria-modal="true" aria-labelledby="svcName" aria-hidden="true">
   <div class="svc-modal" id="svcModal">
-    <button class="svc-close" id="svcClose">&times;</button>
+    <button class="svc-close" id="svcClose" aria-label="Cerrar">&times;</button>
     <div class="svc-photo" id="svcPhoto">
       <img id="svcImg" src="" alt="" loading="lazy">
-      <div class="svc-photo-ph" id="svcPhotoPh">📸 Foto próximamente</div>
+      <div class="svc-photo-ph" id="svcPhotoPh">Nails By Ally</div>
     </div>
     <div class="svc-body">
       <h3 class="svc-name" id="svcName"></h3>
@@ -1006,13 +1012,13 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
         <span class="nivel-badge time" id="svcDur"></span>
         <span class="nivel-badge price" id="svcPrice"></span>
       </div>
-      <p class="svc-desc" id="svcDesc"></p>
-      <!-- SELECTOR NAIL ART — solo extensiones -->
+      <!-- SELECTOR NAIL ART — solo extensiones, arriba de descripción -->
       <div class="nail-art-selector" id="nailArtSelector">
         <h4 class="nail-art-title">Elige tu diseño:</h4>
         <div class="nail-art-cards" id="nailArtCards"></div>
         <div class="svc-total" id="svcTotal"></div>
       </div>
+      <p class="svc-desc" id="svcDesc"></p>
       <button class="btn-primary svc-reservar" id="svcReservar">Reservar este servicio</button>
       <button class="btn-ghost svc-cerrar-btn" id="svcCerrarBtn">Cerrar</button>
     </div>
@@ -1230,6 +1236,9 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     var dur    = currentDurMin + art.minExtra;
     var pStr   = art.precioExtra > 0 ? 'Desde ' + precio + '€' : precio + '€';
     svcTotal.textContent = pStr + ' · ' + formatDur(dur);
+    svcTotal.classList.remove('bump');
+    void svcTotal.offsetWidth;
+    svcTotal.classList.add('bump');
   }
 
   function renderNailArt() {
@@ -1278,11 +1287,13 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     if(esExt) renderNailArt();
 
     overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   }
 
   function closeModal() {
     overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   }
 
