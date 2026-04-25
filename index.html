@@ -687,7 +687,7 @@ footer{
   .nail-art-cards{grid-template-columns:1fr 1fr;}
 }
 </style>
-<!-- Meta Pixel Code -->
+<!-- Meta Pixel + Conversions API (deduplicated por event_id) -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -699,6 +699,40 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '1234944605106026');
 fbq('track', 'PageView');
+
+// === Helpers para deduplicación pixel + CAPI ===
+function _getCookie(n){
+  var m = document.cookie.match('(?:^|;)\\s*' + n + '=([^;]+)');
+  return m ? decodeURIComponent(m[1]) : undefined;
+}
+function _genEventId(){
+  if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return 'eid-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+}
+function metaTrack(eventName, customData){
+  var eid = _genEventId();
+  var fbp = _getCookie('_fbp');
+  var fbc = _getCookie('_fbc');
+  // 1. Pixel del navegador con eventID (clave para dedup)
+  try { fbq('track', eventName, customData || {}, { eventID: eid }); } catch(e){}
+  // 2. CAPI server-side en paralelo
+  try {
+    fetch('/api/meta-conversion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_name: eventName,
+        event_id: eid,
+        event_source_url: window.location.href,
+        fbp: fbp,
+        fbc: fbc,
+        custom_data: customData || {}
+      }),
+      keepalive: true
+    });
+  } catch(e){}
+}
+window.metaTrack = metaTrack;
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
@@ -1435,6 +1469,44 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     var txt  = comentario ? base + '%20' + encodeURIComponent(comentario) : base;
     window.open('https://wa.me/34611962056?text=' + txt, '_blank');
   });
+})();
+
+// META EVENTS — triggers (dispara pixel + CAPI con dedup)
+(function(){
+  if (typeof metaTrack !== 'function') return;
+
+  // ViewContent al cargar la página
+  function fireViewContent(){
+    metaTrack('ViewContent', { content_category: 'home', content_name: 'nailsbyally home' });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fireViewContent);
+  else fireViewContent();
+
+  // Click delegation: Schedule (.chip) y Contact (CTAs)
+  var contactSelectors = [
+    'header .nav-cta',
+    '.mobile-menu a[href="#servicios"]',
+    '.hero-actions-wrap .btn-primary',
+    '.cta-section .btn-primary'
+  ];
+  document.addEventListener('click', function(e){
+    // Schedule: chip de servicio
+    var chip = e.target.closest('.chip');
+    if (chip) {
+      metaTrack('Schedule', {
+        content_name: chip.dataset.servicio || '',
+        content_category: chip.dataset.extension === 'true' ? 'extension' : 'servicio'
+      });
+      return;
+    }
+    // Contact: CTAs principales
+    for (var i = 0; i < contactSelectors.length; i++) {
+      if (e.target.closest(contactSelectors[i])) {
+        metaTrack('Contact', { source: contactSelectors[i] });
+        return;
+      }
+    }
+  }, true);
 })();
 
 async function guardarEnAirtable(nombre, telefono, servicio, comentario) {
