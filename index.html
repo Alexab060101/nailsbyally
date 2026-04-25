@@ -1250,11 +1250,9 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     svcImg.style.opacity = '0';
     setTimeout(function(){
       svcImg.src = src;
-      svcImg.onload = function(){
-        svcImg.style.display = 'block';
-        svcPh.style.display  = 'none';
-        svcImg.style.opacity = '1';
-      };
+      svcImg.style.display = 'block';
+      svcPh.style.display  = 'none';
+      svcImg.style.opacity = '1';
     }, 120);
   }
   function tweenPrice(from, to, prefix, suffix){
@@ -1328,15 +1326,17 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     var esExt = chip.dataset.extension === 'true';
     nailSel.style.display = esExt ? 'block' : 'none';
 
+    svcImg.onerror = function(){ svcImg.style.display='none'; svcPh.style.display='flex'; };
+
     if(esExt){
-      svcImg.style.opacity = '1';
       svcImg.src = NAIL_ART[0].foto;
-      svcImg.style.display = 'none';
-      svcPh.style.display  = 'flex';
-      svcImg.onload = function(){ svcImg.style.display='block'; svcPh.style.display='none'; };
+      svcImg.style.opacity = '1';
+      svcImg.style.display = 'block';
+      svcPh.style.display  = 'none';
       renderNailArt();
     } else {
       svcImg.src = 'assets/servicios/' + (chip.dataset.foto || '') + '.jpg';
+      svcImg.style.opacity = '1';
       svcImg.style.display = 'none';
       svcPh.style.display  = 'flex';
       svcImg.onload = function(){ svcImg.style.display='block'; svcPh.style.display='none'; };
