@@ -1,0 +1,24 @@
+# Variables de entorno (NUNCA commitear)
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.production.local
+
+# Dependencias
+node_modules/
+
+# Vercel
+.vercel/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
