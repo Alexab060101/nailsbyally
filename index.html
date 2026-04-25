@@ -1065,6 +1065,40 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   });
 })();
 
+// CLEAN URL — siempre dominio raíz, sin #hash ni ?query
+(function(){
+  function cleanUrl(){
+    if(window.location.hash || window.location.search){
+      history.replaceState(null, '', window.location.pathname);
+    }
+  }
+  // Intercepta clicks en anchors internos: scroll suave + limpia URL
+  document.addEventListener('click', function(e){
+    var link = e.target.closest('a[href^="#"]');
+    if(!link) return;
+    var hash = link.getAttribute('href');
+    if(!hash || hash === '#') return;
+    var target = document.querySelector(hash);
+    if(!target) return;
+    e.preventDefault();
+    target.scrollIntoView({behavior:'smooth', block:'start'});
+    setTimeout(cleanUrl, 600);
+  }, true);
+  // Si entran con hash directo (ej. /#servicios), scrollea y limpia
+  if(window.location.hash){
+    var h = window.location.hash;
+    setTimeout(function(){
+      var t = document.querySelector(h);
+      if(t) t.scrollIntoView({behavior:'smooth', block:'start'});
+      setTimeout(cleanUrl, 600);
+    }, 80);
+  } else {
+    cleanUrl();
+  }
+  // Limpia tras cualquier hashchange
+  window.addEventListener('hashchange', function(){ setTimeout(cleanUrl, 50); });
+})();
+
 // HEADER SCROLL
 (function(){
   var h=document.getElementById('main-header');
