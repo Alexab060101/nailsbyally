@@ -129,13 +129,13 @@ header{
 }
 .nivel-card:hover{transform:translateY(-4px);border-color:var(--pink-main);box-shadow:0 12px 40px rgba(244,167,190,0.2);}
 .nivel-card.selected{border-color:var(--pink-deep);box-shadow:0 8px 32px rgba(232,132,154,0.3);}
-.nivel-photo{height:140px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;position:relative;}
-.nivel-tag{position:absolute;top:10px;left:10px;background:rgba(255,255,255,0.9);backdrop-filter:blur(8px);border-radius:100px;padding:4px 12px;font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);}
-.nivel-body{padding:16px 16px 18px;}
-.nivel-name{font-family:'Playfair Display',serif;font-size:0.98rem;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.25;}
-.nivel-desc{font-size:0.74rem;color:var(--text-mid);line-height:1.5;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.nivel-meta{display:flex;gap:6px;flex-wrap:wrap;}
-.nbadge{padding:4px 10px;border-radius:100px;font-size:0.68rem;font-weight:500;}
+.nivel-photo{height:104px;display:flex;align-items:center;justify-content:center;font-size:1.9rem;position:relative;}
+.nivel-tag{position:absolute;top:8px;left:8px;background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-radius:100px;padding:3px 9px;font-size:0.58rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mid);}
+.nivel-body{padding:12px 14px 14px;}
+.nivel-name{font-family:'Playfair Display',serif;font-size:0.94rem;font-weight:600;color:var(--text);margin-bottom:5px;line-height:1.2;}
+.nivel-desc{font-size:0.72rem;color:var(--text-mid);line-height:1.45;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.nivel-meta{display:flex;gap:5px;flex-wrap:wrap;}
+.nbadge{padding:3px 9px;border-radius:100px;font-size:0.66rem;font-weight:500;}
 .nbadge.time{background:var(--green-bg);color:var(--green-deep);}
 .nbadge.price{background:var(--pink-bg);color:var(--pink-accent);}
 .check-mark{position:absolute;top:10px;right:10px;width:24px;height:24px;border-radius:50%;background:var(--pink-deep);color:#fff;display:none;align-items:center;justify-content:center;font-size:0.7rem;}
@@ -210,7 +210,10 @@ header{
   font-family:'Playfair Display',serif;
   font-size:1.2rem;font-weight:700;
   color:var(--pink-accent);line-height:1.1;
+  transition:transform 0.2s;
 }
+.sticky-total.bump{animation:totalBump 0.35s ease;}
+@keyframes totalBump{0%{transform:scale(1);}40%{transform:scale(1.06);}100%{transform:scale(1);}}
 .sticky-detail{
   font-size:0.72rem;color:var(--text-soft);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
@@ -322,9 +325,12 @@ header{
   .booking-page{padding:28px 16px 120px;}
   .booking-title{margin-bottom:28px;}
   .progress-wrap{margin-bottom:28px;}
-  .niveles-grid{grid-template-columns:1fr 1fr;gap:12px;}
-  .nivel-photo{height:120px;font-size:2rem;}
-  .nivel-body{padding:14px;}
+  .niveles-grid{grid-template-columns:1fr 1fr;gap:10px;}
+  .nivel-photo{height:78px;font-size:1.55rem;}
+  .nivel-body{padding:10px 12px 12px;}
+  .nivel-name{font-size:0.85rem;margin-bottom:4px;}
+  .nivel-desc{font-size:0.68rem;line-height:1.4;margin-bottom:8px;-webkit-line-clamp:1;}
+  .nbadge{padding:2px 7px;font-size:0.6rem;}
   .nail-art-booking-cards{grid-template-columns:1fr 1fr;}
   .slots-grid{grid-template-columns:repeat(3,1fr);}
   .booking-section{margin-bottom:36px;}
@@ -735,7 +741,13 @@ function updateSticky() {
     return;
   }
 
-  total.textContent = booking.nivelPrecio + ' · ' + booking.nivelDuracion;
+  var nuevoTotal = booking.nivelPrecio + ' · ' + booking.nivelDuracion;
+  if(total.textContent !== nuevoTotal){
+    total.textContent = nuevoTotal;
+    total.classList.remove('bump');
+    void total.offsetWidth;
+    total.classList.add('bump');
+  }
   var pieces = [booking.baseNombre];
   if(booking.nailArtId !== 'natural'){
     var art = NAIL_ART.filter(function(a){return a.id === booking.nailArtId;})[0];
