@@ -678,63 +678,6 @@ footer{
   .svc-photo{height:160px;}
 }
 
-/* SQUARE BOOKING MODAL */
-.sq-overlay{
-  display:none;position:fixed;inset:0;
-  background:rgba(44,44,44,0.6);z-index:700;
-  align-items:center;justify-content:center;padding:0;
-  animation:fadeIn 0.25s ease;
-}
-.sq-overlay.open{display:flex;}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-.sq-modal{
-  background:var(--white);
-  width:100%;max-width:560px;height:90vh;max-height:780px;
-  border-radius:24px;overflow:hidden;
-  display:flex;flex-direction:column;
-  box-shadow:0 30px 80px rgba(0,0,0,0.35);
-  animation:sqSlide 0.32s cubic-bezier(0.4,0,0.2,1);
-}
-@keyframes sqSlide{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-.sq-header{
-  background:linear-gradient(135deg,var(--pink-deep),var(--pink-accent));
-  color:#fff;padding:14px 20px;
-  display:flex;align-items:center;justify-content:space-between;gap:10px;
-}
-.sq-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;letter-spacing:0.02em;}
-.sq-close{
-  background:rgba(255,255,255,0.22);border:none;
-  width:32px;height:32px;border-radius:50%;
-  color:#fff;font-size:1.4rem;cursor:pointer;line-height:1;
-  display:flex;align-items:center;justify-content:center;
-  transition:background 0.2s;flex-shrink:0;
-}
-.sq-close:hover{background:rgba(255,255,255,0.36);}
-.sq-frame-wrap{flex:1;position:relative;background:#fff;}
-.sq-frame{width:100%;height:100%;border:none;background:#fff;}
-.sq-fallback{
-  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
-  font-size:0.7rem;color:var(--text-soft);
-  background:rgba(255,255,255,0.92);padding:6px 14px;border-radius:100px;
-  text-decoration:none;
-  border:1px solid var(--gray-200);
-  transition:color 0.2s,border-color 0.2s;
-}
-.sq-fallback:hover{color:var(--pink-deep);border-color:var(--pink-main);}
-@media(max-width:768px){
-  .sq-modal{max-width:100%;height:100vh;max-height:none;border-radius:0;}
-}
-
-/* WhatsApp como secundario en modal de servicio */
-.svc-wa-link{
-  display:block;text-align:center;
-  font-size:0.74rem;color:var(--text-soft);
-  text-decoration:none;margin-top:8px;
-  transition:color 0.2s;
-}
-.svc-wa-link:hover{color:var(--pink-deep);}
-.svc-wa-link em{font-style:normal;color:var(--pink-deep);text-decoration:underline;}
-
 /* PREFERS-REDUCED-MOTION */
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important;}
@@ -891,23 +834,23 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
           <h3 class="nivel-group-title">Servicios</h3>
         </div>
         <div class="chips-wrap">
-          <button class="chip" data-square-id="CTAAKR6JMZSY4KNKGHDKEKQS" data-servicio="Retiro Profesional" data-duracion="30 min" data-precio="20€" data-foto="retiro-profesional" data-desc="Retirada segura del producto para proteger la uña natural, minimizando daño y preservando su salud.">
+          <button class="chip" data-servicio="Retiro Profesional" data-duracion="30 min" data-precio="20€" data-foto="retiro-profesional" data-desc="Retirada segura del producto para proteger la uña natural, minimizando daño y preservando su salud.">
             <span class="chip-left"><span class="chip-name">Retiro Profesional</span><span class="chip-meta">30 min · 20€</span></span>
             <span class="chip-reservar"></span>
           </button>
-          <button class="chip" data-square-id="3AIRAVBK75EP52SI7OJI6ITL" data-servicio="Manicura Express" data-duracion="30 min" data-precio="25€" data-foto="manicura-express" data-desc="Servicio rápido de preparación básica y aplicación de un solo color. No incluye trabajo de cutícula ni nivelación. Sin garantía.">
+          <button class="chip" data-servicio="Manicura Express" data-duracion="30 min" data-precio="25€" data-foto="manicura-express" data-desc="Servicio rápido de preparación básica y aplicación de un solo color. No incluye trabajo de cutícula ni nivelación. Sin garantía.">
             <span class="chip-left"><span class="chip-name">Manicura Express</span><span class="chip-meta">30 min · 25€</span></span>
             <span class="chip-reservar"></span>
           </button>
-          <button class="chip" data-square-id="JQXTCGFLBS7NIEPYSSHUNEZY" data-servicio="Manicura de Precisión con Color" data-duracion="1h 30" data-precio="35€" data-foto="manicura-precision" data-desc="Preparación profunda, trabajo detallado de cutícula, nivelación y aplicación de color semipermanente.">
+          <button class="chip" data-servicio="Manicura de Precisión con Color" data-duracion="1h 30" data-precio="35€" data-foto="manicura-precision" data-desc="Preparación profunda, trabajo detallado de cutícula, nivelación y aplicación de color semipermanente.">
             <span class="chip-left"><span class="chip-name">Manicura de Precisión con Color</span><span class="chip-meta">1h 30 · 35€</span></span>
             <span class="chip-reservar"></span>
           </button>
-          <button class="chip" data-square-id="NMCCNB2LYNSP5JF72AL4LWFG" data-servicio="Pedicura Semipermanente" data-duracion="1h" data-precio="40€" data-foto="pedicura-semipermanente" data-desc="Preparación de uñas, cuidado básico y color semipermanente para un acabado limpio y duradero.">
+          <button class="chip" data-servicio="Pedicura Semipermanente" data-duracion="1h" data-precio="40€" data-foto="pedicura-semipermanente" data-desc="Preparación de uñas, cuidado básico y color semipermanente para un acabado limpio y duradero.">
             <span class="chip-left"><span class="chip-name">Pedicura Semipermanente</span><span class="chip-meta">1h · 40€</span></span>
             <span class="chip-reservar"></span>
           </button>
-          <button class="chip" data-square-id="LW3QQWMPQ2CUCV2WDJ7OM7HG" data-servicio="Relleno 3 semanas" data-duracion="1h 30" data-precio="30€" data-foto="relleno-3-semanas" data-desc="Mantenimiento y relleno de extensiones cada 3 semanas para mantener el resultado perfecto.">
+          <button class="chip" data-servicio="Relleno 3 semanas" data-duracion="1h 30" data-precio="30€" data-foto="relleno-3-semanas" data-desc="Mantenimiento y relleno de extensiones cada 3 semanas para mantener el resultado perfecto.">
             <span class="chip-left"><span class="chip-name">Relleno 3 semanas</span><span class="chip-meta">1h 30 · 30€</span></span>
             <span class="chip-reservar"></span>
           </button>
@@ -922,15 +865,15 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
           <h3 class="nivel-group-title">Extensiones</h3>
         </div>
         <div class="chips-wrap">
-          <button class="chip" data-square-id="Z4IGGACNHJFN7YPL2OES7YVU" data-servicio="Extensión S" data-duracion="2h" data-precio="Desde 30€" data-foto="extension-s" data-desc="Extensión de uña natural en acrílico o gel. Incluye preparación completa, cutícula, estructura y limado." data-extension="true" data-precio-base="30">
+          <button class="chip" data-servicio="Extensión S" data-duracion="2h" data-precio="Desde 30€" data-foto="extension-s" data-desc="Extensión de uña natural en acrílico o gel. Incluye preparación completa, cutícula, estructura y limado." data-extension="true" data-precio-base="30">
             <span class="chip-left"><span class="chip-name">Extensión S</span><span class="chip-meta">2h · Desde 30€</span></span>
             <span class="chip-reservar"></span>
           </button>
-          <button class="chip" data-square-id="QLUHJTXHKMIQEPHKC3JGNAP2" data-servicio="Extensión M" data-duracion="2h" data-precio="Desde 40€" data-foto="extension-m" data-desc="Extensión de uña natural en acrílico o gel. Incluye preparación completa, cutícula, estructura y limado." data-extension="true" data-precio-base="40">
+          <button class="chip" data-servicio="Extensión M" data-duracion="2h" data-precio="Desde 40€" data-foto="extension-m" data-desc="Extensión de uña natural en acrílico o gel. Incluye preparación completa, cutícula, estructura y limado." data-extension="true" data-precio-base="40">
             <span class="chip-left"><span class="chip-name">Extensión M</span><span class="chip-meta">2h · Desde 40€</span></span>
             <span class="chip-reservar"></span>
           </button>
-          <button class="chip" data-square-id="B3I3JYDL5HNRGQR7PZT7LZL4" data-servicio="Extensión L" data-duracion="2h" data-precio="Desde 45€" data-foto="extension-l" data-desc="Extensión de uña natural en acrílico o gel. Incluye preparación completa, cutícula, estructura y limado." data-extension="true" data-precio-base="45">
+          <button class="chip" data-servicio="Extensión L" data-duracion="2h" data-precio="Desde 45€" data-foto="extension-l" data-desc="Extensión de uña natural en acrílico o gel. Incluye preparación completa, cutícula, estructura y limado." data-extension="true" data-precio-base="45">
             <span class="chip-left"><span class="chip-name">Extensión L</span><span class="chip-meta">2h · Desde 45€</span></span>
             <span class="chip-reservar"></span>
           </button>
@@ -1125,22 +1068,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
       </div>
       <p class="svc-desc" id="svcDesc"></p>
       <button class="btn-primary svc-reservar" id="svcReservar">Quiero reservarlo</button>
-      <a href="#" class="svc-wa-link" id="svcWaLink">¿Prefieres preguntar antes? <em>Habla con Ally</em></a>
       <button class="btn-ghost svc-cerrar-btn" id="svcCerrarBtn">Cerrar</button>
-    </div>
-  </div>
-</div>
-
-<!-- SQUARE BOOKING MODAL -->
-<div class="sq-overlay" id="sqOverlay" role="dialog" aria-modal="true" aria-labelledby="sqTitle" aria-hidden="true">
-  <div class="sq-modal">
-    <div class="sq-header">
-      <span class="sq-title" id="sqTitle">Reservar tu cita</span>
-      <button class="sq-close" id="sqClose" aria-label="Cerrar">&times;</button>
-    </div>
-    <div class="sq-frame-wrap">
-      <iframe class="sq-frame" id="sqFrame" src="" title="Reservar cita en Square"></iframe>
-      <a href="#" class="sq-fallback" id="sqFallback" target="_blank" rel="noopener noreferrer">¿No carga? Abrir en pestaña nueva</a>
     </div>
   </div>
 </div>
@@ -1512,13 +1440,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
       chip.classList.remove('pressed');
       void chip.offsetWidth;
       chip.classList.add('pressed');
-      // Deep-link directo a Square con servicio preseleccionado (sin modal intermedio)
-      var sqId = chip.dataset.squareId;
-      var url = sqId
-        ? 'https://book.squareup.com/appointments/02ta1zehrirhfw/location/L2JE1ARPS43YT/services/' + sqId
-        : 'https://book.squareup.com/appointments/02ta1zehrirhfw/location/L2JE1ARPS43YT/services';
-      if(typeof window.openSquare === 'function') window.openSquare(url);
-      else window.open(url, '_blank', 'noopener');
+      openModal(chip);
       return;
     }
   });
@@ -1531,25 +1453,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     if(waOverlay.classList.contains('open')) closeWA();
     else if(overlay.classList.contains('open')) closeModal();
   });
-  // Reservar primario → abre Square con servicio + VARIACIÓN preseleccionados (sin re-selección)
-  reservar.addEventListener('click', function(){
-    var baseName = currentServicio;
-    var variationName = null;
-    // Si hay un nail art seleccionado, lo usamos como variación
-    var art = NAIL_ART.filter(function(a){ return a.id === selectedNailId; })[0];
-    if(art) variationName = art.nombre; // 'Natural nude', 'Nail Art 1', 'Nail Art 2', 'Nail Art 3'
-    var url = (typeof window.squareUrlFor === 'function') ? window.squareUrlFor(baseName, variationName) : null;
-    closeModal();
-    setTimeout(function(){ window.openSquare(url); }, 200);
-  });
-  // Link WhatsApp secundario
-  var waLink = document.getElementById('svcWaLink');
-  if(waLink){
-    waLink.addEventListener('click', function(e){
-      e.preventDefault();
-      openWA();
-    });
-  }
+  reservar.addEventListener('click', openWA);
   waClose.addEventListener('click', closeWA);
   waOverlay.addEventListener('click', function(e){ if(e.target===waOverlay) closeWA(); });
 
@@ -1564,92 +1468,6 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     var base = 'Hola%20Ally!%20Quiero%20reservar%20' + encodeURIComponent(servCompleto) + '.';
     var txt  = comentario ? base + '%20' + encodeURIComponent(comentario) : base;
     window.open('https://wa.me/34611962056?text=' + txt, '_blank');
-  });
-})();
-
-// SQUARE BOOKING — modal iframe + service+variation mapping (deep-link sin re-selección)
-(function(){
-  var SQ_BOOKING_BASE = 'https://book.squareup.com/appointments/02ta1zehrirhfw/location/L2JE1ARPS43YT/services';
-  // Estructura: { 'Manicura Express': { 'Estándar': 'VARIATION_ID' }, 'Extensión M': { 'Natural Nude': '...', 'Nail Art 1': '...', ... } }
-  var SQ_VARIATION_MAP = {};
-
-  // Fetch dinámico de IDs (no hardcoded)
-  fetch('/api/square-services')
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      if(!data || !data.ok || !data.services) return;
-      data.services.forEach(function(s){
-        if(!s.name || !s.variations) return;
-        SQ_VARIATION_MAP[s.name] = {};
-        s.variations.forEach(function(v){
-          if(v.name && v.variation_id) SQ_VARIATION_MAP[s.name][v.name] = v.variation_id;
-        });
-      });
-    })
-    .catch(function(){ /* silencioso, usa URL base */ });
-
-  function squareUrlFor(serviceName, variationName){
-    var svc = serviceName && SQ_VARIATION_MAP[serviceName];
-    if(!svc) return SQ_BOOKING_BASE;
-    // Match exacto case-insensitive
-    if(variationName){
-      var keys = Object.keys(svc);
-      for(var i=0; i<keys.length; i++){
-        if(keys[i].toLowerCase() === variationName.toLowerCase()){
-          return SQ_BOOKING_BASE + '/' + svc[keys[i]];
-        }
-      }
-    }
-    // Fallback: primera variación (servicios con 1 sola)
-    var firstKey = Object.keys(svc)[0];
-    return firstKey ? SQ_BOOKING_BASE + '/' + svc[firstKey] : SQ_BOOKING_BASE;
-  }
-  window.squareUrlFor = squareUrlFor;
-
-  var overlay = document.getElementById('sqOverlay');
-  var frame   = document.getElementById('sqFrame');
-  var fallback= document.getElementById('sqFallback');
-  var closeBt = document.getElementById('sqClose');
-
-  function openSquare(url){
-    var target = url || SQ_BOOKING_BASE;
-    frame.src = target;
-    fallback.href = target;
-    overlay.classList.add('open');
-    overlay.setAttribute('aria-hidden','false');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeSquare(){
-    overlay.classList.remove('open');
-    overlay.setAttribute('aria-hidden','true');
-    document.body.style.overflow = '';
-    setTimeout(function(){ frame.src = ''; }, 280);
-  }
-  window.openSquare = openSquare;
-  window.closeSquare = closeSquare;
-
-  closeBt.addEventListener('click', closeSquare);
-  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeSquare(); });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape' && overlay.classList.contains('open')) closeSquare();
-  });
-
-  // Wiring de CTAs principales (genéricos, sin servicio preseleccionado)
-  var genericSelectors = [
-    'header .nav-cta',
-    '.mobile-menu a[href="#servicios"]',
-    '.hero-actions-wrap .btn-primary',
-    '.cta-section .btn-primary'
-  ];
-  document.addEventListener('click', function(e){
-    for(var i=0; i<genericSelectors.length; i++){
-      var el = e.target.closest(genericSelectors[i]);
-      if(el){
-        e.preventDefault();
-        openSquare(SQ_BOOKING_BASE);
-        return;
-      }
-    }
   });
 })();
 

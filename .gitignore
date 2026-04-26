@@ -11,9 +11,6 @@ node_modules/
 # Vercel
 .vercel/
 
-# Output del setup de Square (contiene IDs locales)
-square-output.json
-
 # Logs
 *.log
 npm-debug.log*
