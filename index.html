@@ -1525,10 +1525,14 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     if(waOverlay.classList.contains('open')) closeWA();
     else if(overlay.classList.contains('open')) closeModal();
   });
-  // Reservar primario → abre Square con servicio preseleccionado
+  // Reservar primario → abre Square con servicio + VARIACIÓN preseleccionados (sin re-selección)
   reservar.addEventListener('click', function(){
-    var baseName = currentServicio.split(' + ')[0]; // ignora el "+ Nail Art X" para mapping
-    var url = (typeof window.squareUrlFor === 'function') ? window.squareUrlFor(baseName) : null;
+    var baseName = currentServicio;
+    var variationName = null;
+    // Si hay un nail art seleccionado, lo usamos como variación
+    var art = NAIL_ART.filter(function(a){ return a.id === selectedNailId; })[0];
+    if(art) variationName = art.nombre; // 'Natural nude', 'Nail Art 1', 'Nail Art 2', 'Nail Art 3'
+    var url = (typeof window.squareUrlFor === 'function') ? window.squareUrlFor(baseName, variationName) : null;
     closeModal();
     setTimeout(function(){ window.openSquare(url); }, 200);
   });
@@ -1557,23 +1561,42 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   });
 })();
 
-// SQUARE BOOKING — modal iframe + service mapping
+// SQUARE BOOKING — modal iframe + service+variation mapping (deep-link sin re-selección)
 (function(){
   var SQ_BOOKING_BASE = 'https://book.squareup.com/appointments/02ta1zehrirhfw/location/L2JE1ARPS43YT/services';
-  var SQ_SERVICE_MAP = {}; // { 'Manicura Express': 'item_id', ... }
+  // Estructura: { 'Manicura Express': { 'Estándar': 'VARIATION_ID' }, 'Extensión M': { 'Natural Nude': '...', 'Nail Art 1': '...', ... } }
+  var SQ_VARIATION_MAP = {};
 
   // Fetch dinámico de IDs (no hardcoded)
   fetch('/api/square-services')
     .then(function(r){ return r.json(); })
     .then(function(data){
       if(!data || !data.ok || !data.services) return;
-      data.services.forEach(function(s){ if(s.name && s.item_id) SQ_SERVICE_MAP[s.name] = s.item_id; });
+      data.services.forEach(function(s){
+        if(!s.name || !s.variations) return;
+        SQ_VARIATION_MAP[s.name] = {};
+        s.variations.forEach(function(v){
+          if(v.name && v.variation_id) SQ_VARIATION_MAP[s.name][v.name] = v.variation_id;
+        });
+      });
     })
     .catch(function(){ /* silencioso, usa URL base */ });
 
-  function squareUrlFor(serviceName){
-    var id = serviceName && SQ_SERVICE_MAP[serviceName];
-    return id ? SQ_BOOKING_BASE + '/' + id : SQ_BOOKING_BASE;
+  function squareUrlFor(serviceName, variationName){
+    var svc = serviceName && SQ_VARIATION_MAP[serviceName];
+    if(!svc) return SQ_BOOKING_BASE;
+    // Match exacto case-insensitive
+    if(variationName){
+      var keys = Object.keys(svc);
+      for(var i=0; i<keys.length; i++){
+        if(keys[i].toLowerCase() === variationName.toLowerCase()){
+          return SQ_BOOKING_BASE + '/' + svc[keys[i]];
+        }
+      }
+    }
+    // Fallback: primera variación (servicios con 1 sola)
+    var firstKey = Object.keys(svc)[0];
+    return firstKey ? SQ_BOOKING_BASE + '/' + svc[firstKey] : SQ_BOOKING_BASE;
   }
   window.squareUrlFor = squareUrlFor;
 
