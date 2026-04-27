@@ -678,6 +678,71 @@ footer{
   .svc-photo{height:160px;}
 }
 
+/* ── BOOKING STEP ── */
+.booking-step,.booking-done{display:none;padding:20px 22px 22px;animation:bkFadeIn 0.22s ease;}
+@keyframes bkFadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+.bk-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.bk-back{background:none;border:none;color:var(--pink-deep);font-size:0.8rem;font-weight:600;cursor:pointer;padding:0;font-family:'DM Sans',sans-serif;letter-spacing:0.02em;}
+.bk-back:hover{color:var(--pink-accent);}
+.bk-subtitle{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bk-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.bk-input{
+  border:1.5px solid var(--gray-200);border-radius:100px;
+  padding:9px 16px;font-size:0.8rem;font-family:'DM Sans',sans-serif;
+  color:var(--text);background:var(--white);outline:none;
+  transition:border-color 0.15s;width:100%;box-sizing:border-box;
+}
+.bk-input:focus{border-color:var(--pink-main);}
+.bk-input::placeholder{color:var(--text-soft);}
+/* Calendar */
+.bk-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.bk-cal-month{font-family:'Playfair Display',serif;font-size:0.88rem;font-weight:600;color:var(--text);}
+.bk-cal-nav{background:none;border:none;color:var(--pink-deep);font-size:1rem;cursor:pointer;padding:2px 6px;border-radius:6px;}
+.bk-cal-nav:hover{background:var(--pink-bg);}
+.bk-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:14px;}
+.bk-cal-dow{font-size:0.62rem;color:var(--text-soft);text-align:center;padding:2px 0;font-weight:600;letter-spacing:0.04em;}
+.bk-day{
+  aspect-ratio:1;border:none;background:none;border-radius:50%;
+  font-size:0.75rem;font-family:'DM Sans',sans-serif;color:var(--gray-300);
+  cursor:default;display:flex;align-items:center;justify-content:center;
+  transition:background 0.15s,color 0.15s;
+}
+.bk-day.available{color:var(--text);cursor:pointer;}
+.bk-day.available:hover{background:var(--pink-light);color:var(--pink-accent);}
+.bk-day.selected{background:var(--pink-deep);color:#fff;}
+.bk-day.today{font-weight:700;}
+.bk-day.past{color:var(--gray-200);}
+/* Slots */
+.bk-slots-label{font-size:0.7rem;font-weight:600;color:var(--text-soft);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;}
+.bk-slots-grid{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;min-height:32px;}
+.bk-slot{
+  border:1.5px solid var(--pink-light);border-radius:100px;
+  padding:5px 14px;font-size:0.75rem;font-family:'DM Sans',sans-serif;
+  color:var(--text-mid);background:var(--white);cursor:pointer;
+  transition:border-color 0.15s,background 0.15s,color 0.15s;
+}
+.bk-slot:hover{border-color:var(--pink-main);color:var(--pink-accent);}
+.bk-slot.selected{background:var(--pink-deep);border-color:var(--pink-deep);color:#fff;}
+.bk-loading{font-size:0.78rem;color:var(--text-soft);text-align:center;padding:12px 0;display:none;}
+.bk-loading.show{display:block;}
+.bk-error{font-size:0.75rem;color:#c0392b;text-align:center;padding:6px 0;display:none;}
+.bk-error.show{display:block;}
+.bk-confirm{width:100%;text-align:center;display:block;margin-top:4px;opacity:0.4;cursor:not-allowed;pointer-events:none;transition:opacity 0.2s;}
+.bk-confirm.ready{opacity:1;cursor:pointer;pointer-events:auto;}
+/* Confirmation */
+.booking-done{text-align:center;padding:32px 24px;}
+.bk-done-icon{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--pink-deep),var(--pink-accent));
+  color:#fff;font-size:1.4rem;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 14px;
+}
+.bk-done-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;color:var(--text);margin-bottom:8px;}
+.bk-done-sub{font-size:0.82rem;color:var(--text-mid);line-height:1.6;margin-bottom:20px;}
+@media(max-width:768px){
+  .bk-fields{grid-template-columns:1fr;}
+}
+
 /* PREFERS-REDUCED-MOTION */
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important;}
@@ -1070,6 +1135,37 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
       <button class="btn-primary svc-reservar" id="svcReservar">Quiero reservarlo</button>
       <button class="btn-ghost svc-cerrar-btn" id="svcCerrarBtn">Cerrar</button>
     </div>
+
+    <!-- PASO DE RESERVA -->
+    <div class="booking-step" id="bookingStep">
+      <div class="bk-header">
+        <button class="bk-back" id="bkBack">← Volver</button>
+        <span class="bk-subtitle" id="bkSubtitle"></span>
+      </div>
+      <div class="bk-fields">
+        <input class="bk-input" id="bkNombre" type="text" placeholder="Tu nombre" autocomplete="given-name" />
+        <input class="bk-input" id="bkTelefono" type="tel" placeholder="Teléfono" autocomplete="tel" />
+      </div>
+      <div class="bk-cal-header">
+        <button class="bk-cal-nav" id="bkPrevMonth" aria-label="Mes anterior">‹</button>
+        <span class="bk-cal-month" id="bkCalMonth"></span>
+        <button class="bk-cal-nav" id="bkNextMonth" aria-label="Mes siguiente">›</button>
+      </div>
+      <div class="bk-cal-grid" id="bkCalGrid"></div>
+      <div class="bk-slots-label" id="bkSlotsLabel" style="display:none">Elige una hora</div>
+      <div class="bk-slots-grid" id="bkSlotsGrid"></div>
+      <div class="bk-loading" id="bkLoading">Buscando horas disponibles…</div>
+      <div class="bk-error" id="bkError"></div>
+      <button class="btn-primary bk-confirm" id="bkConfirm">Confirmar reserva</button>
+    </div>
+
+    <!-- CONFIRMACIÓN -->
+    <div class="booking-done" id="bookingDone">
+      <div class="bk-done-icon">✓</div>
+      <h4 class="bk-done-title">¡Reserva confirmada!</h4>
+      <p class="bk-done-sub" id="bkDoneSub"></p>
+      <button class="btn-ghost" id="bkDoneClose" style="width:100%;text-align:center;">Cerrar</button>
+    </div>
   </div>
 </div>
 
@@ -1414,6 +1510,12 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
       svcImg.onload = function(){ svcImg.style.display='block'; svcPh.style.display='none'; };
     }
 
+    // Reset booking step state
+    var svcBody = document.querySelector('.svc-body');
+    svcBody.style.display = 'block';
+    document.getElementById('bookingStep').style.display = 'none';
+    document.getElementById('bookingDone').style.display = 'none';
+
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -1423,6 +1525,11 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     overlay.classList.remove('open');
     overlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    // Reset for next open
+    var svcBody = document.querySelector('.svc-body');
+    svcBody.style.display = 'block';
+    document.getElementById('bookingStep').style.display = 'none';
+    document.getElementById('bookingDone').style.display = 'none';
   }
 
   function openWA() {
@@ -1453,7 +1560,312 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     if(waOverlay.classList.contains('open')) closeWA();
     else if(overlay.classList.contains('open')) closeModal();
   });
-  reservar.addEventListener('click', openWA);
+  // ── BOOKING STEP ─────────────────────────────────────────────────────────
+  var bkStep      = document.getElementById('bookingStep');
+  var bkDone      = document.getElementById('bookingDone');
+  var bkBack      = document.getElementById('bkBack');
+  var bkSubtitle  = document.getElementById('bkSubtitle');
+  var bkNombre    = document.getElementById('bkNombre');
+  var bkTelefono  = document.getElementById('bkTelefono');
+  var bkCalMonth  = document.getElementById('bkCalMonth');
+  var bkCalGrid   = document.getElementById('bkCalGrid');
+  var bkPrevMonth = document.getElementById('bkPrevMonth');
+  var bkNextMonth = document.getElementById('bkNextMonth');
+  var bkSlotsLabel= document.getElementById('bkSlotsLabel');
+  var bkSlotsGrid = document.getElementById('bkSlotsGrid');
+  var bkLoading   = document.getElementById('bkLoading');
+  var bkError     = document.getElementById('bkError');
+  var bkConfirm   = document.getElementById('bkConfirm');
+  var bkDoneSub   = document.getElementById('bkDoneSub');
+  var bkDoneClose = document.getElementById('bkDoneClose');
+
+  var squareServices = null; // cache catalog
+  var bkState = {
+    serviceVariationId: null, serviceVariationVersion: null,
+    durationMinutes: 60, teamMemberId: null,
+    selectedDate: null, selectedStartAt: null,
+    calYear: 0, calMonth: 0,
+    availableDays: {}
+  };
+
+  function normName(s) {
+    return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,' ').trim();
+  }
+
+  function loadSquareServices(cb) {
+    if (squareServices) return cb(null, squareServices);
+    fetch('/api/square-booking?action=services')
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (d.error) return cb(d.error);
+        squareServices = d.services || [];
+        cb(null, squareServices);
+      })
+      .catch(function(e){ cb(e.message); });
+  }
+
+  function findSquareService(servicioName, services) {
+    var key = normName(servicioName);
+    return services.find(function(s){
+      return normName(s.parentName) === key || normName(s.variationName) === key ||
+             normName(s.parentName + ' ' + s.variationName) === key;
+    }) || null;
+  }
+
+  function showBkError(msg) {
+    bkError.textContent = msg;
+    bkError.classList.add('show');
+  }
+  function hideBkError() { bkError.classList.remove('show'); }
+
+  var MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  var DAYS_ES   = ['L','M','X','J','V','S','D'];
+
+  function renderCalendar() {
+    var y = bkState.calYear, m = bkState.calMonth;
+    bkCalMonth.textContent = MONTHS_ES[m] + ' ' + y;
+    bkPrevMonth.disabled = (y < new Date().getFullYear() || (y === new Date().getFullYear() && m <= new Date().getMonth()));
+
+    bkCalGrid.innerHTML = '';
+    DAYS_ES.forEach(function(d){
+      var el = document.createElement('span');
+      el.className = 'bk-cal-dow'; el.textContent = d;
+      bkCalGrid.appendChild(el);
+    });
+
+    var firstDOW = (new Date(y, m, 1).getDay() + 6) % 7; // Mon=0
+    var daysInMonth = new Date(y, m + 1, 0).getDate();
+    var today = new Date(); today.setHours(0,0,0,0);
+
+    for (var i = 0; i < firstDOW; i++) {
+      var ph = document.createElement('span'); ph.className = 'bk-day';
+      bkCalGrid.appendChild(ph);
+    }
+    for (var d = 1; d <= daysInMonth; d++) {
+      var btn = document.createElement('button');
+      btn.className = 'bk-day';
+      btn.textContent = d;
+      var thisDate = new Date(y, m, d);
+      var dateStr = y + '-' + String(m+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+      if (thisDate < today) {
+        btn.classList.add('past');
+        btn.disabled = true;
+      } else if (bkState.availableDays[dateStr]) {
+        btn.classList.add('available');
+        if (dateStr === bkState.selectedDate) btn.classList.add('selected');
+        if (thisDate.toDateString() === today.toDateString()) btn.classList.add('today');
+        (function(ds, b){ btn.addEventListener('click', function(){ selectDay(ds, b); }); })(dateStr, btn);
+      } else {
+        btn.disabled = true;
+      }
+      bkCalGrid.appendChild(btn);
+    }
+  }
+
+  function loadAvailableDays() {
+    var y = bkState.calYear, m = bkState.calMonth + 1;
+    fetch('/api/square-booking?action=days&serviceVariationId=' + bkState.serviceVariationId + '&year=' + y + '&month=' + m)
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (d.error) { showBkError('No se pudo cargar el calendario. Intenta de nuevo.'); return; }
+        bkState.availableDays = {};
+        (d.availableDays || []).forEach(function(ds){ bkState.availableDays[ds] = true; });
+        renderCalendar();
+      })
+      .catch(function(){ showBkError('Error de conexión.'); });
+  }
+
+  function selectDay(dateStr, btn) {
+    bkState.selectedDate = dateStr;
+    bkState.selectedStartAt = null;
+    bkState.teamMemberId = null;
+    document.querySelectorAll('.bk-day.selected').forEach(function(b){ b.classList.remove('selected'); });
+    btn.classList.add('selected');
+    bkSlotsGrid.innerHTML = '';
+    bkSlotsLabel.style.display = 'none';
+    bkLoading.classList.add('show');
+    hideBkError();
+    updateConfirmBtn();
+
+    fetch('/api/square-booking?action=availability&serviceVariationId=' + bkState.serviceVariationId + '&date=' + dateStr)
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        bkLoading.classList.remove('show');
+        if (d.error || !d.slots || !d.slots.length) {
+          showBkError('No hay horas disponibles para este día.');
+          return;
+        }
+        bkSlotsLabel.style.display = 'block';
+        renderSlots(d.slots);
+      })
+      .catch(function(){
+        bkLoading.classList.remove('show');
+        showBkError('Error de conexión.');
+      });
+  }
+
+  function renderSlots(slots) {
+    bkSlotsGrid.innerHTML = '';
+    slots.forEach(function(slot) {
+      var btn = document.createElement('button');
+      btn.className = 'bk-slot';
+      // Format time in Europe/Madrid
+      var dt = new Date(slot.startAt);
+      btn.textContent = dt.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Madrid' });
+      (function(s, b){
+        btn.addEventListener('click', function(){
+          document.querySelectorAll('.bk-slot.selected').forEach(function(el){ el.classList.remove('selected'); });
+          b.classList.add('selected');
+          bkState.selectedStartAt = s.startAt;
+          bkState.teamMemberId = s.teamMemberId;
+          updateConfirmBtn();
+        });
+      })(slot, btn);
+      bkSlotsGrid.appendChild(btn);
+    });
+  }
+
+  function updateConfirmBtn() {
+    var ready = !!(bkState.selectedStartAt);
+    bkConfirm.classList.toggle('ready', ready);
+  }
+
+  function openBookingStep() {
+    if (!bkState.serviceVariationId) {
+      showBkStep();
+      bkLoading.classList.add('show');
+      loadSquareServices(function(err, services) {
+        bkLoading.classList.remove('show');
+        if (err) { showBkError('Error al conectar con el sistema de reservas.'); return; }
+        var match = findSquareService(currentServicio, services);
+        if (!match) {
+          showBkError('Servicio no encontrado en el sistema. Escríbenos por WhatsApp.');
+          return;
+        }
+        bkState.serviceVariationId      = match.variationId;
+        bkState.serviceVariationVersion = match.variationVersion;
+        bkState.durationMinutes         = match.durationMinutes || currentDurMin;
+        initCalendar();
+      });
+    } else {
+      showBkStep();
+    }
+  }
+
+  function showBkStep() {
+    var svcBody = document.querySelector('.svc-body');
+    svcBody.style.display = 'none';
+    bkStep.style.display  = 'block';
+    bkDone.style.display  = 'none';
+    var precio = currentPrecioBase > 0 ? currentPrecioBase + '€' : '';
+    bkSubtitle.textContent = precio ? currentServicio + ' · ' + precio : currentServicio;
+    bkNombre.value = '';
+    bkTelefono.value = '';
+    hideBkError();
+  }
+
+  function initCalendar() {
+    var now = new Date();
+    bkState.calYear  = now.getFullYear();
+    bkState.calMonth = now.getMonth();
+    bkState.selectedDate = null;
+    bkState.selectedStartAt = null;
+    bkState.availableDays = {};
+    bkSlotsGrid.innerHTML = '';
+    bkSlotsLabel.style.display = 'none';
+    updateConfirmBtn();
+    loadAvailableDays();
+  }
+
+  bkPrevMonth.addEventListener('click', function(){
+    var now = new Date();
+    if (bkState.calYear > now.getFullYear() || bkState.calMonth > now.getMonth()) {
+      bkState.calMonth--;
+      if (bkState.calMonth < 0) { bkState.calMonth = 11; bkState.calYear--; }
+      bkState.availableDays = {};
+      bkState.selectedDate = null;
+      bkState.selectedStartAt = null;
+      bkSlotsGrid.innerHTML = '';
+      bkSlotsLabel.style.display = 'none';
+      updateConfirmBtn();
+      loadAvailableDays();
+    }
+  });
+
+  bkNextMonth.addEventListener('click', function(){
+    bkState.calMonth++;
+    if (bkState.calMonth > 11) { bkState.calMonth = 0; bkState.calYear++; }
+    bkState.availableDays = {};
+    bkState.selectedDate = null;
+    bkState.selectedStartAt = null;
+    bkSlotsGrid.innerHTML = '';
+    bkSlotsLabel.style.display = 'none';
+    updateConfirmBtn();
+    loadAvailableDays();
+  });
+
+  bkBack.addEventListener('click', function(){
+    var svcBody = document.querySelector('.svc-body');
+    svcBody.style.display = 'block';
+    bkStep.style.display  = 'none';
+    bkDone.style.display  = 'none';
+  });
+
+  bkConfirm.addEventListener('click', function(){
+    if (!bkConfirm.classList.contains('ready')) return;
+    var nombre    = bkNombre.value.trim();
+    var telefono  = bkTelefono.value.trim();
+    if (!nombre)   { bkNombre.focus(); showBkError('Introduce tu nombre.'); return; }
+    if (!telefono) { bkTelefono.focus(); showBkError('Introduce tu teléfono.'); return; }
+    hideBkError();
+    bkConfirm.textContent = 'Confirmando…';
+    bkConfirm.classList.remove('ready');
+
+    fetch('/api/square-booking', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre:                  nombre,
+        telefono:                telefono,
+        serviceVariationId:      bkState.serviceVariationId,
+        serviceVariationVersion: bkState.serviceVariationVersion,
+        teamMemberId:            bkState.teamMemberId,
+        startAt:                 bkState.selectedStartAt,
+        durationMinutes:         bkState.durationMinutes
+      })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (d.error) {
+        bkConfirm.textContent = 'Confirmar reserva';
+        bkConfirm.classList.add('ready');
+        showBkError('No se pudo crear la reserva: ' + d.error);
+        return;
+      }
+      // Guardar lead también en Airtable
+      guardarEnAirtable(nombre, telefono, currentServicio, 'Reserva confirmada Square: ' + d.bookingId);
+      // Mostrar confirmación
+      var dt = new Date(d.startAt);
+      var opts = { weekday:'long', day:'numeric', month:'long', timeZone:'Europe/Madrid' };
+      var hora = dt.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit', timeZone:'Europe/Madrid' });
+      var fecha = dt.toLocaleDateString('es-ES', opts);
+      bkDoneSub.textContent = currentServicio + ' · ' + fecha + ' a las ' + hora;
+      bkStep.style.display = 'none';
+      bkDone.style.display = 'block';
+    })
+    .catch(function(){
+      bkConfirm.textContent = 'Confirmar reserva';
+      bkConfirm.classList.add('ready');
+      showBkError('Error de conexión. Inténtalo de nuevo.');
+    });
+  });
+
+  bkDoneClose.addEventListener('click', closeModal);
+
+  reservar.addEventListener('click', function(){
+    bkState.serviceVariationId = null; // reset on each open
+    openBookingStep();
+  });
   waClose.addEventListener('click', closeWA);
   waOverlay.addEventListener('click', function(e){ if(e.target===waOverlay) closeWA(); });
 
