@@ -170,62 +170,47 @@ module.exports = async function handler(req, res) {
     }
   }
 
-  // ── POST (crear reserva) ─────────────────────────────────────────────────
+  // ── POST (solicitud de reserva → Airtable) ──────────────────────────────
   if (req.method === 'POST') {
-    const { nombre, telefono, serviceVariationId, serviceVariationVersion, teamMemberId, startAt, durationMinutes } = req.body || {};
+    const { nombre, telefono, servicioNombre, startAt } = req.body || {};
 
-    if (!nombre || !telefono || !serviceVariationId || !startAt) {
+    if (!nombre || !telefono || !startAt) {
       return res.status(400).json({ error: 'Faltan campos obligatorios' });
     }
 
-    try {
-      // Find or create customer
-      let customerId = null;
-      try {
-        const searchRes = await sq('/customers/search', 'POST', {
-          query: { filter: { phone_number: { exact: telefono } } }
-        });
-        if (searchRes.customers && searchRes.customers.length > 0) {
-          customerId = searchRes.customers[0].id;
-        }
-      } catch(_) { /* will create below */ }
+    const airtableToken = process.env.AIRTABLE_TOKEN;
+    const BASE_ID       = 'appTUc7K43I0Gcg1';
+    const TABLE_NAME    = 'Clientas';
 
-      if (!customerId) {
-        const nameParts = nombre.trim().split(' ');
-        const createRes = await sq('/customers', 'POST', {
-          given_name:   nameParts[0] || nombre,
-          family_name:  nameParts.slice(1).join(' ') || '',
-          phone_number: telefono
-        });
-        customerId = createRes.customer.id;
+    // Format date/time for the note
+    const dt    = new Date(startAt);
+    const fecha = dt.toLocaleDateString('es-ES',  { weekday:'long', day:'numeric', month:'long', year:'numeric', timeZone:'Europe/Madrid' });
+    const hora  = dt.toLocaleTimeString('es-ES',  { hour:'2-digit', minute:'2-digit', timeZone:'Europe/Madrid' });
+    const nota  = '📅 SOLICITUD DE RESERVA\nServicio: ' + (servicioNombre||'') + '\nFecha: ' + fecha + '\nHora: ' + hora + '\nTeléfono: ' + telefono;
+
+    try {
+      if (airtableToken) {
+        await fetch(
+          'https://api.airtable.com/v0/' + BASE_ID + '/' + encodeURIComponent(TABLE_NAME),
+          {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + airtableToken, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              fields: {
+                'Nombre':   nombre,
+                'Teléfono': telefono,
+                'Tipo':     'Reserva',
+                'Fuente':   'Web',
+                'Notas':    nota
+              }
+            })
+          }
+        );
       }
 
-      // Build booking segment
-      const segment = {
-        service_variation_id: serviceVariationId,
-        team_member_id:       teamMemberId || 'ANY'
-      };
-      if (serviceVariationVersion) segment.service_variation_version = Number(serviceVariationVersion);
-      if (durationMinutes)         segment.duration_minutes = Number(durationMinutes);
-
-      const bookRes = await sq('/bookings', 'POST', {
-        idempotency_key: Date.now() + '-' + Math.random().toString(36).slice(2),
-        booking: {
-          start_at:    startAt,
-          location_id: locationId,
-          customer_id: customerId,
-          customer_note: 'Reserva desde nailsbyally.es',
-          appointment_segments: [segment]
-        }
-      });
-
-      return res.status(200).json({
-        ok:        true,
-        bookingId: bookRes.booking.id,
-        startAt:   bookRes.booking.start_at
-      });
+      return res.status(200).json({ ok: true, startAt: startAt });
     } catch(e) {
-      console.error('[square-booking /create]', e.message);
+      console.error('[square-booking /post]', e.message);
       return res.status(500).json({ error: e.message });
     }
   }

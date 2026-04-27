@@ -1825,13 +1825,10 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        nombre:                  nombre,
-        telefono:                telefono,
-        serviceVariationId:      bkState.serviceVariationId,
-        serviceVariationVersion: bkState.serviceVariationVersion,
-        teamMemberId:            bkState.teamMemberId,
-        startAt:                 bkState.selectedStartAt,
-        durationMinutes:         bkState.durationMinutes
+        nombre:         nombre,
+        telefono:       telefono,
+        servicioNombre: currentServicio,
+        startAt:        bkState.selectedStartAt
       })
     })
     .then(function(r){ return r.json(); })
@@ -1839,16 +1836,12 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
       if (d.error) {
         bkConfirm.textContent = 'Confirmar reserva';
         bkConfirm.classList.add('ready');
-        showBkError('No se pudo crear la reserva: ' + d.error);
+        showBkError('No se pudo enviar la solicitud. Inténtalo de nuevo.');
         return;
       }
-      // Guardar lead también en Airtable
-      guardarEnAirtable(nombre, telefono, currentServicio, 'Reserva confirmada Square: ' + d.bookingId);
-      // Mostrar confirmación
-      var dt = new Date(d.startAt);
-      var opts = { weekday:'long', day:'numeric', month:'long', timeZone:'Europe/Madrid' };
-      var hora = dt.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit', timeZone:'Europe/Madrid' });
-      var fecha = dt.toLocaleDateString('es-ES', opts);
+      var dt    = new Date(d.startAt);
+      var fecha = dt.toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long', timeZone:'Europe/Madrid' });
+      var hora  = dt.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit', timeZone:'Europe/Madrid' });
       bkDoneSub.textContent = currentServicio + ' · ' + fecha + ' a las ' + hora;
       bkStep.style.display = 'none';
       bkDone.style.display = 'block';
