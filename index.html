@@ -1667,7 +1667,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     fetch('/api/square-booking?action=days&serviceVariationId=' + bkState.serviceVariationId + '&year=' + y + '&month=' + m)
       .then(function(r){ return r.json(); })
       .then(function(d){
-        if (d.error) { showBkError('No se pudo cargar el calendario. Intenta de nuevo.'); return; }
+        if (d.error) { showBkError('Error calendario: ' + d.error); return; }
         bkState.availableDays = {};
         (d.availableDays || []).forEach(function(ds){ bkState.availableDays[ds] = true; });
         renderCalendar();
@@ -1736,10 +1736,10 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
       bkLoading.classList.add('show');
       loadSquareServices(function(err, services) {
         bkLoading.classList.remove('show');
-        if (err) { showBkError('Error al conectar con el sistema de reservas.'); return; }
+        if (err) { showBkError('Error Square: ' + err); return; }
         var match = findSquareService(currentServicio, services);
         if (!match) {
-          showBkError('Servicio no encontrado en el sistema. Escríbenos por WhatsApp.');
+          showBkError('Servicio no encontrado: "' + currentServicio + '". ¿Coincide en Square Appointments?');
           return;
         }
         bkState.serviceVariationId      = match.variationId;
