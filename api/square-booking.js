@@ -38,6 +38,19 @@ module.exports = async function handler(req, res) {
 
   const locationId = process.env.SQUARE_LOCATION_ID;
 
+  // ── GET ?action=locations (diagnóstico) ─────────────────────────────────
+  if (req.method === 'GET' && req.query.action === 'locations') {
+    try {
+      const data = await sq('/locations');
+      const locs = (data.locations || []).map(function(l) {
+        return { id: l.id, name: l.name, status: l.status };
+      });
+      return res.status(200).json({ locations: locs });
+    } catch(e) {
+      return res.status(500).json({ error: e.message });
+    }
+  }
+
   // ── GET ?action=services ─────────────────────────────────────────────────
   if (req.method === 'GET' && req.query.action === 'services') {
     try {
