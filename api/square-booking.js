@@ -6,7 +6,7 @@ async function sq(path, method, body) {
   const r = await fetch(SQ_BASE + path, {
     method: method || 'GET',
     headers: {
-      'Authorization': 'Bearer ' + process.env.SQUARE_ACCESS_TOKEN,
+      'Authorization': 'Bearer ' + (process.env.SQUARE_ACCESS_TOKEN_PRODU || process.env.SQUARE_ACCESS_TOKEN),
       'Content-Type': 'application/json',
       'Square-Version': '2024-01-18'
     },
