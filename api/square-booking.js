@@ -90,8 +90,10 @@ module.exports = async function handler(req, res) {
     }
 
     const y = parseInt(year), m = parseInt(month);
-    const firstDay = new Date(Date.UTC(y, m - 1, 1));
-    const lastDay  = new Date(Date.UTC(y, m, 0, 23, 59, 59));
+    const monthStart = new Date(Date.UTC(y, m - 1, 1));
+    const now        = new Date();
+    const firstDay   = monthStart > now ? monthStart : now;
+    const lastDay    = new Date(Date.UTC(y, m, 0, 23, 59, 59));
 
     try {
       const data = await sq('/bookings/availability/search', 'POST', {
