@@ -8,18 +8,34 @@
 <meta name="robots" content="index, follow">
 <meta name="author" content="Nails By Ally">
 <meta name="keywords" content="manicura Palma de Mallorca, nail studio Palma, extensiones uñas Mallorca, nail art Palma, uñas acrílicas Mallorca, pedicura Palma">
-<link rel="canonical" href="index.html">
+<link rel="canonical" href="https://nailsbyally.es/">
 <meta property="og:title" content="Manicura y Uñas en Palma de Mallorca | Nails By Ally">
 <meta property="og:description" content="Studio de uñas profesional en Palma de Mallorca. Manicura, extensiones acrílicas y nail art personalizado. Reserva online en 2 minutos.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="index.html">
-<meta property="og:image" content="assets/ally.jpg">
+<meta property="og:url" content="https://nailsbyally.es/">
+<meta property="og:image" content="https://nailsbyally.es/assets/ally.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_GB">
 <meta property="og:site_name" content="Nails By Ally">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Manicura y Uñas en Palma de Mallorca | Nails By Ally">
 <meta name="twitter:description" content="Studio de uñas profesional en Palma de Mallorca. Manicura, extensiones y nail art. Reserva online.">
-<meta name="twitter:image" content="assets/ally.jpg">
+<meta name="twitter:image" content="https://nailsbyally.es/assets/ally.jpg">
+<meta name="theme-color" content="#F4A7BE">
+<meta name="msapplication-TileColor" content="#F4A7BE">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Nails By Ally">
+<meta name="geo.region" content="ES-IB">
+<meta name="geo.placename" content="Palma de Mallorca">
+<meta name="geo.position" content="39.5696;2.6502">
+<meta name="ICBM" content="39.5696, 2.6502">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.png">
+<link rel="apple-touch-icon" href="/assets/logo.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="assets/ally.jpg">
@@ -28,21 +44,35 @@
 {
   "@context": "https://schema.org",
   "@type": "BeautySalon",
+  "@id": "https://nailsbyally.es/#business",
   "name": "Nails By Ally",
-  "description": "Studio de uñas profesional en Palma de Mallorca. Manicura, extensiones acrílicas, pedicura y nail art personalizado.",
-  "url": "index.html",
+  "description": "Studio de uñas profesional en Palma de Mallorca. Manicura, extensiones acrílicas, pedicura y nail art personalizado. Reserva online.",
+  "url": "https://nailsbyally.es/",
   "telephone": "+34611962056",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Palma de Mallorca",
     "addressRegion": "Islas Baleares",
+    "postalCode": "07001",
     "addressCountry": "ES"
   },
-  "areaServed": ["Palma de Mallorca", "Mallorca", "Islas Baleares"],
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 39.5696,
+    "longitude": 2.6502
+  },
+  "areaServed": [
+    {"@type": "City", "name": "Palma de Mallorca"},
+    {"@type": "Island", "name": "Mallorca"}
+  ],
   "priceRange": "€€",
-  "openingHours": "<!-- REVISAR -->",
-  "image": "assets/ally.jpg",
-  "logo": "assets/logo.png",
+  "currenciesAccepted": "EUR",
+  "paymentAccepted": "Cash, Credit Card",
+  "image": "https://nailsbyally.es/assets/ally.jpg",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://nailsbyally.es/assets/logo.png"
+  },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
     "name": "Servicios de uñas",
@@ -685,7 +715,20 @@ footer{
 .bk-back{background:none;border:none;color:var(--pink-deep);font-size:0.8rem;font-weight:600;cursor:pointer;padding:0;font-family:'DM Sans',sans-serif;letter-spacing:0.02em;}
 .bk-back:hover{color:var(--pink-accent);}
 .bk-subtitle{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.bk-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.bk-fields{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:16px;}
+.bk-phone-wrap{display:flex;gap:6px;}
+.bk-prefix{
+  border:1.5px solid var(--gray-200);border-radius:100px;
+  padding:9px 14px;font-size:0.8rem;font-family:'DM Sans',sans-serif;
+  color:var(--text);background:var(--white);outline:none;
+  transition:border-color 0.15s;flex-shrink:0;cursor:pointer;
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239E9E9E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+  padding-right:28px;
+}
+.bk-prefix:focus{border-color:var(--pink-main);}
+.bk-phone-input{flex:1;min-width:0;}
 .bk-input{
   border:1.5px solid var(--gray-200);border-radius:100px;
   padding:9px 16px;font-size:0.8rem;font-family:'DM Sans',sans-serif;
@@ -1144,7 +1187,27 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
       </div>
       <div class="bk-fields">
         <input class="bk-input" id="bkNombre" type="text" placeholder="Tu nombre" autocomplete="given-name" />
-        <input class="bk-input" id="bkTelefono" type="tel" placeholder="Teléfono" autocomplete="tel" />
+        <div class="bk-phone-wrap">
+          <select class="bk-prefix" id="bkPrefix" autocomplete="tel-country-code">
+            <option value="+34">+34 ES</option>
+            <option value="+44">+44 UK</option>
+            <option value="+49">+49 DE</option>
+            <option value="+33">+33 FR</option>
+            <option value="+39">+39 IT</option>
+            <option value="+31">+31 NL</option>
+            <option value="+32">+32 BE</option>
+            <option value="+41">+41 CH</option>
+            <option value="+43">+43 AT</option>
+            <option value="+46">+46 SE</option>
+            <option value="+47">+47 NO</option>
+            <option value="+45">+45 DK</option>
+            <option value="+358">+358 FI</option>
+            <option value="+351">+351 PT</option>
+            <option value="+1">+1 US</option>
+            <option value="+61">+61 AU</option>
+          </select>
+          <input class="bk-input bk-phone-input" id="bkTelefono" type="tel" placeholder="Número" autocomplete="tel-national" />
+        </div>
       </div>
       <div class="bk-cal-header">
         <button class="bk-cal-nav" id="bkPrevMonth" aria-label="Mes anterior">‹</button>
@@ -1567,6 +1630,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   var bkSubtitle  = document.getElementById('bkSubtitle');
   var bkNombre    = document.getElementById('bkNombre');
   var bkTelefono  = document.getElementById('bkTelefono');
+  var bkPrefix    = document.getElementById('bkPrefix');
   var bkCalMonth  = document.getElementById('bkCalMonth');
   var bkCalGrid   = document.getElementById('bkCalGrid');
   var bkPrevMonth = document.getElementById('bkPrevMonth');
@@ -1761,6 +1825,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     bkSubtitle.textContent = precio ? currentServicio + ' · ' + precio : currentServicio;
     bkNombre.value = '';
     bkTelefono.value = '';
+    bkPrefix.value = '+34';
     hideBkError();
   }
 
@@ -1814,9 +1879,10 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   bkConfirm.addEventListener('click', function(){
     if (!bkConfirm.classList.contains('ready')) return;
     var nombre    = bkNombre.value.trim();
-    var telefono  = bkTelefono.value.trim();
-    if (!nombre)   { bkNombre.focus(); showBkError('Introduce tu nombre.'); return; }
-    if (!telefono) { bkTelefono.focus(); showBkError('Introduce tu teléfono.'); return; }
+    var telNum    = bkTelefono.value.trim().replace(/\s/g,'');
+    var telefono  = (bkPrefix.value || '+34') + telNum;
+    if (!nombre)  { bkNombre.focus();   showBkError('Introduce tu nombre.'); return; }
+    if (!telNum)  { bkTelefono.focus(); showBkError('Introduce tu teléfono.'); return; }
     hideBkError();
     bkConfirm.textContent = 'Confirmando…';
     bkConfirm.classList.remove('ready');
