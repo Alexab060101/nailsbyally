@@ -931,6 +931,28 @@ footer{
   .bk-fields{grid-template-columns:1fr;}
 }
 
+/* ── NOISE OVERLAY GLOBAL — sensación papel premium ── */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  pointer-events:none;
+  z-index:9998;
+  opacity:0.03;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode:overlay;
+}
+
+/* ── TAP FEEDBACK MÓVIL — sensación táctil app nativa ── */
+@media (hover:none){
+  button,a,.chip,.nivel-card,.testi-card,.galeria-item,.proceso-step,[role="button"]{
+    transition:transform 0.12s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  button:active,a:active,.chip:active,.nivel-card:active,.testi-card:active,.galeria-item:active,.proceso-step:active,[role="button"]:active{
+    transform:scale(0.97);
+  }
+}
+
 /* PREFERS-REDUCED-MOTION */
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important;}
@@ -938,6 +960,7 @@ footer{
   *,*::before,*::after{cursor:auto!important;}
   .hero-hand{opacity:1!important;transform:none!important;}
   .nail-art-cards{grid-template-columns:1fr 1fr;}
+  body::after{display:none!important;}
 }
 </style>
 <!-- Meta Pixel + Conversions API (deduplicated por event_id) -->
@@ -2341,6 +2364,24 @@ async function guardarEnAirtable(nombre, telefono, servicio, comentario) {
     touchX = null;
   }, {passive:true});
 })();
+</script>
+
+<!-- LENIS smooth scroll — sensación cinemática premium -->
+<script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script>
+window.addEventListener('load', function(){
+  if (typeof Lenis === 'undefined') return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var lenis = new Lenis({
+    duration: 1.0,
+    easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+    smoothWheel: true,
+    syncTouch: false,
+    wheelMultiplier: 1.0
+  });
+  function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+});
 </script>
 </body>
 </html>
