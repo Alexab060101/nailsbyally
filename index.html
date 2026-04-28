@@ -504,29 +504,32 @@ nav a:hover::after{width:100%;}
 }
 
 /* ── TESTIMONIOS ── */
-.testi-section{background:var(--white);}
-.testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:36px;max-width:760px;margin-left:auto;margin-right:auto;}
+.testi-section{background:var(--pink-bg);}
+.testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:40px;}
 .testi-card{
-  background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:var(--r-md);
-  padding:18px 18px 16px;cursor:pointer;
-  transition:transform 0.18s,border-color 0.18s,box-shadow 0.18s;
-  display:flex;flex-direction:column;
+  aspect-ratio:1;border-radius:var(--r-md);overflow:hidden;
+  position:relative;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px 22px;text-align:center;
+  transition:transform 0.22s,box-shadow 0.22s;
 }
-.testi-card:hover{transform:translateY(-3px);border-color:var(--pink-main);box-shadow:0 10px 28px rgba(244,167,190,0.18);}
-.testi-stars{color:var(--pink-deep);font-size:0.8rem;letter-spacing:2.5px;margin-bottom:8px;}
+.testi-card:hover{transform:scale(1.025);box-shadow:0 18px 44px rgba(212,96,122,0.30);}
+.testi-quote-deco{font-family:'Playfair Display',serif;font-size:3rem;line-height:0.8;color:rgba(255,255,255,0.22);margin-bottom:6px;display:block;}
+.testi-stars{color:rgba(255,255,255,0.88);font-size:0.78rem;letter-spacing:3px;margin-bottom:10px;}
 .testi-text{
-  font-size:0.82rem;color:var(--text-mid);line-height:1.55;font-style:italic;
-  margin-bottom:12px;
+  font-size:0.8rem;color:rgba(255,255,255,0.92);line-height:1.55;font-style:italic;
+  margin-bottom:14px;
   display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
 }
-.testi-author{display:flex;align-items:center;gap:10px;margin-top:auto;}
+.testi-author{display:flex;align-items:center;gap:9px;}
 .testi-avatar{
-  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:600;color:#fff;
+  font-family:'Playfair Display',serif;font-size:0.78rem;font-weight:600;color:#fff;
+  background:rgba(255,255,255,0.22);
 }
-.testi-author strong{display:block;font-size:0.78rem;font-weight:600;color:var(--text);line-height:1.2;}
-.testi-author span{font-size:0.68rem;color:var(--text-soft);}
+.testi-author strong{display:block;font-size:0.76rem;font-weight:600;color:rgba(255,255,255,0.96);line-height:1.2;text-align:left;}
+.testi-author span{font-size:0.65rem;color:rgba(255,255,255,0.62);text-align:left;}
 
 /* Popup de reviews */
 .review-overlay{
@@ -575,8 +578,9 @@ nav a:hover::after{width:100%;}
 .review-dot.active{background:var(--pink-deep);transform:scale(1.3);}
 @media(max-width:768px){
   .testi-grid{gap:10px;margin-top:24px;}
-  .testi-card{padding:14px 14px 12px;}
-  .testi-text{font-size:0.78rem;-webkit-line-clamp:3;}
+  .testi-card{padding:16px 14px;}
+  .testi-quote-deco{font-size:2.2rem;}
+  .testi-text{font-size:0.72rem;-webkit-line-clamp:3;}
   .review-modal{padding:32px 22px 20px;}
   .review-text{font-size:0.95rem;}
 }
@@ -708,9 +712,10 @@ footer{
   .proceso-grid{grid-template-columns:1fr;max-width:400px;margin-left:auto;margin-right:auto;}
   .galeria-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
   .galeria-header{margin-bottom:18px;}
-  .testi-grid{grid-template-columns:1fr;margin-top:20px;gap:12px;}
-  .testi-card{padding:20px 18px;}
-  .testi-text{font-size:0.85rem;line-height:1.65;margin-bottom:14px;}
+  .testi-grid{margin-top:20px;gap:8px;}
+  .testi-card{padding:14px 12px;}
+  .testi-quote-deco{font-size:1.8rem;}
+  .testi-text{font-size:0.68rem;-webkit-line-clamp:2;}
   .ig-cta{padding:36px 20px;}
   .ig-cta-title{font-size:1.4rem;margin-bottom:10px;}
   .ig-cta-sub{font-size:0.85rem;margin-bottom:20px;}
@@ -1240,44 +1245,48 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
       <h2 class="section-h">Lo que dicen <em>ellas</em></h2>
     </div>
     <div class="testi-grid" id="testiGrid">
-      <div class="testi-card reveal reveal-delay-1" data-idx="0">
+      <div class="testi-card reveal reveal-delay-1" data-idx="0" style="background:linear-gradient(145deg,#F4A7BE 0%,#E8849A 100%);">
+        <span class="testi-quote-deco">"</span>
         <div class="testi-stars">★★★★★</div>
         <p class="testi-text">„Me hice una extensión con nail art y quedé enamorada. Ally tiene una paciencia y un detalle impresionantes. Las uñas me duraron más de 4 semanas perfectas."</p>
         <div class="testi-author">
-          <div class="testi-avatar" style="background:linear-gradient(135deg,var(--pink-main),var(--pink-deep));">S</div>
+          <div class="testi-avatar">S</div>
           <div>
             <strong>Sofía R.</strong>
             <span>Cliente habitual</span>
           </div>
         </div>
       </div>
-      <div class="testi-card reveal reveal-delay-2" data-idx="1">
+      <div class="testi-card reveal reveal-delay-2" data-idx="1" style="background:linear-gradient(145deg,#2c2c2c 0%,#1a1a1a 100%);">
+        <span class="testi-quote-deco">"</span>
         <div class="testi-stars">★★★★★</div>
         <p class="testi-text">„Por fin encontré un sitio donde entienden lo que quiero desde el principio. Reservé online en 2 minutos y al llegar Ally ya sabía exactamente qué buscaba."</p>
         <div class="testi-author">
-          <div class="testi-avatar" style="background:linear-gradient(135deg,var(--green-main),var(--green-deep));">M</div>
+          <div class="testi-avatar">M</div>
           <div>
             <strong>María C.</strong>
             <span>Primera visita</span>
           </div>
         </div>
       </div>
-      <div class="testi-card reveal reveal-delay-3" data-idx="2">
+      <div class="testi-card reveal reveal-delay-3" data-idx="2" style="background:linear-gradient(145deg,#E8849A 0%,#D4607A 100%);">
+        <span class="testi-quote-deco">"</span>
         <div class="testi-stars">★★★★★</div>
         <p class="testi-text">„El ambiente del studio es precioso y la atención es 10/10. Me hice las uñas para mi boda y todas me preguntaban dónde me las había hecho."</p>
         <div class="testi-author">
-          <div class="testi-avatar" style="background:linear-gradient(135deg,#D4607A,#F4A7BE);">A</div>
+          <div class="testi-avatar">A</div>
           <div>
             <strong>Andrea M.</strong>
             <span>Boda</span>
           </div>
         </div>
       </div>
-      <div class="testi-card reveal reveal-delay-3" data-idx="3">
+      <div class="testi-card reveal reveal-delay-3" data-idx="3" style="background:linear-gradient(145deg,#D4607A 0%,#b83a66 100%);">
+        <span class="testi-quote-deco">"</span>
         <div class="testi-stars">★★★★★</div>
         <p class="testi-text">„Regalé una cita a mi hermana por su cumpleaños y vino encantada. Volvió tres veces más por su cuenta. La atención al detalle es de otro nivel."</p>
         <div class="testi-author">
-          <div class="testi-avatar" style="background:linear-gradient(135deg,#E8849A,#F4A7BE);">P</div>
+          <div class="testi-avatar">P</div>
           <div>
             <strong>Patricia G.</strong>
             <span>Recomendación</span>
