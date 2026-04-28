@@ -32,6 +32,7 @@ module.exports = async function handler(req, res) {
     const fbp = body.fbp;
     const fbc = body.fbc;
     const custom_data = body.custom_data || {};
+    const user_ids = body.user_ids || null;
 
     if (!event_name || !event_id) {
       return res.status(400).json({ ok: false, error: 'event_name and event_id required' });
@@ -47,7 +48,7 @@ module.exports = async function handler(req, res) {
     const city = req.headers['x-vercel-ip-city'];
     const zp = req.headers['x-vercel-ip-postal-code'];
 
-    // user_data — Meta acepta IP/UA en plano. PII (país, ciudad, zip) se hashea.
+    // user_data — Meta acepta IP/UA en plano. PII se hashea con SHA-256.
     const user_data = {};
     if (client_ip_address) user_data.client_ip_address = client_ip_address;
     if (client_user_agent) user_data.client_user_agent = client_user_agent;
@@ -56,6 +57,19 @@ module.exports = async function handler(req, res) {
     if (country) user_data.country = sha256(country);
     if (city) user_data.ct = sha256(city);
     if (zp) user_data.zp = sha256(zp);
+
+    // PII de usuario (nombre, teléfono) — hasheada SHA-256 para Lead/Purchase
+    if (user_ids) {
+      // Teléfono: solo dígitos, en formato E.164 sin '+'
+      if (user_ids.phone) {
+        const phoneDigits = String(user_ids.phone).replace(/[^\d]/g, '');
+        if (phoneDigits) user_data.ph = sha256(phoneDigits);
+      }
+      if (user_ids.firstName) user_data.fn = sha256(user_ids.firstName);
+      if (user_ids.lastName)  user_data.ln = sha256(user_ids.lastName);
+      if (user_ids.email)     user_data.em = sha256(user_ids.email);
+      if (user_ids.country)   user_data.country = sha256(user_ids.country);
+    }
 
     const event = {
       event_name,

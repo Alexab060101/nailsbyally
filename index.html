@@ -818,13 +818,13 @@ function _genEventId(){
   if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
   return 'eid-' + Date.now() + '-' + Math.random().toString(36).slice(2);
 }
-function metaTrack(eventName, customData){
+function metaTrack(eventName, customData, userIds){
   var eid = _genEventId();
   var fbp = _getCookie('_fbp');
   var fbc = _getCookie('_fbc');
   // 1. Pixel del navegador con eventID (clave para dedup)
   try { fbq('track', eventName, customData || {}, { eventID: eid }); } catch(e){}
-  // 2. CAPI server-side en paralelo
+  // 2. CAPI server-side en paralelo (con user_data PII para mayor match quality)
   try {
     fetch('/api/meta-conversion', {
       method: 'POST',
@@ -835,7 +835,8 @@ function metaTrack(eventName, customData){
         event_source_url: window.location.href,
         fbp: fbp,
         fbc: fbc,
-        custom_data: customData || {}
+        custom_data: customData || {},
+        user_ids: userIds || null
       }),
       keepalive: true
     });
@@ -1912,6 +1913,32 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
       bkDoneSub.textContent = currentServicio + ' · ' + fecha + ' a las ' + hora;
       bkStep.style.display = 'none';
       bkDone.style.display = 'block';
+      // ── Meta Pixel + CAPI: Lead (reserva confirmada) ──
+      try {
+        var artExtra = 0;
+        if (typeof NAIL_ART !== 'undefined' && selectedNailId) {
+          var artObj = NAIL_ART.filter(function(a){ return a.id === selectedNailId; })[0];
+          if (artObj) artExtra = artObj.precioExtra || 0;
+        }
+        var totalEur = (currentPrecioBase || 0) + artExtra;
+        var esExt    = nailSel && nailSel.style.display !== 'none';
+        var nameParts = (nombre || '').trim().split(/\s+/);
+        if (typeof metaTrack === 'function') {
+          metaTrack('Lead', {
+            value:            totalEur,
+            currency:         'EUR',
+            content_name:     currentServicio,
+            content_category: esExt ? 'extension' : 'servicio',
+            content_ids:      [bkState.serviceVariationId || ''],
+            num_items:        1
+          }, {
+            phone:     telefono,
+            firstName: nameParts[0] || '',
+            lastName:  nameParts.slice(1).join(' ') || '',
+            country:   'es'
+          });
+        }
+      } catch(_) {}
     })
     .catch(function(){
       bkConfirm.textContent = 'Confirmar reserva';
