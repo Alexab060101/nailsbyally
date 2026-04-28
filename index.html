@@ -551,9 +551,79 @@ footer{
 .footer-col a:hover{color:var(--pink-main);}
 .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 .footer-copy{font-size:0.68rem;color:rgba(255,255,255,0.2);}
-.footer-social{display:flex;gap:16px;}
-.footer-social a{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:0.75rem;color:rgba(255,255,255,0.4);text-decoration:none;transition:background 0.3s,color 0.3s;}
-.footer-social a:hover{background:var(--pink-deep);color:#fff;}
+.footer-social{display:flex;gap:12px;}
+.footer-social a{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;transition:background 0.25s,color 0.25s,transform 0.2s;}
+.footer-social a:hover{background:var(--pink-deep);color:#fff;border-color:var(--pink-deep);transform:translateY(-2px);}
+.footer-social svg{width:18px;height:18px;}
+
+/* HEADER + MOBILE SOCIAL */
+.header-social{display:flex;gap:8px;margin-right:14px;}
+.header-social a{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text-mid);transition:color 0.2s,background 0.2s;text-decoration:none;}
+.header-social a:hover{color:var(--pink-deep);background:var(--pink-bg);}
+.header-social svg{width:18px;height:18px;}
+@media(max-width:900px){.header-social{display:none;}}
+.mm-social{display:flex;gap:14px;justify-content:center;margin-top:30px;padding-top:24px;border-top:1px solid var(--gray-200);}
+.mm-social a{width:44px;height:44px;border-radius:50%;background:var(--pink-bg);display:flex;align-items:center;justify-content:center;color:var(--pink-deep);text-decoration:none;transition:background 0.2s,color 0.2s;}
+.mm-social a:hover{background:var(--pink-deep);color:#fff;}
+.mm-social svg{width:20px;height:20px;}
+
+/* INSTAGRAM CTA después de la galería */
+.ig-cta{
+  background:linear-gradient(135deg,#FFE0EC 0%,#FEF0F5 50%,#FFF6F8 100%);
+  padding:56px 24px;text-align:center;position:relative;overflow:hidden;
+}
+.ig-cta::before,.ig-cta::after{
+  content:'';position:absolute;border-radius:50%;
+  background:radial-gradient(circle,rgba(244,167,190,0.3),transparent 70%);
+  pointer-events:none;
+}
+.ig-cta::before{width:300px;height:300px;top:-150px;left:-100px;}
+.ig-cta::after{width:240px;height:240px;bottom:-100px;right:-80px;}
+.ig-cta-inner{max-width:680px;margin:0 auto;position:relative;z-index:2;}
+.ig-cta-eyebrow{
+  display:inline-block;font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--pink-accent);font-weight:600;margin-bottom:14px;
+}
+.ig-cta-title{
+  font-family:'Playfair Display',serif;font-size:2rem;font-weight:600;
+  color:var(--text);margin-bottom:14px;line-height:1.15;letter-spacing:-0.5px;
+}
+.ig-cta-title em{font-style:italic;color:var(--pink-accent);}
+.ig-cta-sub{font-size:0.95rem;color:var(--text-mid);line-height:1.6;margin-bottom:28px;}
+.ig-cta-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:#000;color:#fff;
+  padding:14px 28px;border-radius:100px;font-weight:600;
+  text-decoration:none;font-size:0.92rem;letter-spacing:0.02em;
+  transition:transform 0.2s,box-shadow 0.2s;
+  box-shadow:0 6px 20px rgba(0,0,0,0.18);
+}
+.ig-cta-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,0.25);}
+.ig-cta-btn svg{width:20px;height:20px;}
+.ig-cta-handle{font-size:0.78rem;color:var(--text-soft);margin-top:14px;letter-spacing:0.02em;}
+@media(max-width:768px){
+  .ig-cta-title{font-size:1.5rem;}
+  .ig-cta{padding:44px 20px;}
+}
+
+/* GALERIA — fotos reales con efecto Instagram-style */
+.galeria-img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  display:block;
+}
+.galeria-item:hover .galeria-img{transform:scale(1.06);}
+.galeria-overlay-ig{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(232,132,154,0);transition:background 0.3s;
+  pointer-events:none;
+}
+.galeria-overlay-ig svg{
+  width:36px;height:36px;color:#fff;opacity:0;transform:scale(0.8);
+  transition:opacity 0.3s,transform 0.3s;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+}
+.galeria-item:hover .galeria-overlay-ig{background:rgba(44,44,44,0.35);}
+.galeria-item:hover .galeria-overlay-ig svg{opacity:1;transform:scale(1);}
 
 /* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.9s ease,transform 0.9s ease;}
@@ -863,6 +933,14 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     <a href="#servicios">Servicios</a>
     <a href="#galeria">Galería</a>
     <a href="#nosotras">Nosotras</a>
+    <div class="header-social">
+      <a href="https://www.instagram.com/nailsby.allyy/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@nailsby.allyy" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.83 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.87-.1z"/></svg>
+      </a>
+    </div>
     <a href="#servicios" class="nav-cta">Reservar cita</a>
   </nav>
   <div class="hamburger" id="hamburger" role="button" tabindex="0" aria-label="Abrir menú">
@@ -876,6 +954,17 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   <a href="#galeria" class="mm-link">Galería</a>
   <a href="#nosotras" class="mm-link">Nosotras</a>
   <a href="#servicios">Reservar cita</a>
+  <div class="mm-social">
+    <a href="https://www.instagram.com/nailsby.allyy/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+    </a>
+    <a href="https://www.tiktok.com/@nailsby.allyy" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.83 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.87-.1z"/></svg>
+    </a>
+    <a href="https://wa.me/34611962056" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+    </a>
+  </div>
 </div>
 
 <!-- HERO SCROLL ZONE — 200vh, hero sticky mientras las manos entran -->
@@ -1029,35 +1118,54 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
         <span class="eyebrow">Galería</span>
         <h2 class="section-h">Nuestro <em>trabajo</em></h2>
       </div>
-      <a href="#servicios" class="btn-ghost reveal" style="flex-shrink:0;">Ver todos los servicios</a>
+      <a href="https://www.instagram.com/nailsby.allyy/" target="_blank" rel="noopener noreferrer" class="btn-ghost reveal" style="flex-shrink:0;">Ver más en Instagram</a>
     </div>
     <div class="galeria-grid">
-      <div class="galeria-item reveal">
-        <div class="galeria-ph" style="background:linear-gradient(135deg,#F4B8CE,#E8A0BC);"><span>📸</span><span>Foto próximamente</span></div>
-        <div class="galeria-overlay"></div>
-        <span class="pronto-tag">Nivel III</span>
-      </div>
-      <div class="galeria-item reveal reveal-delay-1">
-        <div class="galeria-ph" style="background:linear-gradient(135deg,#B8D8C4,#8FCFAE);"><span>📸</span></div>
-        <div class="galeria-overlay"></div>
-        <span class="pronto-tag">Nivel IV</span>
-      </div>
-      <div class="galeria-item reveal reveal-delay-2">
-        <div class="galeria-ph" style="background:linear-gradient(135deg,#F0D4E8,#E8B8D4);"><span>📸</span></div>
-        <div class="galeria-overlay"></div>
-        <span class="pronto-tag">Nivel V</span>
-      </div>
-      <div class="galeria-item reveal reveal-delay-1">
-        <div class="galeria-ph" style="background:linear-gradient(135deg,#FFE8F0,#FFD0E2);"><span>📸</span></div>
-        <div class="galeria-overlay"></div>
-        <span class="pronto-tag">Nivel II</span>
-      </div>
-      <div class="galeria-item reveal reveal-delay-2">
-        <div class="galeria-ph" style="background:linear-gradient(135deg,#F4B8CE,#D4E8DC);"><span>📸</span></div>
-        <div class="galeria-overlay"></div>
-        <span class="pronto-tag">Nivel IV</span>
-      </div>
+      <a href="https://www.instagram.com/nailsby.allyy/" target="_blank" rel="noopener noreferrer" class="galeria-item reveal" aria-label="Ver más en Instagram">
+        <img class="galeria-img" src="assets/hands/WhatsApp Image 2026-04-17 at 21.21.30.jpeg" alt="Nail art con detalles dorados — Nails By Ally" loading="lazy">
+        <div class="galeria-overlay-ig">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+      </a>
+      <a href="https://www.instagram.com/nailsby.allyy/" target="_blank" rel="noopener noreferrer" class="galeria-item reveal reveal-delay-1" aria-label="Ver más en Instagram">
+        <img class="galeria-img" src="assets/hands/elaborado.png" alt="Nail art elaborado — Nails By Ally" loading="lazy">
+        <div class="galeria-overlay-ig">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+      </a>
+      <a href="https://www.instagram.com/nailsby.allyy/" target="_blank" rel="noopener noreferrer" class="galeria-item reveal reveal-delay-2" aria-label="Ver más en Instagram">
+        <img class="galeria-img" src="assets/hands/medio.png" alt="Nail art medio — Nails By Ally" loading="lazy">
+        <div class="galeria-overlay-ig">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+      </a>
+      <a href="https://www.instagram.com/nailsby.allyy/" target="_blank" rel="noopener noreferrer" class="galeria-item reveal reveal-delay-1" aria-label="Ver más en Instagram">
+        <img class="galeria-img" src="assets/hands/sutil.png" alt="Nail art sutil — Nails By Ally" loading="lazy">
+        <div class="galeria-overlay-ig">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+      </a>
+      <a href="https://www.instagram.com/nailsby.allyy/" target="_blank" rel="noopener noreferrer" class="galeria-item reveal reveal-delay-2" aria-label="Ver más en Instagram">
+        <img class="galeria-img" src="assets/hands/nude.png" alt="Manicura nude natural — Nails By Ally" loading="lazy">
+        <div class="galeria-overlay-ig">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+      </a>
     </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM CTA -->
+<section class="ig-cta">
+  <div class="ig-cta-inner reveal">
+    <span class="ig-cta-eyebrow">Síguenos</span>
+    <h2 class="ig-cta-title">Cada cita, una <em>obra única</em>.</h2>
+    <p class="ig-cta-sub">Descubre todos los diseños, los antes y después y los detalles que no caben en esta web. La galería completa vive en Instagram.</p>
+    <a href="https://www.instagram.com/nailsby.allyy/" target="_blank" rel="noopener noreferrer" class="ig-cta-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      Seguir en Instagram
+    </a>
+    <p class="ig-cta-handle">@nailsby.allyy</p>
   </div>
 </section>
 
@@ -1071,34 +1179,34 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     <div class="testi-grid">
       <div class="testi-card reveal reveal-delay-1">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">„Me hice el nivel IV y quedé enamorada. Ally tiene una paciencia y un detalle impresionantes. Las uñas me duraron más de 4 semanas perfectas."</p>
+        <p class="testi-text">„Me hice una extensión con nail art y quedé enamorada. Ally tiene una paciencia y un detalle impresionantes. Las uñas me duraron más de 4 semanas perfectas."</p>
         <div class="testi-author">
           <div class="testi-avatar" style="background:linear-gradient(135deg,var(--pink-main),var(--pink-deep));">S</div>
           <div>
             <strong>Sofía R.</strong>
-            <span>Cliente habitual · Nivel IV</span>
+            <span>Cliente habitual</span>
           </div>
         </div>
       </div>
       <div class="testi-card reveal reveal-delay-2">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">„Por fin encontré un sitio donde entienden lo que quiero desde el principio. Los niveles con fotos son un acierto total, vine sabiendo exactamente qué pedir."</p>
+        <p class="testi-text">„Por fin encontré un sitio donde entienden lo que quiero desde el principio. Reservé online en 2 minutos y al llegar Ally ya sabía exactamente qué buscaba."</p>
         <div class="testi-author">
           <div class="testi-avatar" style="background:linear-gradient(135deg,var(--green-main),var(--green-deep));">M</div>
           <div>
             <strong>María C.</strong>
-            <span>Primera visita · Nivel III</span>
+            <span>Primera visita</span>
           </div>
         </div>
       </div>
       <div class="testi-card reveal reveal-delay-3">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">„El ambiente del studio es precioso y la atención es 10/10. Me hice el nivel V para mi boda y todas me preguntaban dónde me había hecho las uñas."</p>
+        <p class="testi-text">„El ambiente del studio es precioso y la atención es 10/10. Me hice las uñas para mi boda y todas me preguntaban dónde me las había hecho."</p>
         <div class="testi-author">
           <div class="testi-avatar" style="background:linear-gradient(135deg,#D4607A,#F4A7BE);">A</div>
           <div>
             <strong>Andrea M.</strong>
-            <span>Boda · Nivel V</span>
+            <span>Boda</span>
           </div>
         </div>
       </div>
@@ -1149,9 +1257,15 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   <div class="footer-bottom">
     <span class="footer-copy">© 2026 Nails By Ally · Todos los derechos reservados</span>
     <div class="footer-social">
-      <a href="#" rel="noopener noreferrer" aria-label="Instagram">📷</a>
-      <a href="#" rel="noopener noreferrer" aria-label="TikTok">🎵</a>
-      <a href="#" rel="noopener noreferrer" aria-label="WhatsApp">💬</a>
+      <a href="https://www.instagram.com/nailsby.allyy/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@nailsby.allyy" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.83 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.87-.1z"/></svg>
+      </a>
+      <a href="https://wa.me/34611962056" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+      </a>
     </div>
   </div>
 </footer>
