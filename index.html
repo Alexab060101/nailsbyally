@@ -1033,6 +1033,113 @@ footer{
 .sticky-cta-wa svg{width:22px;height:22px;}
 @media(min-width:769px){.sticky-cta-bar{display:none!important;}}
 
+/* ── SPLIT H2 reveal por palabras (Sprint 3) ── */
+.split-h2 .word{display:inline-block;overflow:hidden;vertical-align:baseline;line-height:inherit;}
+.split-h2 .word-inner{
+  display:inline-block;transform:translateY(110%);
+  transition:transform 0.9s cubic-bezier(0.16,1,0.3,1);
+  will-change:transform;
+}
+.split-h2.is-visible .word-inner{transform:translateY(0);}
+.split-h2.is-visible .word:nth-child(1) .word-inner{transition-delay:0s;}
+.split-h2.is-visible .word:nth-child(2) .word-inner{transition-delay:0.07s;}
+.split-h2.is-visible .word:nth-child(3) .word-inner{transition-delay:0.14s;}
+.split-h2.is-visible .word:nth-child(4) .word-inner{transition-delay:0.21s;}
+.split-h2.is-visible .word:nth-child(5) .word-inner{transition-delay:0.28s;}
+.split-h2.is-visible .word:nth-child(6) .word-inner{transition-delay:0.35s;}
+.split-h2.is-visible .word:nth-child(7) .word-inner{transition-delay:0.42s;}
+
+/* ── MAGNETIC CTA helper (Sprint 3) ── */
+.magnetic{transition:transform 0.25s cubic-bezier(0.16,1,0.3,1);will-change:transform;}
+.magnetic-inner{display:inline-block;transition:transform 0.25s cubic-bezier(0.16,1,0.3,1);}
+@media(hover:none){.magnetic,.magnetic-inner{transform:none!important;}}
+
+/* ── CHIP BORDER GLOW spotlight (Sprint 3) — sigue el cursor ── */
+@media(hover:hover) and (pointer:fine){
+  .chip{position:relative;isolation:isolate;}
+  .chip::before{
+    content:'';position:absolute;inset:0;border-radius:inherit;
+    background:radial-gradient(280px circle at var(--gx,-100px) var(--gy,-100px),
+                rgba(244,167,190,0.55),transparent 55%);
+    opacity:0;transition:opacity 0.25s;pointer-events:none;z-index:0;
+  }
+  .chip:hover::before{opacity:1;}
+  .chip > *{position:relative;z-index:1;}
+}
+
+/* ── MARQUEE SEPARADOR (Sprint 3) ── */
+.marquee-section{
+  background:var(--text);color:#fff;overflow:hidden;
+  padding:22px 0;position:relative;
+}
+.marquee-track{
+  display:flex;white-space:nowrap;
+  animation:marqueeScroll 32s linear infinite;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.6rem,4.6vw,3.4rem);
+  font-style:italic;font-weight:400;
+  color:rgba(255,255,255,0.95);
+}
+.marquee-track > span{padding:0 0.5em;flex-shrink:0;}
+.marquee-track > span::after{
+  content:'✦';margin-left:0.5em;color:var(--pink-main);font-style:normal;
+}
+@keyframes marqueeScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.marquee-section:hover .marquee-track{animation-play-state:paused;}
+@media(max-width:680px){.marquee-section{padding:16px 0;}}
+
+/* ── GRADIENT SHIMMER en palabra clave (Sprint 3) ── */
+.shimmer{
+  background:linear-gradient(90deg,var(--pink-main),var(--pink-deep),var(--pink-accent),var(--pink-main));
+  background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  animation:shimmerSlide 4.5s ease-in-out infinite;
+  font-style:italic;
+}
+@keyframes shimmerSlide{
+  0%,100%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+}
+
+/* ── OUTLINED TEXT decorativo (Sprint 3) ── */
+.outline-deco{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(4rem,16vw,12rem);
+  font-weight:700;font-style:italic;
+  text-align:center;line-height:0.9;letter-spacing:-0.02em;
+  color:transparent;
+  -webkit-text-stroke:1.5px rgba(212,96,122,0.5);
+  margin:0;padding:0 16px;
+  user-select:none;pointer-events:none;
+  transition:color 0.5s,-webkit-text-stroke 0.5s;
+}
+.outline-deco-wrap{padding:32px 0 0;background:var(--white);overflow:hidden;}
+@media(hover:hover){.outline-deco-wrap:hover .outline-deco{color:rgba(212,96,122,0.12);}}
+@media(max-width:680px){.outline-deco-wrap{padding:20px 0 0;}}
+
+/* ── STACK SWAP LINKS rolodex (Sprint 3) ── */
+.stack-link{
+  display:inline-block;overflow:hidden;
+  height:1em;line-height:1;vertical-align:bottom;
+  position:relative;
+}
+.stack-link-inner{
+  display:inline-block;position:relative;
+  transition:transform 0.5s cubic-bezier(0.76,0,0.24,1);
+}
+.stack-link-inner::after{
+  content:attr(data-text);
+  position:absolute;top:100%;left:0;
+  color:var(--pink-deep);
+  white-space:nowrap;
+}
+@media(hover:hover){
+  .stack-link:hover .stack-link-inner{transform:translateY(-100%);}
+}
+nav a.stack-link::after{display:none;}
+nav a.stack-link:hover{color:var(--text-mid);}
+
 /* ── NOISE OVERLAY GLOBAL — sensación papel premium ── */
 body::after{
   content:'';
@@ -1129,9 +1236,9 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     <img src="assets/logo.png" alt="Nails By Ally - Studio de uñas en Palma de Mallorca" class="logo-img" decoding="async">
   </a>
   <nav>
-    <a href="#servicios">Servicios</a>
-    <a href="#galeria">Galería</a>
-    <a href="#nosotras">Nosotras</a>
+    <a href="#servicios" class="stack-link"><span class="stack-link-inner" data-text="Servicios">Servicios</span></a>
+    <a href="#galeria" class="stack-link"><span class="stack-link-inner" data-text="Galería">Galería</span></a>
+    <a href="#nosotras" class="stack-link"><span class="stack-link-inner" data-text="Nosotras">Nosotras</span></a>
     <div class="header-social">
       <a href="https://www.instagram.com/nailsby.allyy/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -1140,7 +1247,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.83 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.87-.1z"/></svg>
       </a>
     </div>
-    <a href="#servicios" class="nav-cta">Reservar cita</a>
+    <a href="#servicios" class="nav-cta magnetic"><span class="magnetic-inner">Reservar cita</span></a>
   </nav>
   <div class="hamburger" id="hamburger" role="button" tabindex="0" aria-label="Abrir menú">
     <span></span><span></span><span></span>
@@ -1220,7 +1327,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   <div class="section-inner">
     <div class="servicios-header reveal">
       <span class="eyebrow">Nuestros servicios</span>
-      <h2 class="section-h">Elige tu <em>servicio</em></h2>
+      <h2 class="section-h split-h2">Elige tu <em>servicio</em></h2>
       <p class="section-desc">Desde el cuidado básico hasta extensiones con diseño.<br>Pincha y reserva en 2 minutos.</p>
     </div>
     <div class="niveles-new">
@@ -1287,7 +1394,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   <div class="section-inner">
     <div style="text-align:center;" class="reveal">
       <span class="eyebrow green">Proceso</span>
-      <h2 class="section-h">Así de <em>fácil</em></h2>
+      <h2 class="section-h split-h2">Así de <em>fácil</em></h2>
     </div>
     <div class="proceso-grid">
       <div class="proceso-step reveal reveal-delay-1">
@@ -1309,13 +1416,21 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   </div>
 </section>
 
+<!-- MARQUEE separador -->
+<section class="marquee-section" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Manicura</span><span>Pedicura</span><span>Nail Art</span><span>Extensiones</span><span>Nude natural</span><span>Diseño elaborado</span>
+    <span>Manicura</span><span>Pedicura</span><span>Nail Art</span><span>Extensiones</span><span>Nude natural</span><span>Diseño elaborado</span>
+  </div>
+</section>
+
 <!-- GALERÍA -->
 <section class="section galeria-section" id="galeria">
   <div class="section-inner">
     <div class="galeria-header">
       <div class="reveal">
         <span class="eyebrow">Galería</span>
-        <h2 class="section-h">Nuestro <em>trabajo</em></h2>
+        <h2 class="section-h split-h2">Nuestro <em>trabajo</em></h2>
       </div>
       <a href="https://www.instagram.com/nailsby.allyy/" target="_blank" rel="noopener noreferrer" class="btn-ghost reveal" style="flex-shrink:0;">Ver más en Instagram</a>
     </div>
@@ -1367,7 +1482,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   <div class="section-inner">
     <div style="text-align:center;" class="reveal">
       <span class="eyebrow">Opiniones</span>
-      <h2 class="section-h">Lo que dicen <em>ellas</em></h2>
+      <h2 class="section-h split-h2">Lo que dicen <em>ellas</em></h2>
     </div>
     <div class="testi-grid" id="testiGrid">
       <div class="testi-card reveal reveal-delay-1" data-idx="0" style="background:linear-gradient(145deg,#F4A7BE 0%,#E8849A 100%);">
@@ -1445,7 +1560,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   <div class="section-inner">
     <div style="text-align:center;" class="reveal">
       <span class="eyebrow">Dudas frecuentes</span>
-      <h2 class="section-h">Lo que <em>preguntan</em></h2>
+      <h2 class="section-h split-h2">Lo que <em>preguntan</em></h2>
     </div>
     <div class="faq-list">
       <details class="faq reveal">
@@ -1472,15 +1587,20 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   </div>
 </section>
 
+<!-- OUTLINED TEXT decorativo -->
+<div class="outline-deco-wrap">
+  <h2 class="outline-deco">Studio</h2>
+</div>
+
 <!-- CTA -->
 <section class="cta-section" id="nosotras">
   <div class="cta-deco-1"></div>
   <div class="cta-deco-2"></div>
   <div class="cta-inner reveal">
     <span class="cta-eyebrow">¿Lista?</span>
-    <h2 class="cta-title">Tu próxima cita te<br>está <em>esperando.</em></h2>
+    <h2 class="cta-title">Tu próxima cita te<br>está <em class="shimmer">esperando.</em></h2>
     <p class="cta-sub">Elige tu servicio, hablamos por WhatsApp y queda confirmada. Sin llamadas, sin complicaciones — solo tú y tus uñas de ensueño.</p>
-    <a href="#servicios" class="btn-primary">Reservar ahora</a>
+    <a href="#servicios" class="btn-primary magnetic"><span class="magnetic-inner">Reservar ahora</span></a>
     <p class="cta-note">Sin tarjeta · Cancelación gratuita hasta 24h antes</p>
   </div>
 </section>
@@ -1751,6 +1871,66 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     });
   },{threshold:0.5});
   nodes.forEach(function(el){io.observe(el);});
+})();
+
+// SPLIT H2 — palabras envueltas y reveal escalonado (Sprint 3)
+(function(){
+  var heads=document.querySelectorAll('.split-h2');
+  if(!heads.length)return;
+  heads.forEach(function(h){
+    var html=h.innerHTML;
+    var parts=html.split(/(\s+|<em>|<\/em>)/i);
+    var inEm=false;
+    var out='';
+    parts.forEach(function(p){
+      if(!p)return;
+      if(/^<em>$/i.test(p)){inEm=true;return;}
+      if(/^<\/em>$/i.test(p)){inEm=false;return;}
+      if(/^\s+$/.test(p)){out+=' ';return;}
+      var tag=inEm?'em':'span';
+      var cls=inEm?'word-inner':'word-inner';
+      out+='<span class="word"><'+tag+' class="'+cls+'">'+p+'</'+tag+'></span>';
+    });
+    h.innerHTML=out;
+  });
+  if(!('IntersectionObserver' in window)){heads.forEach(function(h){h.classList.add('is-visible');});return;}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target);}
+    });
+  },{threshold:0.4});
+  heads.forEach(function(h){io.observe(h);});
+})();
+
+// MAGNETIC BUTTONS (Sprint 3)
+(function(){
+  if(!window.matchMedia('(hover:hover)').matches)return;
+  document.querySelectorAll('.magnetic').forEach(function(btn){
+    var inner=btn.querySelector('.magnetic-inner');
+    btn.addEventListener('mousemove',function(e){
+      var r=btn.getBoundingClientRect();
+      var x=e.clientX-r.left-r.width/2;
+      var y=e.clientY-r.top-r.height/2;
+      btn.style.transform='translate('+(x*0.18)+'px,'+(y*0.32)+'px)';
+      if(inner)inner.style.transform='translate('+(x*0.10)+'px,'+(y*0.18)+'px)';
+    });
+    btn.addEventListener('mouseleave',function(){
+      btn.style.transform='';
+      if(inner)inner.style.transform='';
+    });
+  });
+})();
+
+// CHIP BORDER GLOW spotlight (Sprint 3)
+(function(){
+  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+  document.querySelectorAll('.chip').forEach(function(chip){
+    chip.addEventListener('mousemove',function(e){
+      var r=chip.getBoundingClientRect();
+      chip.style.setProperty('--gx',(e.clientX-r.left)+'px');
+      chip.style.setProperty('--gy',(e.clientY-r.top)+'px');
+    });
+  });
 })();
 
 // STICKY CTA BAR — aparece después del hero (Sprint 2)
