@@ -137,11 +137,23 @@ header{
   transition:padding 0.4s,background 0.4s,backdrop-filter 0.4s,box-shadow 0.4s;
 }
 header.scrolled{
-  padding:14px 52px;
-  background:rgba(255,255,255,0.92);
-  backdrop-filter:blur(20px) saturate(160%);
-  box-shadow:0 1px 0 rgba(244,167,190,0.2);
+  padding:14px 32px;
+  background:transparent;
+  backdrop-filter:none;
+  box-shadow:none;
 }
+header.scrolled nav{
+  background:rgba(255,255,255,0.75);
+  backdrop-filter:blur(22px) saturate(180%);
+  -webkit-backdrop-filter:blur(22px) saturate(180%);
+  border:1px solid rgba(255,255,255,0.55);
+  border-radius:999px;
+  padding:6px 8px 6px 26px;
+  gap:24px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.06),0 1px 0 rgba(255,255,255,0.6) inset;
+  transition:background 0.4s,backdrop-filter 0.4s,box-shadow 0.4s,padding 0.4s;
+}
+header.scrolled .logo-img{height:72px;transition:height 0.4s;}
 .logo-wrap{text-decoration:none;display:flex;align-items:center;}
 .logo-img{
   height:120px;width:auto;display:block;
@@ -931,6 +943,96 @@ footer{
   .bk-fields{grid-template-columns:1fr;}
 }
 
+/* ── SECCIÓN STATS (Sprint 2) ── */
+.stats-section{background:var(--white);padding:64px 24px 56px;}
+.stats-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:32px;
+  max-width:880px;margin:0 auto;text-align:center;
+}
+.stat-item{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.stat-num{
+  font-family:'Playfair Display',serif;font-size:clamp(2.6rem,7vw,4.4rem);
+  font-weight:600;line-height:1;
+  background:linear-gradient(135deg,var(--pink-deep),var(--pink-accent));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  font-variant-numeric:tabular-nums;
+}
+.stat-label{font-size:0.82rem;color:var(--text-mid);letter-spacing:0.04em;line-height:1.4;max-width:160px;}
+@media(max-width:680px){
+  .stats-section{padding:48px 22px 40px;}
+  .stats-grid{grid-template-columns:repeat(3,1fr);gap:14px;}
+  .stat-label{font-size:0.7rem;}
+}
+
+/* ── FAQ ACCORDION (Sprint 2) ── */
+.faq-section{background:var(--pink-bg);padding:80px 24px;}
+.faq-list{max-width:760px;margin:36px auto 0;}
+.faq{
+  border-bottom:1px solid rgba(212,96,122,0.18);
+  padding:4px 0;
+}
+.faq summary{
+  display:flex;justify-content:space-between;align-items:center;gap:18px;
+  padding:22px 4px;
+  font-size:1rem;font-weight:500;color:var(--text);
+  cursor:pointer;list-style:none;
+}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary::marker{display:none;}
+.faq-icon{
+  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(244,167,190,0.18);
+  color:var(--pink-deep);
+  font-size:1.3rem;font-weight:300;line-height:1;
+  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1),background 0.3s,color 0.3s;
+}
+.faq[open] .faq-icon{transform:rotate(45deg);background:var(--pink-deep);color:#fff;}
+.faq-body{
+  padding:0 4px 22px;
+  color:var(--text-mid);font-size:0.92rem;line-height:1.65;
+  animation:faqOpen 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes faqOpen{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+@media(max-width:680px){
+  .faq-section{padding:56px 22px;}
+  .faq summary{font-size:0.92rem;padding:18px 2px;}
+  .faq-body{font-size:0.86rem;padding:0 2px 18px;}
+}
+
+/* ── STICKY CTA BAR MÓVIL (Sprint 2) ── */
+.sticky-cta-bar{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(18px) saturate(180%);
+  -webkit-backdrop-filter:blur(18px) saturate(180%);
+  border-top:1px solid rgba(0,0,0,0.06);
+  z-index:90;
+  gap:8px;
+}
+.sticky-cta-bar.show{display:flex;}
+.sticky-cta-main{
+  flex:1;text-align:center;
+  padding:14px 16px;
+  background:var(--pink-deep);color:#fff;
+  border-radius:999px;
+  text-decoration:none;
+  font-size:0.92rem;font-weight:600;letter-spacing:0.02em;
+  box-shadow:0 4px 16px rgba(232,132,154,0.4);
+}
+.sticky-cta-wa{
+  flex-shrink:0;
+  width:48px;height:48px;
+  display:flex;align-items:center;justify-content:center;
+  background:#25D366;color:#fff;
+  border-radius:50%;text-decoration:none;
+  box-shadow:0 4px 14px rgba(37,211,102,0.4);
+}
+.sticky-cta-wa svg{width:22px;height:22px;}
+@media(min-width:769px){.sticky-cta-bar{display:none!important;}}
+
 /* ── NOISE OVERLAY GLOBAL — sensación papel premium ── */
 body::after{
   content:'';
@@ -1320,6 +1422,56 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   </div>
 </section>
 
+<!-- STATS — prueba social -->
+<section class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-num" data-count="500" data-suffix="+">0</div>
+      <div class="stat-label">Clientas felices</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-1">
+      <div class="stat-num" data-count="98" data-suffix="%">0</div>
+      <div class="stat-label">Volverían a venir</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-2">
+      <div class="stat-num" data-count="100" data-suffix="%">0</div>
+      <div class="stat-label">Materiales premium</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="section-inner">
+    <div style="text-align:center;" class="reveal">
+      <span class="eyebrow">Dudas frecuentes</span>
+      <h2 class="section-h">Lo que <em>preguntan</em></h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq reveal">
+        <summary>¿Cuánto dura una sesión?<span class="faq-icon" aria-hidden="true">+</span></summary>
+        <div class="faq-body"><p>Depende del servicio: una manicura express son 30 minutos, una manicura de precisión con color 1h 30, y las extensiones con nail art elaborado pueden llegar a 3h. En cada servicio te indicamos la duración exacta antes de reservar.</p></div>
+      </details>
+      <details class="faq reveal">
+        <summary>¿Qué materiales usáis?<span class="faq-icon" aria-hidden="true">+</span></summary>
+        <div class="faq-body"><p>Trabajamos solo con marcas profesionales y materiales premium. Esmaltes semipermanentes y acrílicos de gama alta, libres de los químicos más agresivos, con duración real de 3-4 semanas en perfecto estado.</p></div>
+      </details>
+      <details class="faq reveal">
+        <summary>¿Puedo elegir el diseño que quiera?<span class="faq-icon" aria-hidden="true">+</span></summary>
+        <div class="faq-body"><p>Sí. Tenemos 3 niveles de Nail Art (sutil, medio, elaborado) y dentro de cada uno trabajamos cualquier referencia que traigas. Si tienes una foto de inspiración, mándala por WhatsApp antes de la cita y la adaptamos a tus uñas.</p></div>
+      </details>
+      <details class="faq reveal">
+        <summary>¿Cómo se reserva y se paga?<span class="faq-icon" aria-hidden="true">+</span></summary>
+        <div class="faq-body"><p>Eliges tu servicio aquí en la web, escoges fecha y hora y completas tus datos — recibimos la reserva al instante. El pago se hace en el studio el día de la cita (efectivo o tarjeta). No pedimos tarjeta para reservar.</p></div>
+      </details>
+      <details class="faq reveal">
+        <summary>¿Política de cancelación?<span class="faq-icon" aria-hidden="true">+</span></summary>
+        <div class="faq-body"><p>Cancelación gratuita hasta 24 horas antes de tu cita. Si necesitas reprogramar, escríbenos por WhatsApp y buscamos otro hueco que te encaje. Sin penalizaciones, sin complicaciones.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta-section" id="nosotras">
   <div class="cta-deco-1"></div>
@@ -1574,6 +1726,50 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('up');obs.unobserve(e.target);}});
   },{threshold:0.12,rootMargin:'0px 0px -80px 0px'});
   document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+})();
+
+// STAT COUNTERS ON SCROLL (Sprint 2)
+(function(){
+  var nodes=document.querySelectorAll('[data-count]');
+  if(!nodes.length||!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting)return;
+      var el=entry.target;
+      var target=parseFloat(el.dataset.count)||0;
+      var suffix=el.dataset.suffix||'';
+      var duration=1700;
+      var start=performance.now();
+      function tick(now){
+        var t=Math.min((now-start)/duration,1);
+        var eased=1-Math.pow(1-t,3);
+        el.textContent=Math.floor(eased*target)+suffix;
+        if(t<1)requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      io.unobserve(el);
+    });
+  },{threshold:0.5});
+  nodes.forEach(function(el){io.observe(el);});
+})();
+
+// STICKY CTA BAR — aparece después del hero (Sprint 2)
+(function(){
+  var bar=document.getElementById('stickyCtaBar');
+  if(!bar)return;
+  function update(){
+    var heroZone=document.getElementById('heroScrollZone');
+    var threshold=heroZone?heroZone.offsetHeight*0.6:window.innerHeight;
+    if(window.scrollY>threshold){
+      bar.classList.add('show');
+      bar.setAttribute('aria-hidden','false');
+    }else{
+      bar.classList.remove('show');
+      bar.setAttribute('aria-hidden','true');
+    }
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  update();
 })();
 
 // NIVEL CARD CLICK → RESERVAS
@@ -2365,6 +2561,14 @@ async function guardarEnAirtable(nombre, telefono, servicio, comentario) {
   }, {passive:true});
 })();
 </script>
+
+<!-- STICKY CTA BAR MÓVIL (Sprint 2) -->
+<div class="sticky-cta-bar" id="stickyCtaBar" aria-hidden="true">
+  <a href="#servicios" class="sticky-cta-main">Reservar mi cita</a>
+  <a href="https://wa.me/34611962056" target="_blank" rel="noopener noreferrer" class="sticky-cta-wa" aria-label="WhatsApp directo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1s-.5-.2-.7.1c-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1s-1.2-.5-2.3-1.4c-.9-.7-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5s-.7-1.7-1-2.3c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.7.4-.3.3-1 1-1 2.4s1 2.8 1.1 3 2 3.1 4.9 4.4c2.9 1.3 2.9.8 3.4.8.5 0 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.4zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.4 5L2 22l5.2-1.4c1.5.8 3.1 1.3 4.8 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.5 0-3-.4-4.3-1.2l-.3-.2-3.1.8.8-3-.2-.3C4.4 14.9 4 13.5 4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8z"/></svg>
+  </a>
+</div>
 
 <!-- LENIS smooth scroll — sensación cinemática premium -->
 <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
