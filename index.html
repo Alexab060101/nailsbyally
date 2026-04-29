@@ -2038,7 +2038,10 @@ function initMapModal(){
   var reservar=document.getElementById('mapReservar');
   if(!btn||!overlay||!iframe)return;
   function open(){
-    if(!iframe.src&&iframe.dataset.src){iframe.src=iframe.dataset.src;}
+    if(iframe.dataset.loaded!=='1'&&iframe.dataset.src){
+      iframe.src=iframe.dataset.src;
+      iframe.dataset.loaded='1';
+    }
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
@@ -2897,7 +2900,6 @@ async function guardarEnAirtable(nombre, telefono, servicio, comentario) {
         id="mapIframe"
         title="Ubicación de Nails By Ally en Palma de Mallorca"
         data-src="https://www.openstreetmap.org/export/embed.html?bbox=2.6500%2C39.5803%2C2.6530%2C39.5823&layer=mapnik&marker=39.5813161%2C2.6515212"
-        src=""
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
         allowfullscreen></iframe>
