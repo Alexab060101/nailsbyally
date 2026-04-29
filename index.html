@@ -2028,8 +2028,8 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   });
 })();
 
-// MODAL MAPA — iframe lazy on demand
-(function(){
+// MODAL MAPA — iframe lazy on demand (espera al DOM porque el modal está más abajo)
+function initMapModal(){
   var btn=document.getElementById('openMapBtn');
   var overlay=document.getElementById('mapOverlay');
   var closeBtn=document.getElementById('mapClose');
@@ -2052,7 +2052,12 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   overlay.addEventListener('click',function(e){if(e.target===overlay)close();});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay.classList.contains('open'))close();});
   if(reservar)reservar.addEventListener('click',close);
-})();
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',initMapModal);
+}else{
+  initMapModal();
+}
 
 // CHIP BORDER GLOW spotlight (Sprint 3)
 (function(){
