@@ -32,6 +32,21 @@ function norm(s) {
     .replace(/\s+/g, ' ').trim();
 }
 
+async function notificarWhatsApp(texto) {
+  const phone  = process.env.CALLMEBOT_PHONE;
+  const apikey = process.env.CALLMEBOT_APIKEY;
+  if (!phone || !apikey) return;
+  try {
+    const url = 'https://api.callmebot.com/whatsapp.php'
+      + '?phone='  + encodeURIComponent(phone)
+      + '&text='   + encodeURIComponent(texto)
+      + '&apikey=' + encodeURIComponent(apikey);
+    await fetch(url);
+  } catch(e) {
+    console.error('[callmebot]', e.message);
+  }
+}
+
 module.exports = async function handler(req, res) {
   cors(res);
   if (req.method === 'OPTIONS') return res.status(200).end();
@@ -207,6 +222,14 @@ module.exports = async function handler(req, res) {
           }
         );
       }
+
+      const msgWa = '💅 NUEVA RESERVA WEB\n'
+        + 'Cliente: ' + nombre + '\n'
+        + 'Teléfono: ' + telefono + '\n'
+        + 'Servicio: ' + (servicioNombre || '-') + '\n'
+        + 'Fecha: ' + fecha + '\n'
+        + 'Hora: ' + hora;
+      await notificarWhatsApp(msgWa);
 
       return res.status(200).json({ ok: true, startAt: startAt });
     } catch(e) {

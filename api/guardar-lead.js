@@ -1,6 +1,21 @@
 const BASE_ID    = 'appTUc7K43I0Gcg1';
 const TABLE_NAME = 'Clientas';
 
+async function notificarWhatsApp(texto) {
+  const phone  = process.env.CALLMEBOT_PHONE;
+  const apikey = process.env.CALLMEBOT_APIKEY;
+  if (!phone || !apikey) return;
+  try {
+    const url = 'https://api.callmebot.com/whatsapp.php'
+      + '?phone='  + encodeURIComponent(phone)
+      + '&text='   + encodeURIComponent(texto)
+      + '&apikey=' + encodeURIComponent(apikey);
+    await fetch(url);
+  } catch(e) {
+    console.error('[callmebot]', e.message);
+  }
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -38,6 +53,13 @@ module.exports = async function handler(req, res) {
       const err = await airtableRes.text();
       return res.status(airtableRes.status).json({ error: err });
     }
+
+    const msgWa = '✨ NUEVO CONTACTO WEB\n'
+      + 'Nombre: ' + (nombre || 'Desconocida') + '\n'
+      + 'Teléfono: ' + (telefono || '-') + '\n'
+      + 'Servicio: ' + (servicio || '-') + '\n'
+      + (comentario ? 'Comentario: ' + comentario : '');
+    await notificarWhatsApp(msgWa);
 
     return res.status(200).json({ ok: true });
   } catch (e) {
