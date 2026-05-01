@@ -204,23 +204,32 @@ module.exports = async function handler(req, res) {
     const nota  = '📅 SOLICITUD DE RESERVA\nServicio: ' + (servicioNombre||'') + '\nFecha: ' + fecha + '\nHora: ' + hora + '\nTeléfono: ' + telefono;
 
     try {
-      if (airtableToken) {
-        await fetch(
-          'https://api.airtable.com/v0/' + BASE_ID + '/' + encodeURIComponent(TABLE_NAME),
-          {
-            method: 'POST',
-            headers: { 'Authorization': 'Bearer ' + airtableToken, 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              fields: {
-                'Nombre':   nombre,
-                'Teléfono': telefono,
-                'Tipo':     'Reserva',
-                'Fuente':   'Web',
-                'Notas':    nota
-              }
-            })
-          }
-        );
+      if (!airtableToken) {
+        console.error('[square-booking] AIRTABLE_TOKEN no configurado');
+        return res.status(500).json({ error: 'AIRTABLE_TOKEN no configurado en el servidor' });
+      }
+
+      const atRes = await fetch(
+        'https://api.airtable.com/v0/' + BASE_ID + '/' + encodeURIComponent(TABLE_NAME),
+        {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + airtableToken, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fields: {
+              'Nombre':           nombre,
+              'Teléfono':         telefono,
+              'Tipo':             'Reserva',
+              'Fuente':           'Web',
+              'Notas de clienta': nota
+            }
+          })
+        }
+      );
+
+      if (!atRes.ok) {
+        const errText = await atRes.text();
+        console.error('[airtable POST]', atRes.status, errText);
+        return res.status(502).json({ error: 'Airtable ' + atRes.status + ': ' + errText });
       }
 
       const msgWa = '💅 NUEVA RESERVA WEB\n'

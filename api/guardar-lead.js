@@ -39,11 +39,11 @@ module.exports = async function handler(req, res) {
         },
         body: JSON.stringify({
           fields: {
-            'Nombre':    nombre    || 'Desconocida',
-            'Teléfono': telefono  || '',
-            'Tipo':     'Nueva',
-            'Fuente':   'Web',
-            'Notas':    'Servicio: ' + (servicio || '') + ' | Comentario: ' + (comentario || '')
+            'Nombre':           nombre    || 'Desconocida',
+            'Teléfono':         telefono  || '',
+            'Tipo':             'Nueva',
+            'Fuente':           'Web',
+            'Notas de clienta': 'Servicio: ' + (servicio || '') + ' | Comentario: ' + (comentario || '')
           }
         })
       }
