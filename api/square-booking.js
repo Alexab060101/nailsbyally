@@ -194,7 +194,7 @@ module.exports = async function handler(req, res) {
     }
 
     const airtableToken = process.env.AIRTABLE_TOKEN;
-    const BASE_ID       = 'appTUc7K43I0Gcg1';
+    const BASE_ID       = 'appaTUc7K43I0Gcg1';
     const TABLE_NAME    = 'Clientas';
 
     // Format date/time for the note

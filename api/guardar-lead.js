@@ -1,4 +1,4 @@
-const BASE_ID    = 'appTUc7K43I0Gcg1';
+const BASE_ID    = 'appaTUc7K43I0Gcg1';
 const TABLE_NAME = 'Clientas';
 
 async function notificarWhatsApp(texto) {
