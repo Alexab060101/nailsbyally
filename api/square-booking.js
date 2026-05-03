@@ -187,6 +187,12 @@ module.exports = async function handler(req, res) {
 
   // ── POST (solicitud de reserva → Airtable) ──────────────────────────────
   if (req.method === 'POST') {
+    // Honeypot anti-spam: bots rellenan todos los inputs, este es invisible
+    if (req.body && req.body.website) {
+      console.log('[square-booking] honeypot triggered, silently dropping');
+      return res.status(200).json({ ok: true, startAt: (req.body && req.body.startAt) || null });
+    }
+
     const { nombre, telefono, servicioNombre, startAt } = req.body || {};
 
     if (!nombre || !telefono || !startAt) {
@@ -197,16 +203,33 @@ module.exports = async function handler(req, res) {
     const BASE_ID       = 'appaTUc7K43I0Gcg1';
     const TABLE_NAME    = 'Clientas';
 
-    // Format date/time for the note
     const dt    = new Date(startAt);
     const fecha = dt.toLocaleDateString('es-ES',  { weekday:'long', day:'numeric', month:'long', year:'numeric', timeZone:'Europe/Madrid' });
     const hora  = dt.toLocaleTimeString('es-ES',  { hour:'2-digit', minute:'2-digit', timeZone:'Europe/Madrid' });
-    const nota  = '📅 SOLICITUD DE RESERVA\nServicio: ' + (servicioNombre||'') + '\nFecha: ' + fecha + '\nHora: ' + hora + '\nTeléfono: ' + telefono;
+    // [startAt:...] al final → permite deduplicar por busqueda exacta
+    const nota  = '📅 SOLICITUD DE RESERVA\nServicio: ' + (servicioNombre||'') + '\nFecha: ' + fecha + '\nHora: ' + hora + '\nTeléfono: ' + telefono + '\n[startAt:' + startAt + ']';
 
     try {
       if (!airtableToken) {
         console.error('[square-booking] AIRTABLE_TOKEN no configurado');
         return res.status(500).json({ error: 'AIRTABLE_TOKEN no configurado en el servidor' });
+      }
+
+      // Dedup: si ya existe una reserva con mismo telefono y mismo startAt, no duplicar
+      const dedupFilter = 'AND({Teléfono}="' + telefono + '",{Tipo}="Reserva",FIND("[startAt:' + startAt + ']",{Notas de clienta}))';
+      const dedupUrl = 'https://api.airtable.com/v0/' + BASE_ID + '/' + encodeURIComponent(TABLE_NAME)
+        + '?filterByFormula=' + encodeURIComponent(dedupFilter) + '&maxRecords=1';
+
+      const dedupRes = await fetch(dedupUrl, {
+        headers: { 'Authorization': 'Bearer ' + airtableToken }
+      });
+
+      if (dedupRes.ok) {
+        const dedupData = await dedupRes.json();
+        if (dedupData.records && dedupData.records.length > 0) {
+          console.log('[square-booking] reserva duplicada ignorada:', telefono, startAt);
+          return res.status(200).json({ ok: true, startAt: startAt, duplicate: true });
+        }
       }
 
       const atRes = await fetch(

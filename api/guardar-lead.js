@@ -21,6 +21,12 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // Honeypot anti-spam: bots rellenan todos los inputs, este es invisible
+  if (req.body && req.body.website) {
+    console.log('[guardar-lead] honeypot triggered, silently dropping');
+    return res.status(200).json({ ok: true });
+  }
+
   const { nombre, telefono, servicio, comentario } = req.body;
   const token = process.env.AIRTABLE_TOKEN;
 

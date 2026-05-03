@@ -1823,6 +1823,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
           </select>
           <input class="bk-input bk-phone-input" id="bkTelefono" type="tel" placeholder="Número" autocomplete="tel-national" />
         </div>
+        <input type="text" name="website" id="bkHoney" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;pointer-events:none;" />
       </div>
       <div class="bk-cal-header">
         <button class="bk-cal-nav" id="bkPrevMonth" aria-label="Mes anterior">‹</button>
@@ -1874,6 +1875,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
     <h4 class="wa-title">Una cosita más</h4>
     <p class="wa-sub">¿Tienes alguna referencia o detalle? Cuéntanoslo aquí y Ally lo verá antes de tu cita.</p>
     <textarea class="wa-textarea" id="waText" placeholder="Una idea, una foto, lo que sea..."></textarea>
+    <input type="text" name="website" id="waHoney" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;pointer-events:none;" />
     <button class="btn-primary wa-send" id="waSend">Hablar con Ally por WhatsApp</button>
     <a href="https://squareup.com/appointments" target="_blank" rel="noopener noreferrer" class="btn-ghost wa-direct">O reservar sin hablar (Square)</a>
   </div>
@@ -2664,17 +2666,23 @@ if(document.readyState==='loading'){
     bkConfirm.textContent = 'Confirmando…';
     bkConfirm.classList.remove('ready');
 
+    var honeyVal = (document.getElementById('bkHoney') || {}).value || '';
+    var bkCtrl   = new AbortController();
+    var bkTid    = setTimeout(function(){ bkCtrl.abort(); }, 8000);
+
     fetch('/api/square-booking', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      signal: bkCtrl.signal,
       body: JSON.stringify({
         nombre:         nombre,
         telefono:       telefono,
         servicioNombre: currentServicio,
-        startAt:        bkState.selectedStartAt
+        startAt:        bkState.selectedStartAt,
+        website:        honeyVal
       })
     })
-    .then(function(r){ return r.json(); })
+    .then(function(r){ clearTimeout(bkTid); return r.json(); })
     .then(function(d){
       if (d.error) {
         bkConfirm.textContent = 'Confirmar reserva';
@@ -2715,10 +2723,15 @@ if(document.readyState==='loading'){
         }
       } catch(_) {}
     })
-    .catch(function(){
+    .catch(function(err){
+      clearTimeout(bkTid);
       bkConfirm.textContent = 'Confirmar reserva';
       bkConfirm.classList.add('ready');
-      showBkError('Error de conexión. Inténtalo de nuevo.');
+      if (err && err.name === 'AbortError') {
+        showBkError('La conexión está tardando demasiado. Vuelve a intentarlo.');
+      } else {
+        showBkError('Error de conexión. Inténtalo de nuevo.');
+      }
     });
   });
 
@@ -2785,10 +2798,11 @@ if(document.readyState==='loading'){
 
 async function guardarEnAirtable(nombre, telefono, servicio, comentario) {
   try {
+    var honey = (document.getElementById('waHoney') || {}).value || '';
     await fetch('/api/guardar-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nombre: nombre || 'Desconocida', telefono: telefono || '', servicio: servicio || '', comentario: comentario || '' })
+      body: JSON.stringify({ nombre: nombre || 'Desconocida', telefono: telefono || '', servicio: servicio || '', comentario: comentario || '', website: honey })
     });
   } catch(e) {
     console.log('Lead error:', e);
