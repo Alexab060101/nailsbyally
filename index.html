@@ -214,11 +214,18 @@ nav a:hover::after{width:100%;}
   overflow:hidden;z-index:20;
   box-shadow:0 0 0 6px rgba(255,255,255,0.97),0 0 0 10px rgba(244,167,190,0.25),0 32px 80px rgba(44,44,44,0.2);
 }
-.hero-ally img{
+.hero-ally-img,
+.hero-ally-video{
+  position:absolute;inset:0;
   width:100%;height:100%;
   object-fit:cover;object-position:center 8%;
   display:block;
 }
+/* Crossfade entre foto (default visible) y video (oculto hasta scroll) */
+.hero-ally-img{ opacity:1; transition:opacity 0.5s ease; z-index:2; }
+.hero-ally-video{ opacity:0; transition:opacity 0.5s ease; z-index:1; pointer-events:none; }
+.hero-ally.is-playing .hero-ally-img{ opacity:0; }
+.hero-ally.is-playing .hero-ally-video{ opacity:1; z-index:2; }
 
 /* TEXT — siempre por encima de todas las manos (z>12) */
 /* Desktop: anclado desde abajo → bottom del bloque = 24px por encima del borde top de Ally */
@@ -1399,8 +1406,9 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   </div>
 
   <!-- ALLY — z-index: 20, nunca tapada por manos -->
-  <div class="hero-ally">
-    <img src="assets/ally.jpg" alt="Ally, nail artist profesional - Nails By Ally Palma de Mallorca" loading="eager" draggable="false">
+  <div class="hero-ally" id="heroAlly">
+    <img class="hero-ally-img" src="assets/ally.jpg" alt="Ally, nail artist profesional - Nails By Ally Palma de Mallorca" loading="eager" draggable="false">
+    <video class="hero-ally-video" id="heroAllyVideo" src="assets/ally-wink.mp4" muted playsinline preload="metadata" aria-hidden="true"></video>
   </div>
 
   <!-- MANOS (z-index 6–11) — data-rotate = giro para que uñas apunten HACIA AFUERA del círculo -->
@@ -2951,6 +2959,54 @@ async function guardarEnAirtable(nombre, telefono, servicio, comentario) {
 </div>
 
 <!-- LENIS smooth scroll — sensación cinemática premium -->
+<!-- ── HERO ALLY VIDEO (foto → video al scrollear → vuelve a foto al terminar) ── -->
+<script>
+(function(){
+  const ally = document.getElementById('heroAlly');
+  const video = document.getElementById('heroAllyVideo');
+  if (!ally || !video) return;
+
+  let played = false;        // ya se reprodujo en este scroll
+  let scrolledOnce = false;  // user ya hizo scroll al menos una vez
+
+  function resetToPhoto() {
+    ally.classList.remove('is-playing');
+    try { video.pause(); video.currentTime = 0; } catch(e){}
+  }
+  function playVideo() {
+    if (played) return;
+    played = true;
+    ally.classList.add('is-playing');
+    video.currentTime = 0;
+    video.play().catch(() => { resetToPhoto(); played = false; });
+  }
+  // Cuando el video termina → vuelve a la foto (CRÍTICO: que no se quede con el ojo guiñado)
+  video.addEventListener('ended', resetToPhoto);
+
+  // Trigger: primera vez que el usuario hace scroll
+  function onFirstScroll() {
+    if (scrolledOnce) return;
+    scrolledOnce = true;
+    window.removeEventListener('scroll', onFirstScroll);
+    playVideo();
+  }
+  window.addEventListener('scroll', onFirstScroll, { passive: true });
+
+  // Reset si el user vuelve al top (permite re-trigger en próximas visitas a hero)
+  let lastY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y < 50 && lastY >= 50) {
+      // Volvió al top, prepara el re-trigger
+      played = false;
+      scrolledOnce = false;
+      resetToPhoto();
+      window.addEventListener('scroll', onFirstScroll, { passive: true });
+    }
+    lastY = y;
+  }, { passive: true });
+})();
+</script>
 <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
 <script>
 window.addEventListener('load', function(){
