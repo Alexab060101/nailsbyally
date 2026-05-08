@@ -85,6 +85,8 @@
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Manicura Express"}, "price": "25", "priceCurrency": "EUR"},
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Manicura de Precisión con Color"}, "price": "35", "priceCurrency": "EUR"},
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Pedicura Semipermanente"}, "price": "40", "priceCurrency": "EUR"},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Pedicura Glow"}, "price": "30", "priceCurrency": "EUR"},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Pedicura Sculpt"}, "price": "40", "priceCurrency": "EUR"},
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Relleno 3 semanas"}, "price": "30", "priceCurrency": "EUR"},
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Extensión S"}, "price": "30", "priceCurrency": "EUR"},
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Extensión M"}, "price": "40", "priceCurrency": "EUR"},
@@ -1472,6 +1474,14 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
             <span class="chip-left"><span class="chip-name">Pedicura Semipermanente</span><span class="chip-meta">1h · 40€</span></span>
             <span class="chip-reservar"></span>
           </button>
+          <button class="chip" data-servicio="Pedicura Glow" data-duracion="50 min" data-precio="30€" data-foto="pedicura-glow" data-desc="Limpieza, forma, cutículas y esmaltado semipermanente para un acabado impecable y duradero. Acabado liso. Diseños y decoración con coste adicional.">
+            <span class="chip-left"><span class="chip-name">Pedicura Glow</span><span class="chip-meta">50 min · 30€</span></span>
+            <span class="chip-reservar"></span>
+          </button>
+          <button class="chip" data-servicio="Pedicura Sculpt" data-duracion="1h" data-precio="Desde 40€" data-foto="pedicura-sculpt" data-desc="Reestructuración de uñas con acrílico para mejorar forma y apariencia, con acabado semipermanente. Acabado liso. Diseños y decoración con coste adicional.">
+            <span class="chip-left"><span class="chip-name">Pedicura Sculpt</span><span class="chip-meta">1h · Desde 40€</span></span>
+            <span class="chip-reservar"></span>
+          </button>
           <button class="chip" data-servicio="Relleno 3 semanas" data-duracion="1h 30" data-precio="30€" data-foto="relleno-3-semanas" data-desc="Mantenimiento y relleno de extensiones cada 3 semanas para mantener el resultado perfecto.">
             <span class="chip-left"><span class="chip-name">Relleno 3 semanas</span><span class="chip-meta">1h 30 · 30€</span></span>
             <span class="chip-reservar"></span>
@@ -2558,7 +2568,21 @@ if(document.readyState==='loading'){
 
   function renderSlots(slots) {
     bkSlotsGrid.innerHTML = '';
-    slots.forEach(function(slot) {
+    // Filtro: el primer horario disponible es a las 10:30 hora Madrid (todos los anteriores se descartan)
+    var MIN_HOUR = 10, MIN_MIN = 30;
+    var filtered = slots.filter(function(slot) {
+      var dt = new Date(slot.startAt);
+      var hhmm = dt.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Europe/Madrid' });
+      var parts = hhmm.split(':');
+      var totalMin = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+      return totalMin >= MIN_HOUR * 60 + MIN_MIN;
+    });
+    if (!filtered.length) {
+      bkSlotsLabel.style.display = 'none';
+      showBkError('No hay horas disponibles para este día.');
+      return;
+    }
+    filtered.forEach(function(slot) {
       var btn = document.createElement('button');
       btn.className = 'bk-slot';
       // Format time in Europe/Madrid
