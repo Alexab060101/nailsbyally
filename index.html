@@ -212,6 +212,7 @@ nav a:hover::after{width:100%;}
   width:500px;height:560px;
   border-radius:50%;
   overflow:hidden;z-index:20;
+  background:#f5e8e0; /* fondo opaco color piel/beige para que no se transparente durante el crossfade */
   box-shadow:0 0 0 6px rgba(255,255,255,0.97),0 0 0 10px rgba(244,167,190,0.25),0 32px 80px rgba(44,44,44,0.2);
 }
 .hero-ally-img,
@@ -221,9 +222,9 @@ nav a:hover::after{width:100%;}
   object-fit:cover;object-position:center 8%;
   display:block;
 }
-/* Crossfade entre foto (default visible) y video (oculto hasta scroll) */
-.hero-ally-img{ opacity:1; transition:opacity 0.5s ease; z-index:2; }
-.hero-ally-video{ opacity:0; transition:opacity 0.5s ease; z-index:1; pointer-events:none; }
+/* Crossfade entre foto y video — transición rápida + fondo opaco evita que se vean las uñas detrás */
+.hero-ally-img{ opacity:1; transition:opacity 0.25s ease; z-index:2; }
+.hero-ally-video{ opacity:0; transition:opacity 0.25s ease; z-index:1; pointer-events:none; }
 .hero-ally.is-playing .hero-ally-img{ opacity:0; }
 .hero-ally.is-playing .hero-ally-video{ opacity:1; z-index:2; }
 
