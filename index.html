@@ -510,6 +510,10 @@ nav a:hover::after{width:100%;}
 }
 .proceso-step h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:10px;}
 .proceso-step p{font-size:0.85rem;color:var(--text-mid);line-height:1.7;}
+.proceso-step{cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;}
+.proceso-step:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(244,167,190,0.18);}
+.proceso-cta{display:inline-block;margin-top:14px;font-size:0.78rem;font-weight:600;color:var(--pink-deep);letter-spacing:0.04em;transition:gap 0.2s;}
+.proceso-step:hover .proceso-cta{letter-spacing:0.08em;}
 
 /* ── GALERÍA ── */
 .galeria-section{background:var(--pink-bg);}
@@ -1535,21 +1539,24 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
       <h2 class="section-h split-h2">Así de <em>fácil</em></h2>
     </div>
     <div class="proceso-grid">
-      <div class="proceso-step reveal reveal-delay-1">
+      <a href="#servicios" class="proceso-step reveal reveal-delay-1" style="text-decoration:none;color:inherit;">
         <div class="proceso-num">01</div>
         <h3>Eliges servicio</h3>
         <p>En segundos.</p>
-      </div>
-      <div class="proceso-step reveal reveal-delay-2">
+        <span class="proceso-cta">Ver servicios →</span>
+      </a>
+      <a href="https://wa.me/34611962056?text=Hola%20Ally%2C%20quiero%20reservar%20pero%20me%20gustar%C3%ADa%20tener%20m%C3%A1s%20informaci%C3%B3n%20primero%20%F0%9F%98%8A" target="_blank" rel="noopener noreferrer" class="proceso-step reveal reveal-delay-2" style="text-decoration:none;color:inherit;">
         <div class="proceso-num" style="background:linear-gradient(135deg,var(--green-light),var(--green-main));">02</div>
         <h3>Hablamos</h3>
         <p>Por WhatsApp, en un suspiro.</p>
-      </div>
-      <div class="proceso-step reveal reveal-delay-3">
+        <span class="proceso-cta">Escribir ahora →</span>
+      </a>
+      <a href="#servicios" class="proceso-step reveal reveal-delay-3" style="text-decoration:none;color:inherit;">
         <div class="proceso-num">03</div>
-        <h3>A disfrutar</h3>
-        <p>Llegas y enamoras.</p>
-      </div>
+        <h3>Confirmas tu cita</h3>
+        <p>Fecha, hora y listo.</p>
+        <span class="proceso-cta">Reservar →</span>
+      </a>
     </div>
   </div>
 </section>
