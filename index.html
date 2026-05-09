@@ -212,17 +212,18 @@ nav a:hover::after{width:100%;}
   position:absolute;left:50%;top:50%;
   transform:translate(-50%,-50%);
   width:500px;height:560px;
-  border-radius:50%;
-  overflow:hidden;z-index:20;
-  background:#f5e8e0;
-  box-shadow:0 0 0 12px #FAF7F4, 0 0 50px 30px #FAF7F4;
+  overflow:visible;z-index:20;
+  background:transparent;
 }
 .hero-ally-img,
 .hero-ally-video{
   position:absolute;inset:0;
   width:100%;height:100%;
-  object-fit:cover;object-position:center 8%;
+  object-fit:cover;object-position:center 18%;
   display:block;
+  transform:scale(0.82);
+  -webkit-mask-image:radial-gradient(ellipse 195px 220px at 50% 46%, black 62%, transparent 92%);
+  mask-image:radial-gradient(ellipse 195px 220px at 50% 46%, black 62%, transparent 92%);
 }
 /* Crossfade entre foto y video — transición rápida + fondo opaco evita que se vean las uñas detrás */
 .hero-ally-img{ opacity:1; transition:opacity 0.25s ease; z-index:2; }
