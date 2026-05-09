@@ -207,15 +207,13 @@ nav a:hover::after{width:100%;}
   background-size:300px 300px;
 }
 
-/* ALLY — marco circular con bordes difuminados hacia afuera */
+/* ALLY — óvalo con bordes difuminados, sin overflow:hidden para no cortar */
 .hero-ally{
   position:absolute;left:50%;top:50%;
   transform:translate(-50%,-50%);
   width:500px;height:560px;
-  overflow:hidden;
+  overflow:visible;
   z-index:20;
-  -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 40%, black 72%, rgba(0,0,0,0.5) 86%, transparent 98%);
-  mask-image:radial-gradient(ellipse 50% 50% at 50% 40%, black 72%, rgba(0,0,0,0.5) 86%, transparent 98%);
 }
 .hero-ally-img,
 .hero-ally-video{
@@ -223,6 +221,8 @@ nav a:hover::after{width:100%;}
   width:100%;height:100%;
   object-fit:cover;object-position:center top;
   display:block;
+  -webkit-mask-image:radial-gradient(ellipse 46% 48% at 50% 35%, black 74%, rgba(0,0,0,0.4) 87%, transparent 99%);
+  mask-image:radial-gradient(ellipse 46% 48% at 50% 35%, black 74%, rgba(0,0,0,0.4) 87%, transparent 99%);
 }
 /* Crossfade entre foto y video — transición rápida + fondo opaco evita que se vean las uñas detrás */
 .hero-ally-img{ opacity:1; transition:opacity 0.25s ease; z-index:2; }
