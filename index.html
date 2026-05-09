@@ -212,10 +212,8 @@ nav a:hover::after{width:100%;}
   position:absolute;left:50%;top:50%;
   transform:translate(-50%,-50%);
   width:500px;height:560px;
-  border-radius:50%;
-  overflow:hidden;z-index:20;
-  background:#f5e8e0; /* fondo opaco color piel/beige para que no se transparente durante el crossfade */
-  box-shadow:0 0 0 6px rgba(255,255,255,0.97),0 0 0 10px rgba(244,167,190,0.25),0 32px 80px rgba(44,44,44,0.2);
+  overflow:visible;z-index:20;
+  background:transparent;
 }
 .hero-ally-img,
 .hero-ally-video{
@@ -223,6 +221,8 @@ nav a:hover::after{width:100%;}
   width:100%;height:100%;
   object-fit:cover;object-position:center 8%;
   display:block;
+  -webkit-mask-image:radial-gradient(ellipse 200px 230px at 50% 48%, black 70%, transparent 100%);
+  mask-image:radial-gradient(ellipse 200px 230px at 50% 48%, black 70%, transparent 100%);
 }
 /* Crossfade entre foto y video — transición rápida + fondo opaco evita que se vean las uñas detrás */
 .hero-ally-img{ opacity:1; transition:opacity 0.25s ease; z-index:2; }
@@ -2568,7 +2568,7 @@ if(document.readyState==='loading'){
 
   function renderSlots(slots) {
     bkSlotsGrid.innerHTML = '';
-    // Filtro: el primer horario disponible es a las 10:30 hora Madrid (todos los anteriores se descartan)
+    // Filtro mínimo: primer horario disponible a las 10:30 hora Madrid
     var MIN_HOUR = 10, MIN_MIN = 30;
     var filtered = slots.filter(function(slot) {
       var dt = new Date(slot.startAt);
@@ -2577,6 +2577,24 @@ if(document.readyState==='loading'){
       var totalMin = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
       return totalMin >= MIN_HOUR * 60 + MIN_MIN;
     });
+    // Filtro sábado: salón cierra a las 17:00 — último slot = 17:00 - duración total
+    if (bkState.selectedDate) {
+      var dp = bkState.selectedDate.split('-');
+      var dow = new Date(parseInt(dp[0]), parseInt(dp[1]) - 1, parseInt(dp[2])).getDay();
+      if (dow === 6) {
+        var artExtra = 0;
+        var selArt = NAIL_ART.filter(function(a){ return a.id === selectedNailId; })[0];
+        if (selArt) artExtra = selArt.minExtra;
+        var maxStartMin = 17 * 60 - (currentDurMin + artExtra);
+        filtered = filtered.filter(function(slot) {
+          var dt = new Date(slot.startAt);
+          var hhmm = dt.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Europe/Madrid' });
+          var parts = hhmm.split(':');
+          var slotMin = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+          return slotMin <= maxStartMin;
+        });
+      }
+    }
     if (!filtered.length) {
       bkSlotsLabel.style.display = 'none';
       showBkError('No hay horas disponibles para este día.');
