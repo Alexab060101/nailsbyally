@@ -2519,7 +2519,7 @@ if(document.readyState==='loading'){
       if (thisDate < today) {
         btn.classList.add('past');
         btn.disabled = true;
-      } else if (bkState.availableDays[dateStr]) {
+      } else if (bkState.availableDays[dateStr] && thisDate.getDay() !== 1) {
         btn.classList.add('available');
         if (dateStr === bkState.selectedDate) btn.classList.add('selected');
         if (thisDate.toDateString() === today.toDateString()) btn.classList.add('today');

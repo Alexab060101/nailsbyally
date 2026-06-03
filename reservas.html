@@ -713,7 +713,7 @@ src="https://www.facebook.com/tr?id=1234944605106026&ev=PageView&noscript=1"
   <div class="modal-content modal-content-wide">
     <button class="modal-close" id="calendarClose" aria-label="Cerrar">&times;</button>
     <h2 class="modal-title" id="calendarModalTitle">¿Cuándo te <em>viene bien?</em></h2>
-    <p class="modal-intro">Abrimos de lunes a sábado · Domingos cerramos.</p>
+    <p class="modal-intro">Abrimos de martes a sábado · Domingos y lunes cerramos.</p>
     <div class="when-wrap">
       <div class="calendar-wrap">
         <div class="cal-header">
@@ -1030,10 +1030,10 @@ function updateSticky() {
 
       var thisDate = new Date(viewYear, viewMonth, d);
       var isPast = thisDate < new Date(today.getFullYear(), today.getMonth(), today.getDate());
-      var isSun  = thisDate.getDay() === 0;
+      var isClosed = (thisDate.getDay() === 0 || thisDate.getDay() === 1); // domingo y lunes cerrado
       var isToday = (d===today.getDate() && viewMonth===today.getMonth() && viewYear===today.getFullYear());
 
-      if(isPast || isSun){
+      if(isPast || isClosed){
         dayEl.classList.add('disabled');
       } else {
         if(isToday) dayEl.classList.add('today');
